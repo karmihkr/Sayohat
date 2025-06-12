@@ -1,16 +1,41 @@
-# sayohat
+# Sayohat | Share ride between cities app
 
-A new Flutter project.
+Sayohat is a mobile application developed to help users find and publish their rides to save money per trip... blablabla
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Find ride:** Users can find ride to share it with someone.
+- **Post ride:** Users can post their ride to share it with someone.
 
-A few resources to get you started if this is your first Flutter project:
+## Usage
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Find ride
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Add "from" city
+2. Add "to" city
+3. Add number of passenger that will ride with you
+4. Click on button to find a ride
+5. You will see a list of available rides for your preferences 
+
+### Posting ride
+
+1. Add "from" city
+2. Add "to" city
+3. Add number of passenger that you can take with you
+4. Add your car plate
+5. Click on button to post a ride
+6. Your ride will be published and can be seen by another users
+
+## Frontend Code Structure
+
+- **lib/screens/regisatration-screens/registration_screen.dart:** Screen to enter the user's phone number.
+- **lib/screens/regisatration-screens/confirm_phone_number_screen.dart:** Screen to confirm entered phone number.
+- **lib/screens/regisatration-screens/verification_screen.dart:** Screen to enter a code.
+- **lib/screens/tab-main-screen/welcome_screen.dart:** Screen that contains bottom navigation bar.
+- **lib/screens/tab-main-screen/find_ride_screen.dart.dart:** Screen to enter information about a ride to find.
+- **lib/screens/tab-main-screen/add_ride_screen.dart.dart:** Screen to enter information about a ride to post.
+- **lib/screens/tab-main-screen/list_ride_screen.dart.dart:** Screen to view history about user's rides.
+- **lib/screens/tab-main-screen/profile_screen.dart.dart:** Screen to view user's profile.
+- **lib/theme/app_colors.dart:** Colors that are used in application.
+- **lib/widgets/app_logo.dart:** Widget that show app logo.
+- **lib/widgets/app_name.dart:** Widget that show app name.
