@@ -6,6 +6,7 @@ Sayohat is a mobile application developed to help users find and publish their r
 
 - **Find ride:** Users can find ride to share it with someone.
 - **Post ride:** Users can post their ride to share it with someone.
+- **Some else features:** Will be soon
 
 ## Usage
 
@@ -17,7 +18,7 @@ Sayohat is a mobile application developed to help users find and publish their r
 4. Click on button to find a ride
 5. You will see a list of available rides for your preferences 
 
-### Posting ride
+### Post ride
 
 1. Add "from" city
 2. Add "to" city
