@@ -54,6 +54,7 @@ class _CodeForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),

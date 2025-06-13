@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 class AddRideScreen extends StatelessWidget {
   const AddRideScreen({super.key});
@@ -99,6 +100,7 @@ class _DateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      inputFormatters: [DateInputFormatter()],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(
@@ -117,7 +119,7 @@ class _DateField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "Date",
+        hintText: "dd/mm/yyyy",
         filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
@@ -129,6 +131,7 @@ class _PassengerNumberField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outlined, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(

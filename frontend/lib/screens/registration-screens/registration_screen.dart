@@ -68,6 +68,7 @@ class _PhoneNumberFormState extends State<_PhoneNumberFormAndButton> {
           width: 246,
           height: 46,
           child: TextField(
+            keyboardType: TextInputType.number,
             controller: _textController,
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
