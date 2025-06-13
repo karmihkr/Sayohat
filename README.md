@@ -29,14 +29,21 @@ Sayohat is a mobile application developed to help users find and publish their r
 
 ## Frontend Code Structure
 
-- **lib/screens/regisatration-screens/registration_screen.dart:** Screen to enter the user's phone number.
-- **lib/screens/regisatration-screens/confirm_phone_number_screen.dart:** Screen to confirm entered phone number.
-- **lib/screens/regisatration-screens/verification_screen.dart:** Screen to enter a code.
+- **lib/screens/registration-screens/registration_screen.dart:** Screen to enter the user's phone number.
+- **lib/screens/registration-screens/confirm_phone_number_screen.dart:** Screen to confirm entered phone number.
+- **lib/screens/registration-screens/verification_screen.dart:** Screen to enter a code.
 - **lib/screens/tab-main-screen/welcome_screen.dart:** Screen that contains bottom navigation bar.
-- **lib/screens/tab-main-screen/find_ride_screen.dart.dart:** Screen to enter information about a ride to find.
-- **lib/screens/tab-main-screen/add_ride_screen.dart.dart:** Screen to enter information about a ride to post.
-- **lib/screens/tab-main-screen/list_ride_screen.dart.dart:** Screen to view history about user's rides.
-- **lib/screens/tab-main-screen/profile_screen.dart.dart:** Screen to view user's profile.
+- **lib/screens/tab-main-screen/find_ride_screen.dart:** Screen to enter information about a ride to find.
+- **lib/screens/tab-main-screen/add_ride_screen.dart:** Screen to enter information about a ride to post.
+- **lib/screens/tab-main-screen/list_ride_screen.dart:** Screen to view history about user's rides.
+- **lib/screens/tab-main-screen/profile_screen.dart:** Screen to view user's profile.
 - **lib/theme/app_colors.dart:** Colors that are used in application.
 - **lib/widgets/app_logo.dart:** Widget that show app logo.
 - **lib/widgets/app_name.dart:** Widget that show app name.
+
+## Project Setup
+
+1. [Install Flutter](https://docs.flutter.dev/get-started/install?_gl=1*jjmxmh*_ga*MTYwNjk4MTAxNi4xNzQ5MTM4NTk3*_ga_04YGWK0175*czE3NDk4MDA0NTYkbzYkZzEkdDE3NDk4MDA0ODEkajM1JGwwJGgw) for your development platform
+2. Clone the repository
+3. Execute `--no-color pub get` of Flutter
+4. Run **/lib/main.dart** to start the application
