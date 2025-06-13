@@ -3,8 +3,8 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
 
-class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
+class NameSurnameScreen extends StatelessWidget {
+  const NameSurnameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,11 @@ class VerificationScreen extends StatelessWidget {
               AppLogo(),
               SizedBox(height: 80),
               _VerificationText(),
+              _PleaseText(),
               SizedBox(height: 15.0),
-              _CodeForm(),
+              _NameForm(),
+              SizedBox(height: 15.0),
+              _SurnmaeForm(),
               SizedBox(height: 15.0),
               _ConfirmCodeButton(),
             ],
@@ -47,7 +50,21 @@ class _VerificationText extends StatelessWidget {
   }
 }
 
-class _CodeForm extends StatelessWidget {
+class _PleaseText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Enter your name and surname',
+      style: TextStyle(
+        color: AppColors.primaryGreen,
+        fontSize: 20.0,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _NameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -79,7 +96,48 @@ class _CodeForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Code",
+          hintText: "Name",
+          filled: true,
+          fillColor: Color.fromRGBO(255, 255, 255, 1),
+        ),
+      ),
+    );
+  }
+}
+
+class _SurnmaeForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 246.0,
+      height: 46,
+      child: TextField(
+        decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+          ),
+          hintText: "Surname",
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -93,7 +151,7 @@ class _ConfirmCodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/NameSurnameScreen');
+        Navigator.pushNamed(context, '/WelcomeScreen');
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
@@ -108,7 +166,7 @@ class _ConfirmCodeButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Confirm the code",
+        "Go next!",
       ),
     );
   }

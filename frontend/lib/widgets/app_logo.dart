@@ -5,7 +5,7 @@ class AppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Image(
       image: AssetImage('assets/images/logo.png'),
-      width: 250.0,
+      width: 200.0,
     );
   }
 }
