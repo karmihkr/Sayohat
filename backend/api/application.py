@@ -1,5 +1,5 @@
 import fastapi
-from registration.test_router import test_router
+from api.registration.test_router import test_router
 
 application = fastapi.FastAPI()
 for router in (test_router,):

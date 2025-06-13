@@ -1,5 +1,7 @@
 .idea
 
+.venv
+
 /frontend/.dart_tool
 
 /frontend/build
