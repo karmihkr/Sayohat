@@ -45,5 +45,5 @@ Sayohat is a mobile application developed to help users find and publish their r
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install?_gl=1*jjmxmh*_ga*MTYwNjk4MTAxNi4xNzQ5MTM4NTk3*_ga_04YGWK0175*czE3NDk4MDA0NTYkbzYkZzEkdDE3NDk4MDA0ODEkajM1JGwwJGgw) for your development platform
 2. Clone the repository
-3. Execute `flutter --no-color pub get` from the frontend directory
+3. Execute `flutter --no-color pub get` from the frontend dir
 4. Run **/lib/main.dart** to start the application
