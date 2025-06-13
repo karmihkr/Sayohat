@@ -41,9 +41,12 @@ Sayohat is a mobile application developed to help users find and publish their r
 - **lib/widgets/app_logo.dart:** Widget that show app logo.
 - **lib/widgets/app_name.dart:** Widget that show app name.
 
-## Project Setup
+## Project Setup (Development)
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install?_gl=1*jjmxmh*_ga*MTYwNjk4MTAxNi4xNzQ5MTM4NTk3*_ga_04YGWK0175*czE3NDk4MDA0NTYkbzYkZzEkdDE3NDk4MDA0ODEkajM1JGwwJGgw) for your development platform
-2. Clone the repository
-3. Execute `flutter --no-color pub get` from the frontend dir
-4. Run **/lib/main.dart** to start the application
+2. Run `flutter doctor` in your terminal until requirements are satisfied
+3. Clone the repository
+4. Configure virtual python environment in `/backend` folder and install `requirements.txt`
+5. Start api server from `/backend` with the command `fastapi dev(or run) api/application.py`
+6. Execute `flutter --no-color pub get` from the `/frontend` directory
+7. Run **/lib/main.dart** to start the application
