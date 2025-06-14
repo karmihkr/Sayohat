@@ -3,7 +3,9 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 class FindRideScreen extends StatelessWidget {
-  const FindRideScreen({super.key});
+  final Function(bool) onShowSearchList;
+
+  const FindRideScreen({super.key, required this.onShowSearchList});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,11 @@ class FindRideScreen extends StatelessWidget {
             SizedBox(height: 10),
             _PassengerNumberField(),
             SizedBox(height: 30),
-            _FindRideButton(),
+            _FindRideButton(
+              onPressed: () {
+                onShowSearchList(true);
+              },
+            ),
           ],
         ),
       ),
@@ -157,10 +163,14 @@ class _PassengerNumberField extends StatelessWidget {
 }
 
 class _FindRideButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const _FindRideButton({required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
         backgroundColor: AppColors.primaryGreen,

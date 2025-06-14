@@ -3,6 +3,7 @@ import 'package:sayohat/screens/tabs-main-screens/find_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/add_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/list_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile_screen.dart';
+import 'package:sayohat/screens/list_search_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,23 +15,38 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   int _selectedTab = 0;
+  bool _showSearchList = false;
 
   final List<Widget> _widgetOptions = <Widget>[
-    FindRideScreen(),
+    FindRideScreen(onShowSearchList: (show) {}),
     AddRideScreen(),
     ListRideScreen(),
     ProfileScreen(),
   ];
 
   void onSelectTab(int index) {
-    if (_selectedTab == index) return;
+    if (_selectedTab == index && _showSearchList) {
+      setState(() {
+        _showSearchList = false;
+      });
+      return;
+    }
     setState(() {
       _selectedTab = index;
+      _showSearchList = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    _widgetOptions[0] = FindRideScreen(
+      onShowSearchList: (show) {
+        setState(() {
+          _showSearchList = show;
+        });
+      },
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -42,7 +58,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
-          _widgetOptions[_selectedTab],
+          _showSearchList && _selectedTab == 0
+              ? const ListSearchRideScreen()
+              : _widgetOptions[_selectedTab],
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
