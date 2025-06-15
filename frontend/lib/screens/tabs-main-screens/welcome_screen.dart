@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/screens/tabs-main-screens/find_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/add_ride_screen.dart';
-import 'package:sayohat/screens/tabs-main-screens/list_ride_screen.dart';
+import 'package:sayohat/screens/tabs-main-screens/list_your_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile_screen.dart';
-import 'package:sayohat/screens/list_search_screen.dart';
+import 'package:sayohat/screens/tabs-main-screens/list_search_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 class WelcomeScreen extends StatefulWidget {

@@ -25,6 +25,7 @@ class Ride {
   final int cost;
   final String description;
   final Date date;
+  final String carPlate;
 
   Ride({
     required this.fullName,
@@ -37,6 +38,7 @@ class Ride {
     required this.cost,
     required this.description,
     required this.date,
+    required this.carPlate,
   });
 }
 
@@ -52,6 +54,7 @@ final rides = [
     cost: 1000,
     description: '@alias',
     date: Date(day: 10, month: 10, year: 2025, hour: 21, min: 45),
+    carPlate: 'T995YT777',
   ),
   Ride(
     fullName: "Aleksander Chupachups",
@@ -64,9 +67,10 @@ final rides = [
     cost: 520,
     description: '@alias',
     date: Date(day: 12, month: 11, year: 2025, hour: 14, min: 30),
+    carPlate: 'T995YT777',
   ),
   Ride(
-    fullName: "Dmitri Ushakov",
+    fullName: "Dmitri Lisiy",
     age: 24,
     from: 'Moscow',
     to: 'Innopolis',
@@ -76,9 +80,10 @@ final rides = [
     cost: 1010,
     description: '@alias',
     date: Date(day: 14, month: 10, year: 2025, hour: 18, min: 30),
+    carPlate: 'T995YT777',
   ),
   Ride(
-    fullName: "Frandly Thug",
+    fullName: "Uha Uhahahaha",
     age: 52,
     from: 'Moscow',
     to: 'Innopolis',
@@ -88,5 +93,6 @@ final rides = [
     cost: 890,
     description: '@alias',
     date: Date(day: 17, month: 10, year: 2025, hour: 19, min: 30),
+    carPlate: 'T995YT777',
   ),
 ];
