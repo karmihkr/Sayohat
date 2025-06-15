@@ -62,7 +62,7 @@ class _PhoneNumberForm extends StatelessWidget {
       height: 46,
       child: Center(
         child: Container(
-          color: AppColors.primaryWhite,
+          color: AppColors.backgroundBeige,
           child: Text(
             pn ?? "",
             style: TextStyle(
