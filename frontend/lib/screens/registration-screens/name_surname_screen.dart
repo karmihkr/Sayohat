@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
+import 'package:sayohat/user_data.dart';
+
+final _nameTextController = TextEditingController();
+final _surnameTextController = TextEditingController();
+String? userName;
+String? userSurname;
 
 class NameSurnameScreen extends StatelessWidget {
   const NameSurnameScreen({super.key});
@@ -71,6 +77,7 @@ class _NameForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        controller: _nameTextController,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -112,6 +119,7 @@ class _SurnmaeForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        controller: _surnameTextController,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -151,7 +159,45 @@ class _ConfirmCodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/WelcomeScreen');
+        userName = _nameTextController.text;
+        userSurname = _surnameTextController.text;
+        if (userName == '' ||
+            userName == null ||
+            userSurname == '' ||
+            userSurname == null) {
+          final nameSurnameSnackBar = SnackBar(
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    'Enter your name and surname',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(nameSurnameSnackBar);
+        } else {
+          user.setName(userName);
+          user.setSurname(userSurname);
+          Navigator.pushNamed(context, '/PasswordScreen');
+        }
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),

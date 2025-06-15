@@ -110,8 +110,31 @@ class _PhoneNumberFormState extends State<_PhoneNumberFormAndButton> {
               userPhoneNumber = _textController.text;
               if (userPhoneNumber == "" || userPhoneNumber == null) {
                 final phoneNumberSnackBar = SnackBar(
-                  content: Text("Input your phone number"),
-                  action: SnackBarAction(label: "Got it!", onPressed: () {}),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Text(
+                          'Enter your phone number',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            color: AppColors.primaryGreen,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
                 );
                 ScaffoldMessenger.of(context).showSnackBar(phoneNumberSnackBar);
               } else {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
+import 'package:sayohat/user_data.dart';
 
 late String? pn;
 
@@ -108,6 +109,7 @@ class _GoNextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
+        user.setPhone(pn);
         Navigator.pushNamed(context, '/VerificationScreen');
       },
       style: ElevatedButton.styleFrom(

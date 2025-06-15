@@ -3,6 +3,9 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
 
+final _codeTextController = TextEditingController();
+String? userCode;
+
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
 
@@ -54,6 +57,7 @@ class _CodeForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        controller: _codeTextController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -94,7 +98,39 @@ class _ConfirmCodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/NameSurnameScreen');
+        userCode = _codeTextController.text;
+        if (userCode == '' || userCode == null) {
+          final emptyCodeSnackBar = SnackBar(
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    'Enter the code',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(emptyCodeSnackBar);
+        } else {
+          Navigator.pushNamed(context, '/NameSurnameScreen');
+        }
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
