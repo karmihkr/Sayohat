@@ -77,14 +77,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_rounded, color: AppColors.primaryGreen),
-            label: 'List',
+            label: 'Your rides',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline, color: AppColors.primaryGreen),
             label: 'Profile',
           ),
         ],
-        showUnselectedLabels: true,
+        showUnselectedLabels: false,
         backgroundColor: AppColors.backgroundBeige,
         selectedItemColor: AppColors.primaryGreen,
         unselectedItemColor: AppColors.primaryGreen,
