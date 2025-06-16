@@ -57,7 +57,7 @@ class _Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(75), // Радиус скругления
+        borderRadius: BorderRadius.circular(75),
         child: Image.asset(
           'assets/images/test_ava.JPG',
           width: 146,
