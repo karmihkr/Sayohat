@@ -44,7 +44,6 @@ class _FindRideScreenState extends State<FindRideScreen> {
     if (value == null || value.isEmpty) {
       return 'Please enter date';
     }
-    // Добавьте дополнительную проверку формата даты при необходимости
     return null;
   }
 

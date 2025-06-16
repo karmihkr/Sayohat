@@ -23,123 +23,237 @@ class YourRideDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Driver: ${ride.fullName}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
-              ),
-            ),
+            _FullName(ride: ride),
             SizedBox(height: 16),
-            Text(
-              'Age: ${ride.age} years',
-              style: TextStyle(fontFamily: 'Roboto'),
-            ),
-            Text('Rating: 5.0', style: TextStyle(fontFamily: 'Roboto')),
+            _Age(ride: ride),
+            _Rating(),
             SizedBox(height: 24),
-            Text(
-              'Trip Details',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
-              ),
-            ),
+            _TripDetails(),
             Divider(),
-            ListTile(
-              leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
-              title: Text(
-                'From: ${ride.address1}',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
-              title: Text(
-                'To: ${ride.address2}',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.calendar_today,
-                color: AppColors.primaryGreen,
-              ),
-              title: Text(
-                'Date: ${ride.date.day}.${ride.date.month}.${ride.date.year}',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
-              title: Text(
-                'Time: ${ride.date.hour}:${ride.date.min}',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
+            _FromAddress(ride: ride),
+            _ToAddress(ride: ride),
+            _RideDate(ride: ride),
+            _RideStart(ride: ride),
             SizedBox(height: 24),
-            Text(
-              'Car Details',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
-              ),
-            ),
+            _CarDetailsText(),
             Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.directions_car,
-                color: AppColors.primaryGreen,
-              ),
-              title: Text(
-                'Model: Toyota Camry',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
-              title: Text(
-                'Color: White',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
+            _CarModel(),
+            _CarColor(),
             SizedBox(height: 24),
-            Text(
-              'Description',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
-              ),
-            ),
+            _RideDescription(),
             Divider(),
-            ListTile(
-              leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
-              title: Text(
-                ride.description,
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryGreen,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                ),
-                child: Text(
-                  'Edit this ride',
-                  style: TextStyle(
-                    color: AppColors.primaryWhite,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-              ),
-            ),
+            _RideDescriptionContext(ride: ride),
+            _EditRideButton(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FullName extends StatelessWidget {
+  const _FullName({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Driver: ${ride.fullName}',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _Age extends StatelessWidget {
+  const _Age({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Age: ${ride.age} years',
+      style: TextStyle(fontFamily: 'Roboto'),
+    );
+  }
+}
+
+class _Rating extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text('Rating: 5.0', style: TextStyle(fontFamily: 'Roboto'));
+  }
+}
+
+class _TripDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Trip Details',
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _FromAddress extends StatelessWidget {
+  const _FromAddress({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
+      title: Text(
+        'From: ${ride.address1}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _ToAddress extends StatelessWidget {
+  const _ToAddress({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
+      title: Text(
+        'To: ${ride.address2}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _RideDate extends StatelessWidget {
+  const _RideDate({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
+      title: Text(
+        'Date: ${ride.date.day}.${ride.date.month}.${ride.date.year}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _RideStart extends StatelessWidget {
+  const _RideStart({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
+      title: Text(
+        'Time: ${ride.date.hour}:${ride.date.min}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _CarDetailsText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Car Details',
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _CarModel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
+      title: Text(
+        'Model: Toyota Camry',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _CarColor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
+      title: Text('Color: White', style: TextStyle(fontFamily: 'Roboto')),
+    );
+  }
+}
+
+class _RideDescription extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Description',
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _RideDescriptionContext extends StatelessWidget {
+  const _RideDescriptionContext({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
+      title: Text(ride.description, style: TextStyle(fontFamily: 'Roboto')),
+    );
+  }
+}
+
+class _EditRideButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryGreen,
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        ),
+        child: Text(
+          'Edit this ride',
+          style: TextStyle(
+            color: AppColors.primaryWhite,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Roboto',
+          ),
         ),
       ),
     );
