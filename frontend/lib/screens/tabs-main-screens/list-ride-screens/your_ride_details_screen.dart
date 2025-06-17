@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/screens/test_data_search_screen.dart';
+import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 
 class YourRideDetailsScreen extends StatelessWidget {
   final Ride ride;
@@ -147,10 +147,7 @@ class _RideDate extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
-      title: Text(
-        'Date: ${ride.date.day}.${ride.date.month}.${ride.date.year}',
-        style: TextStyle(fontFamily: 'Roboto'),
-      ),
+      title: Text('Date: ${ride.date}', style: TextStyle(fontFamily: 'Roboto')),
     );
   }
 }
@@ -164,10 +161,7 @@ class _RideStart extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
-      title: Text(
-        'Time: ${ride.date.hour}:${ride.date.min}',
-        style: TextStyle(fontFamily: 'Roboto'),
-      ),
+      title: Text('Time: ${ride.time}', style: TextStyle(fontFamily: 'Roboto')),
     );
   }
 }

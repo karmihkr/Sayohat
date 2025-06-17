@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/screens/test_data_search_screen.dart';
+import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/screens/tabs-main-screens/list-ride-screens/your_ride_details_screen.dart';
 
 class ListRideScreen extends StatelessWidget {
@@ -21,18 +21,18 @@ class ListRideScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (rides.isNotEmpty)
+                if (yourRides.isNotEmpty)
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: rides.length,
+                    itemCount: yourRides.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final ride = rides[index];
+                      final ride = yourRides[index];
                       return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -162,7 +162,7 @@ class _Date extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${ride.date.day}.${ride.date.month}.${ride.date.year} - ${ride.date.hour}:${ride.date.min}',
+      '${ride.date} - ${ride.time}',
       style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,

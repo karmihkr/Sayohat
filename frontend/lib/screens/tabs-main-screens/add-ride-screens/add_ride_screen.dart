@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
+import 'package:sayohat/user_data.dart';
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -10,54 +12,222 @@ class AddRideScreen extends StatefulWidget {
 }
 
 class _AddRideScreenState extends State<AddRideScreen> {
-  final _formKey = GlobalKey<FormState>();
+  //final _formKey = GlobalKey<FormState>();
+  int _currentStep = 0;
+  final List<GlobalKey<FormState>> _stepFormKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+  ];
+
+  String fromCity = '';
+  String toCity = '';
+  String date = '';
+  String passengers = '';
+  String addressFrom = '';
+  String addressTo = '';
+  String time = '';
+  String price = '';
+  String description = '';
+  String carModel = '';
+  String carColor = '';
+  String carPlate = '';
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Form(
-        key: _formKey,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          padding: const EdgeInsets.all(60),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(255, 255, 255, 1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _FromField(),
-              SizedBox(height: 10),
-              _ToField(),
-              SizedBox(height: 10),
-              _DateField(),
-              SizedBox(height: 10),
-              _PassengerNumberField(),
-              SizedBox(height: 10),
-              _CarPlateField(),
-              SizedBox(height: 30),
-              _AddRideButton(formKey: _formKey),
-            ],
-          ),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.all(13),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Stepper(
+          connectorColor: WidgetStatePropertyAll(AppColors.primaryGreen),
+          currentStep: _currentStep,
+          onStepContinue: () {
+            if (_stepFormKeys[_currentStep].currentState!.validate()) {
+              _stepFormKeys[_currentStep].currentState!.save();
+              if (_currentStep < 2) {
+                setState(() => _currentStep += 1);
+              } else {
+                _saveRide();
+              }
+            }
+          },
+          onStepCancel: () {
+            if (_currentStep > 0) {
+              setState(() => _currentStep -= 1);
+            }
+          },
+          steps: [
+            Step(
+              title: Text('General'),
+              content: Form(
+                key: _stepFormKeys[0],
+                child: Column(
+                  children: [
+                    _CityField(
+                      label: 'From',
+                      onSaved: (value) => fromCity = value ?? '',
+                    ),
+                    SizedBox(height: 10),
+                    _CityField(
+                      label: 'To',
+                      onSaved: (value) => toCity = value ?? '',
+                    ),
+                    SizedBox(height: 10),
+                    _DateField(onSaved: (value) => date = value ?? ''),
+                    SizedBox(height: 10),
+                    _PassengerNumberField(
+                      onSaved: (value) => passengers = value ?? '',
+                    ),
+                  ],
+                ),
+              ),
+              isActive: _currentStep >= 0,
+            ),
+            Step(
+              title: Text('Ride details'),
+              content: Form(
+                key: _stepFormKeys[1],
+                child: Column(
+                  children: [
+                    _AddressField(
+                      label: 'Departure address',
+                      onSaved: (value) => addressFrom = value ?? '',
+                    ),
+                    SizedBox(height: 10),
+                    _AddressField(
+                      label: 'Destination address',
+                      onSaved: (value) => addressTo = value ?? '',
+                    ),
+                    SizedBox(height: 10),
+                    _TimeField(onSaved: (value) => time = value ?? ''),
+                    SizedBox(height: 10),
+                    _PriceField(onSaved: (value) => price = value ?? ''),
+                    SizedBox(height: 10),
+                    _DescriptionField(
+                      onSaved: (value) => description = value ?? '',
+                    ),
+                  ],
+                ),
+              ),
+              isActive: _currentStep >= 1,
+            ),
+            Step(
+              title: Text('Car information'),
+              content: Form(
+                key: _stepFormKeys[2],
+                child: Column(
+                  children: [
+                    _CarModelField(onSaved: (value) => carModel = value ?? ''),
+                    SizedBox(height: 10),
+                    _CarColorField(onSaved: (value) => carColor = value ?? ''),
+                    SizedBox(height: 10),
+                    _CarPlateField(onSaved: (value) => carPlate = value ?? ''),
+                  ],
+                ),
+              ),
+              isActive: _currentStep >= 2,
+            ),
+          ],
+          controlsBuilder: (context, details) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Row(
+                children: [
+                  if (_currentStep != 0)
+                    ElevatedButton(
+                      onPressed: details.onStepCancel,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryGreen,
+                      ),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: details.onStepContinue,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryGreen,
+                    ),
+                    child: Text(
+                      _currentStep == 2 ? 'Complete' : 'Next',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
+
+  void _saveRide() {
+    Ride userRide = Ride(
+      fullName: '${user.name} ${user.surname}',
+      age: 5,
+      from: fromCity,
+      to: toCity,
+      date: date,
+      seats: passengers,
+      address1: addressFrom,
+      address2: addressTo,
+      time: time,
+      cost: price,
+      description: description,
+      carModel: carModel,
+      carColor: carColor,
+      carPlate: carPlate,
+    );
+    yourRides.add(userRide);
+    final addRideSnackBar = SnackBar(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            height: 40,
+            decoration: const BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Text(
+              'Ride was added successfuly!',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                color: AppColors.primaryGreen,
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(addRideSnackBar);
+  }
 }
 
-class _FromField extends StatelessWidget {
+class _CityField extends StatelessWidget {
+  final String label;
+  final Function(String?) onSaved;
+
+  const _CityField({required this.label, required this.onSaved});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter departure location';
-        }
-        return null;
-      },
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
@@ -74,26 +244,31 @@ class _FromField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "From",
+        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
+        hintText: label,
         filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 1),
+        fillColor: Colors.white,
       ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null,
+      onSaved: onSaved,
     );
   }
 }
 
-class _ToField extends StatelessWidget {
+class _AddressField extends StatelessWidget {
+  final String label;
+  final Function(String?) onSaved;
+
+  const _AddressField({required this.label, required this.onSaved});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter destination';
-        }
-        return null;
-      },
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
+        prefixIcon: Icon(Icons.location_on, color: AppColors.primaryGreen),
+        hintText: label,
+        filled: true,
+        fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
@@ -110,27 +285,27 @@ class _ToField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "To",
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter address' : null,
+      onSaved: onSaved,
     );
   }
 }
 
 class _DateField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _DateField({required this.onSaved});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       inputFormatters: [DateInputFormatter()],
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter date';
-        }
-        return null;
-      },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
+        hintText: 'Date dd/mm/yyyy',
+        filled: true,
+        fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
@@ -147,30 +322,26 @@ class _DateField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "dd/mm/yyyy",
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter date' : null,
+      onSaved: onSaved,
     );
   }
 }
 
 class _PassengerNumberField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _PassengerNumberField({required this.onSaved});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter number of passengers';
-        }
-        if (int.tryParse(value) == null) {
-          return 'Please enter a valid number';
-        }
-        return null;
-      },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outlined, color: AppColors.primaryGreen),
+        hintText: "Number of passengers",
+        filled: true,
+        fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
@@ -187,26 +358,206 @@ class _PassengerNumberField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "Number of Passengers",
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter number' : null,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _TimeField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _TimeField({required this.onSaved});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.access_time, color: AppColors.primaryGreen),
+        hintText: "Time hh:mm",
+        filled: true,
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter time' : null,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _PriceField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _PriceField({required this.onSaved});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.money, color: AppColors.primaryGreen),
+        hintText: "Price",
+        filled: true,
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter price' : null,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _DescriptionField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _DescriptionField({required this.onSaved});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.info, color: AppColors.primaryGreen),
+        hintText: "Contact info, rules etc.",
+        filled: true,
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter description' : null,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _CarModelField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _CarModelField({required this.onSaved});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.directions_car, color: AppColors.primaryGreen),
+        hintText: "Car Model",
+        filled: true,
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter car model' : null,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _CarColorField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _CarColorField({required this.onSaved});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.color_lens, color: AppColors.primaryGreen),
+        hintText: "Car color",
+        filled: true,
+        fillColor: Colors.white,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter car color' : null,
+      onSaved: onSaved,
     );
   }
 }
 
 class _CarPlateField extends StatelessWidget {
+  final Function(String?) onSaved;
+
+  const _CarPlateField({required this.onSaved});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter car plate number';
-        }
-        return null;
-      },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
+        hintText: "Car plate",
+        filled: true,
+        fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
@@ -223,42 +574,9 @@ class _CarPlateField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "Car Plate",
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
-    );
-  }
-}
-
-class _AddRideButton extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-
-  const _AddRideButton({required this.formKey});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (formKey.currentState!.validate()) {
-          return;
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(246, 46),
-        backgroundColor: AppColors.primaryGreen,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-      ),
-      child: Text(
-        style: TextStyle(
-          color: AppColors.primaryWhite,
-          fontSize: 26.0,
-          fontFamily: 'Roboto',
-        ),
-        'Add the ride!',
-      ),
+      validator: (value) => value?.isEmpty ?? true ? 'Enter car plate' : null,
+      onSaved: onSaved,
     );
   }
 }
