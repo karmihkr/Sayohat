@@ -8,37 +8,62 @@ class ListSearchRideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Center(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color.fromRGBO(255, 255, 255, 1),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: rides.length,
-              itemBuilder: (BuildContext context, int index) {
-                final ride = rides[index];
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RideDetailsScreen(ride: ride),
-                      ),
-                    );
-                  },
-                  child: _RideCard(ride: ride),
-                );
-              },
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (rides.isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: rides.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final ride = rides[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  RideDetailsScreen(ride: ride),
+                            ),
+                          );
+                        },
+                        child: _RideCard(ride: ride),
+                      );
+                    },
+                  )
+                else
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Sorry, we did not find rides by your preferences, try another city or date',
+                        style: TextStyle(
+                          fontSize: 23,
+                          color: AppColors.primaryGreen,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );

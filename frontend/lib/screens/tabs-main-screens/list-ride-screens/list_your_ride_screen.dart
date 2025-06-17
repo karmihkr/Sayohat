@@ -26,26 +26,41 @@ class ListRideScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: rides.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final ride = rides[index];
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                YourRideDetailsScreen(ride: ride),
-                          ),
-                        );
-                      },
-                      child: _RideCard(ride: ride),
-                    );
-                  },
-                ),
+                if (rides.isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: rides.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final ride = rides[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  YourRideDetailsScreen(ride: ride),
+                            ),
+                          );
+                        },
+                        child: _RideCard(ride: ride),
+                      );
+                    },
+                  )
+                else
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'There you will see list of your rides after adding',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: AppColors.primaryGreen,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -245,7 +260,11 @@ class _AvailableSeats extends StatelessWidget {
         SizedBox(width: 8),
         Text(
           'Available seats: ${ride.seats}',
-          style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.primaryGreen,
+            fontFamily: 'Roboto',
+          ),
         ),
       ],
     );
@@ -265,6 +284,7 @@ class _Cost extends StatelessWidget {
         fontSize: 16,
         fontWeight: FontWeight.bold,
         color: AppColors.primaryGreen,
+        fontFamily: 'Roboto',
       ),
     );
   }

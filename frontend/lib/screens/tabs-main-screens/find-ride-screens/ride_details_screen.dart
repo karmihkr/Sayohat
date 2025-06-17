@@ -34,8 +34,9 @@ class RideDetailsScreen extends StatelessWidget {
             SizedBox(height: 24),
             _CarDetailsText(),
             Divider(),
-            _CarModel(),
-            _CarColor(),
+            _CarModel(ride: ride),
+            _CarColor(ride: ride),
+            _CarPlate(ride: ride),
             SizedBox(height: 24),
             _Description(),
             Divider(),
@@ -184,12 +185,16 @@ class _CarDetailsText extends StatelessWidget {
 }
 
 class _CarModel extends StatelessWidget {
+  const _CarModel({required this.ride});
+
+  final Ride ride;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
-        'Model: Toyota Camry',
+        'Model: ${ride.carModel}',
         style: TextStyle(fontFamily: 'Roboto'),
       ),
     );
@@ -197,11 +202,35 @@ class _CarModel extends StatelessWidget {
 }
 
 class _CarColor extends StatelessWidget {
+  const _CarColor({required this.ride});
+
+  final Ride ride;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
-      title: Text('Color: White', style: TextStyle(fontFamily: 'Roboto')),
+      title: Text(
+        'Color: ${ride.carColor}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
+    );
+  }
+}
+
+class _CarPlate extends StatelessWidget {
+  const _CarPlate({required this.ride});
+
+  final Ride ride;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
+      title: Text(
+        'Car plate: ${ride.carPlate}',
+        style: TextStyle(fontFamily: 'Roboto'),
+      ),
     );
   }
 }
