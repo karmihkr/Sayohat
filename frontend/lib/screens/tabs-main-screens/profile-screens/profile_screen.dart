@@ -114,6 +114,7 @@ class _PhoneNumber extends StatelessWidget {
 }
 
 class _DateOfBirth extends StatelessWidget {
+  final String userDateOfBirth = user.birth ?? " ";
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -128,7 +129,7 @@ class _DateOfBirth extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            "will be soon...",
+            userDateOfBirth,
             style: const TextStyle(
               color: AppColors.primaryGreen,
               fontSize: 20,

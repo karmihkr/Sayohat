@@ -3,14 +3,13 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
 import 'package:sayohat/user_data.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
-final _nameTextController = TextEditingController();
-final _surnameTextController = TextEditingController();
-String? userName;
-String? userSurname;
+final _birthTextController = TextEditingController();
+String? userBirth;
 
-class NameSurnameScreen extends StatelessWidget {
-  const NameSurnameScreen({super.key});
+class DateOfBirthScreen extends StatelessWidget {
+  const DateOfBirthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,8 @@ class NameSurnameScreen extends StatelessWidget {
                 AppLogo(),
                 SizedBox(height: 80),
                 _VerificationText(),
-                _PleaseText(),
                 SizedBox(height: 15.0),
-                _NameForm(),
-                SizedBox(height: 15.0),
-                _SurnmaeForm(),
+                _CodeForm(),
                 SizedBox(height: 15.0),
                 _ConfirmCodeButton(),
               ],
@@ -59,28 +55,16 @@ class _VerificationText extends StatelessWidget {
   }
 }
 
-class _PleaseText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'Enter your name and surname',
-      style: TextStyle(
-        color: AppColors.primaryGreen,
-        fontSize: 20.0,
-        fontFamily: 'Roboto',
-      ),
-    );
-  }
-}
-
-class _NameForm extends StatelessWidget {
+class _CodeForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 246.0,
       height: 46,
       child: TextField(
-        controller: _nameTextController,
+        inputFormatters: [DateInputFormatter()],
+        controller: _birthTextController,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -106,49 +90,7 @@ class _NameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Name",
-          filled: true,
-          fillColor: Color.fromRGBO(255, 255, 255, 1),
-        ),
-      ),
-    );
-  }
-}
-
-class _SurnmaeForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 246.0,
-      height: 46,
-      child: TextField(
-        controller: _surnameTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          hintText: "Surname",
+          hintText: "Date of birth",
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -162,13 +104,9 @@ class _ConfirmCodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        userName = _nameTextController.text;
-        userSurname = _surnameTextController.text;
-        if (userName == '' ||
-            userName == null ||
-            userSurname == '' ||
-            userSurname == null) {
-          final nameSurnameSnackBar = SnackBar(
+        userBirth = _birthTextController.text;
+        if (userBirth == '' || userBirth == null) {
+          final emptyCodeSnackBar = SnackBar(
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -180,7 +118,7 @@ class _ConfirmCodeButton extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Text(
-                    'Enter your name and surname',
+                    'Add the date of your birth',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       color: AppColors.primaryGreen,
@@ -195,11 +133,10 @@ class _ConfirmCodeButton extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           );
-          ScaffoldMessenger.of(context).showSnackBar(nameSurnameSnackBar);
+          ScaffoldMessenger.of(context).showSnackBar(emptyCodeSnackBar);
         } else {
-          user.setName(userName);
-          user.setSurname(userSurname);
-          Navigator.pushNamed(context, '/BirthScreen');
+          user.setBirth(userBirth);
+          Navigator.pushNamed(context, '/PasswordScreen');
         }
       },
       style: ElevatedButton.styleFrom(
@@ -215,7 +152,7 @@ class _ConfirmCodeButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Go next!",
+        "Confirm date of birth",
       ),
     );
   }

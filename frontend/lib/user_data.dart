@@ -3,6 +3,7 @@ class User {
   String? password;
   String? name;
   String? surname;
+  String? birth;
 
   void setPhone(String? phone) {
     this.phone = phone;
@@ -18,6 +19,10 @@ class User {
 
   void setSurname(String? surname) {
     this.surname = surname;
+  }
+
+  void setBirth(String? birth) {
+    this.birth = birth;
   }
 }
 

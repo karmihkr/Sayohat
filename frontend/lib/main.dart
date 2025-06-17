@@ -7,6 +7,7 @@ import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/welcome_screen.dart';
 import 'package:sayohat/screens/authorization-screens/phone_passwords_screen.dart';
+import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/RegistrationScreen': (context) => const RegistrationScreen(),
         '/VerificationScreen': (context) => const VerificationScreen(),
         '/NameSurnameScreen': (context) => const NameSurnameScreen(),
+        '/BirthScreen': (context) => const DateOfBirthScreen(),
         '/PasswordScreen': (context) => const PasswordScreen(),
         '/AuthorizationScreen': (context) => const PhonePasswordsScreen(),
         '/WelcomeHub': (context) => const WelcomeHub(),
