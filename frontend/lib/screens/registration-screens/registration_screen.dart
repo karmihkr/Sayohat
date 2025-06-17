@@ -16,25 +16,22 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundBeige,
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(top: 150),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                AppName(),
-                AppLogo(),
-                SizedBox(height: 80),
-                _RegistrationText(),
-                SizedBox(height: 15.0),
-                _PhoneNumberFormAndButton(),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundBeige,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(top: 150),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              AppName(),
+              AppLogo(),
+              SizedBox(height: 80),
+              _RegistrationText(),
+              SizedBox(height: 15.0),
+              _PhoneNumberFormAndButton(),
+            ],
           ),
         ),
       ),
