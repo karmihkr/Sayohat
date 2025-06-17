@@ -14,27 +14,30 @@ class NameSurnameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(top: 150),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppName(),
-              AppLogo(),
-              SizedBox(height: 80),
-              _VerificationText(),
-              _PleaseText(),
-              SizedBox(height: 15.0),
-              _NameForm(),
-              SizedBox(height: 15.0),
-              _SurnmaeForm(),
-              SizedBox(height: 15.0),
-              _ConfirmCodeButton(),
-            ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundBeige,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(top: 150),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppName(),
+                AppLogo(),
+                SizedBox(height: 80),
+                _VerificationText(),
+                _PleaseText(),
+                SizedBox(height: 15.0),
+                _NameForm(),
+                SizedBox(height: 15.0),
+                _SurnmaeForm(),
+                SizedBox(height: 15.0),
+                _ConfirmCodeButton(),
+              ],
+            ),
           ),
         ),
       ),

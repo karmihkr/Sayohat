@@ -13,26 +13,29 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     pn = phoneNumber;
-    return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(top: 150),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppName(),
-              AppLogo(),
-              SizedBox(height: 80),
-              _ConfirmPhoneNumberText(),
-              SizedBox(height: 15.0),
-              _PhoneNumberForm(),
-              SizedBox(height: 15.0),
-              _GoBackButton(),
-              SizedBox(height: 15.0),
-              _GoNextButton(),
-            ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundBeige,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(top: 150),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppName(),
+                AppLogo(),
+                SizedBox(height: 80),
+                _ConfirmPhoneNumberText(),
+                SizedBox(height: 15.0),
+                _PhoneNumberForm(),
+                SizedBox(height: 15.0),
+                _GoBackButton(),
+                SizedBox(height: 15.0),
+                _GoNextButton(),
+              ],
+            ),
           ),
         ),
       ),

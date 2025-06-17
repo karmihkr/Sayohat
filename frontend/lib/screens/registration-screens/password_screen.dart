@@ -14,27 +14,30 @@ class PasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(top: 150),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppName(),
-              AppLogo(),
-              SizedBox(height: 80),
-              _VerificationText(),
-              _PleaseText(),
-              SizedBox(height: 15.0),
-              _PasswordCreationForm(),
-              SizedBox(height: 15.0),
-              _PasswordConfirmForm(),
-              SizedBox(height: 15.0),
-              _ConfirmCodeButton(),
-            ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundBeige,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(top: 150),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppName(),
+                AppLogo(),
+                SizedBox(height: 80),
+                _VerificationText(),
+                _PleaseText(),
+                SizedBox(height: 15.0),
+                _PasswordCreationForm(),
+                SizedBox(height: 15.0),
+                _PasswordConfirmForm(),
+                SizedBox(height: 15.0),
+                _ConfirmCodeButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -230,7 +233,7 @@ class _ConfirmCodeButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(notMatchSnackBar);
         } else {
           user.setPasswords(userPassword);
-          Navigator.pushNamed(context, '/WelcomeScreen');
+          Navigator.pushNamed(context, '/WelcomeHub');
         }
       },
       style: ElevatedButton.styleFrom(

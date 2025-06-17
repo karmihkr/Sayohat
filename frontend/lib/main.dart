@@ -3,8 +3,9 @@ import 'package:sayohat/screens/registration-screens/registration_screen.dart';
 import 'package:sayohat/screens/registration-screens/verification_screen.dart';
 import 'package:sayohat/screens/registration-screens/name_surname_screen.dart';
 import 'package:sayohat/screens/registration-screens/password_screen.dart';
-import 'package:sayohat/screens/tabs-main-screens/welcome_screen.dart';
+import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
+import 'package:sayohat/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,20 +18,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         snackBarTheme: SnackBarThemeData(
-          contentTextStyle: TextStyle(
-            color: AppColors.primaryGreen,
-          ), // Убедитесь, что здесь нет переопределения
+          contentTextStyle: TextStyle(color: AppColors.primaryGreen),
         ),
       ),
       debugShowCheckedModeBanner: false,
       title: 'Sayohat Demo',
-      home: const RegistrationScreen(),
+      home: const WelcomeScreen(),
       routes: {
         '/RegistrationScreen': (context) => const RegistrationScreen(),
         '/VerificationScreen': (context) => const VerificationScreen(),
         '/NameSurnameScreen': (context) => const NameSurnameScreen(),
         '/PasswordScreen': (context) => const PasswordScreen(),
-        '/WelcomeScreen': (context) => const WelcomeScreen(),
+        '/WelcomeHub': (context) => const WelcomeHub(),
       },
     );
   }
