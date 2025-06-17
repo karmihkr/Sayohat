@@ -26,6 +26,7 @@ Sayohat is a mobile application developed to help users find and publish their r
 4. Add your car plate
 5. Click on button to post a ride
 6. Your ride will be published and can be seen by another users
+7. ...
 
 ## Frontend Code Structure
 
