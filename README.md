@@ -30,17 +30,44 @@ Sayohat is a mobile application developed to help users find and publish their r
 
 ## Frontend Code Structure
 
-- **lib/screens/registration-screens/registration_screen.dart:** Screen to enter the user's phone number.
-- **lib/screens/registration-screens/confirm_phone_number_screen.dart:** Screen to confirm entered phone number.
-- **lib/screens/registration-screens/verification_screen.dart:** Screen to enter a code.
-- **lib/screens/tab-main-screen/welcome_screen.dart:** Screen that contains bottom navigation bar.
-- **lib/screens/tab-main-screen/find_ride_screen.dart:** Screen to enter information about a ride to find.
-- **lib/screens/tab-main-screen/add_ride_screen.dart:** Screen to enter information about a ride to post.
-- **lib/screens/tab-main-screen/list_ride_screen.dart:** Screen to view history about user's rides.
-- **lib/screens/tab-main-screen/profile_screen.dart:** Screen to view user's profile.
-- **lib/theme/app_colors.dart:** Colors that are used in application.
-- **lib/widgets/app_logo.dart:** Widget that show app logo.
-- **lib/widgets/app_name.dart:** Widget that show app name.
+# Log in and Sign up screens
+
+- **welcome_screen.dart:** Screen to choose method "Log in" or "Sign up".
+
+- **phone_number_screen.dart:** Screen to enter the user's phone number (Sign up process).
+- **confirm_phone_number_screen.dart:** Screen to confirm entered phone number (Sign up process).
+- **sms_code_screen.dart:** Screen to enter a code from sms (Sign up process).
+- **name_surname_screen.dart** Screen to enter user's name and surname (Sign up process).
+- **date_of_birth_screen.dart** Screen to enter user's date of birth (Sign up process).
+- **password_screen.dart** Screen to enter and confirm user's password (Sign up process).
+- **phone_passwords_screen.dart** Screen to enter user's phone and password (Log in process).
+
+# Main functionality screens
+
+- **main_hub_screen.dart** Screen that contains bottom navigation bar.
+
+- **find_ride_screen.dart** Screen to enter information about a ride to search.
+- **list_search_screen.dart** Screen that contains result list of search.
+- **ride_details_screen.dart** Screen that contains full information about a ride.
+- **find_data.dart** File that contains infromation entered by user.
+
+- **add_ride_screen.dart** Screen to enter information about a ride to post.
+- **your_ride_data.dart** File that contains information about all user's rides.
+
+- **list_your_ride_screen.dart** Screen that contains all user's rides.
+- **your_ride_details_screen.dart** Screen that contains details about a user's ride.
+
+- **profile_screen.dart** Screen that contains user's profile.
+
+- **test_data_search_screen.dart** File that contains test data for searching.
+
+- **app_colors.dart** File that contains main colors for application.
+
+- **app_logo.dart** File that contains app logo widget.
+- **app_name.dart** File that contains app nane widget.
+
+- **user_data.dart** File that contains user's general information.
+- **main.dart** Main file of the frontend part.
 
 ## Project Setup (Development)
 
