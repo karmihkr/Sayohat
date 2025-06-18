@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/screens/registration-screens/registration_screen.dart';
-import 'package:sayohat/screens/registration-screens/verification_screen.dart';
+import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
+import 'package:sayohat/screens/registration-screens/sms_code_screen.dart';
 import 'package:sayohat/screens/registration-screens/name_surname_screen.dart';
 import 'package:sayohat/screens/registration-screens/password_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
