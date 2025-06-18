@@ -118,7 +118,9 @@ class _FullNameAndRating extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          ride.fullName,
+          ride.fullName.length > 20
+              ? "${ride.fullName.substring(0, 21)}..."
+              : ride.fullName,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -180,7 +182,9 @@ class _FromToCities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${ride.from} - ${ride.to}',
+      '${ride.from} - ${ride.to}'.length > 25
+          ? '${ride.from.substring(0, 5)}. - ${ride.to.substring(0, 5)}.'
+          : '${ride.from} - ${ride.to}',
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
@@ -202,7 +206,9 @@ class _FromAddress extends StatelessWidget {
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
-          'from: ${ride.address1}',
+          ride.address1.length > 20
+              ? 'From: ${ride.address1.substring(0, 20)}...'
+              : 'From: ${ride.address1}',
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
@@ -222,7 +228,9 @@ class _ToAddress extends StatelessWidget {
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
-          'To: ${ride.address2}',
+          ride.address2.length > 20
+              ? 'To: ${ride.address2.substring(0, 20)}...'
+              : 'To: ${ride.address2}',
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
