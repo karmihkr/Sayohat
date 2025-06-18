@@ -30,7 +30,7 @@ Sayohat is a mobile application developed to help users find and publish their r
 
 ## Frontend Code Structure
 
-# Log in and Sign up screens
+### Log in and Sign up screens
 
 - **welcome_screen.dart:** Screen to choose method "Log in" or "Sign up".
 
@@ -42,7 +42,7 @@ Sayohat is a mobile application developed to help users find and publish their r
 - **password_screen.dart** Screen to enter and confirm user's password (Sign up process).
 - **phone_passwords_screen.dart** Screen to enter user's phone and password (Log in process).
 
-# Main functionality screens
+### Main functionality screens
 
 - **main_hub_screen.dart** Screen that contains bottom navigation bar.
 
