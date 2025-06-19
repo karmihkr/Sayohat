@@ -25,7 +25,7 @@ class VerificationScreen extends StatelessWidget {
                 AppName(),
                 AppLogo(),
                 SizedBox(height: 80),
-                _VerificationText(),
+                _RegistationText(),
                 SizedBox(height: 15.0),
                 _CodeForm(),
                 SizedBox(height: 15.0),
@@ -39,7 +39,7 @@ class VerificationScreen extends StatelessWidget {
   }
 }
 
-class _VerificationText extends StatelessWidget {
+class _RegistationText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(

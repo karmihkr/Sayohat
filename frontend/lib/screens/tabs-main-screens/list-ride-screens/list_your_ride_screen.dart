@@ -26,46 +26,56 @@ class ListRideScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (yourRides.isNotEmpty)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: yourRides.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final ride = yourRides[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  YourRideDetailsScreen(ride: ride),
-                            ),
-                          );
-                        },
-                        child: _RideCard(ride: ride),
-                      );
-                    },
-                  )
-                else
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'There you will see list of your rides after adding',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: AppColors.primaryGreen,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
+                if (yourRides.isNotEmpty) _NonEmptyList() else _EmptyList(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _EmptyList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(
+          'There you will see list of your rides after adding',
+          style: TextStyle(
+            fontSize: 24,
+            color: AppColors.primaryGreen,
+            fontFamily: 'Roboto',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NonEmptyList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: yourRides.length,
+      itemBuilder: (BuildContext context, int index) {
+        final ride = yourRides[index];
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => YourRideDetailsScreen(ride: ride),
+              ),
+            );
+          },
+          child: _RideCard(ride: ride),
+        );
+      },
     );
   }
 }

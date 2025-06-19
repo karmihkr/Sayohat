@@ -28,14 +28,14 @@ class PasswordScreen extends StatelessWidget {
                 AppName(),
                 AppLogo(),
                 SizedBox(height: 80),
-                _VerificationText(),
+                _RegistationText(),
                 _PleaseText(),
                 SizedBox(height: 15.0),
                 _PasswordCreationForm(),
                 SizedBox(height: 15.0),
                 _PasswordConfirmForm(),
                 SizedBox(height: 15.0),
-                _ConfirmCodeButton(),
+                _ConfirmPasswordButton(),
               ],
             ),
           ),
@@ -45,7 +45,7 @@ class PasswordScreen extends StatelessWidget {
   }
 }
 
-class _VerificationText extends StatelessWidget {
+class _RegistationText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
@@ -163,7 +163,7 @@ class _PasswordConfirmForm extends StatelessWidget {
   }
 }
 
-class _ConfirmCodeButton extends StatelessWidget {
+class _ConfirmPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

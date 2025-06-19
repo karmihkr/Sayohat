@@ -28,14 +28,14 @@ class NameSurnameScreen extends StatelessWidget {
                 AppName(),
                 AppLogo(),
                 SizedBox(height: 80),
-                _VerificationText(),
+                _RegistrationText(),
                 _PleaseText(),
                 SizedBox(height: 15.0),
                 _NameForm(),
                 SizedBox(height: 15.0),
-                _SurnmaeForm(),
+                _SurnameForm(),
                 SizedBox(height: 15.0),
-                _ConfirmCodeButton(),
+                _ConfirmNameSurnameButton(),
               ],
             ),
           ),
@@ -45,7 +45,7 @@ class NameSurnameScreen extends StatelessWidget {
   }
 }
 
-class _VerificationText extends StatelessWidget {
+class _RegistrationText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
@@ -115,7 +115,7 @@ class _NameForm extends StatelessWidget {
   }
 }
 
-class _SurnmaeForm extends StatelessWidget {
+class _SurnameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -157,7 +157,7 @@ class _SurnmaeForm extends StatelessWidget {
   }
 }
 
-class _ConfirmCodeButton extends StatelessWidget {
+class _ConfirmNameSurnameButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

@@ -27,11 +27,11 @@ class DateOfBirthScreen extends StatelessWidget {
                 AppName(),
                 AppLogo(),
                 SizedBox(height: 80),
-                _VerificationText(),
+                _BirthText(),
                 SizedBox(height: 15.0),
-                _CodeForm(),
+                _BirthForm(),
                 SizedBox(height: 15.0),
-                _ConfirmCodeButton(),
+                _ConfirmBirthButton(),
               ],
             ),
           ),
@@ -41,7 +41,7 @@ class DateOfBirthScreen extends StatelessWidget {
   }
 }
 
-class _VerificationText extends StatelessWidget {
+class _BirthText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
@@ -55,7 +55,7 @@ class _VerificationText extends StatelessWidget {
   }
 }
 
-class _CodeForm extends StatelessWidget {
+class _BirthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -99,7 +99,7 @@ class _CodeForm extends StatelessWidget {
   }
 }
 
-class _ConfirmCodeButton extends StatelessWidget {
+class _ConfirmBirthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
