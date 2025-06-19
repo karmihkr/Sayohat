@@ -44,7 +44,39 @@ class _FindRideScreenState extends State<FindRideScreen> {
     if (value == null || value.isEmpty) {
       return 'Please enter date';
     }
-    return null;
+
+    final dateParts = value.split('/');
+    if (dateParts.length != 3 ||
+        dateParts[0].length != 2 ||
+        dateParts[1].length != 2 ||
+        dateParts[2].length != 4) {
+      return 'Use dd/mm/yyyy format';
+    }
+
+    try {
+      final day = int.parse(dateParts[0]);
+      final month = int.parse(dateParts[1]);
+      final year = int.parse(dateParts[2]);
+
+      final inputDate = DateTime(year, month, day);
+      if (inputDate.year != year ||
+          inputDate.month != month ||
+          inputDate.day != day) {
+        return 'Invalid date';
+      }
+
+      final today = DateTime.now();
+      final todayDate = DateTime(today.year, today.month, today.day);
+      final inputDateOnly = DateTime(year, month, day);
+
+      if (inputDateOnly.isBefore(todayDate)) {
+        return 'Date cannot be in the past';
+      }
+
+      return null;
+    } catch (e) {
+      return 'Invalid date';
+    }
   }
 
   String? _validatePassengers(String? value) {
@@ -53,6 +85,9 @@ class _FindRideScreenState extends State<FindRideScreen> {
     }
     if (int.tryParse(value) == null) {
       return 'Please enter a valid number';
+    }
+    if (int.parse(value) <= 0) {
+      return 'Number should be possitive';
     }
     return null;
   }

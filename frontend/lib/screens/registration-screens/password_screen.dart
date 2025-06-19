@@ -170,6 +170,7 @@ class _ConfirmPasswordButton extends StatelessWidget {
       onPressed: () {
         userPassword = _passwordTextController.text;
         userConfirm = _confirmTextController.text;
+        var passwordLength = _passwordTextController.text.length;
         if (userPassword == '' ||
             userPassword == null ||
             userConfirm == '' ||
@@ -231,6 +232,35 @@ class _ConfirmPasswordButton extends StatelessWidget {
             elevation: 0,
           );
           ScaffoldMessenger.of(context).showSnackBar(notMatchSnackBar);
+        } else if (passwordLength < 5) {
+          final shortPasswordSnackBar = SnackBar(
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    'Make a password atleast 5 symbols',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(shortPasswordSnackBar);
         } else {
           user.setPasswords(userPassword);
           Navigator.pushNamed(context, '/WelcomeHub');

@@ -5,6 +5,28 @@ import 'package:sayohat/widgets/app_logo.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
+bool isValidDate(String input) {
+  try {
+    final date = input.split('/');
+    if (date.length != 3) return false;
+
+    final day = int.parse(date[0]);
+    final month = int.parse(date[1]);
+    final year = int.parse(date[2]);
+
+    if (day < 1 || day > 31) return false;
+    if (month < 1 || month > 12) return false;
+    if (year < 1900 || year > DateTime.now().year) return false;
+
+    final DateTime birthDate = DateTime(year, month, day);
+    return birthDate.year == year &&
+        birthDate.month == month &&
+        birthDate.day == day;
+  } catch (e) {
+    return false;
+  }
+}
+
 final _birthTextController = TextEditingController();
 String? userBirth;
 
@@ -62,7 +84,10 @@ class _BirthForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
-        inputFormatters: [DateInputFormatter()],
+        inputFormatters: [
+          DateInputFormatter(),
+          //LengthLimitingTextInputFormatter(10),
+        ],
         controller: _birthTextController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -105,8 +130,8 @@ class _ConfirmBirthButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         userBirth = _birthTextController.text;
-        if (userBirth == '' || userBirth == null) {
-          final emptyCodeSnackBar = SnackBar(
+        if (userBirth!.isEmpty || userBirth == null) {
+          final emptyDateSnackBar = SnackBar(
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -133,7 +158,36 @@ class _ConfirmBirthButton extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           );
-          ScaffoldMessenger.of(context).showSnackBar(emptyCodeSnackBar);
+          ScaffoldMessenger.of(context).showSnackBar(emptyDateSnackBar);
+        } else if (!isValidDate(userBirth!)) {
+          final nonValidDateSnackBar = SnackBar(
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    'Add the valid date of birth',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(nonValidDateSnackBar);
         } else {
           user.setBirth(userBirth);
           Navigator.pushNamed(context, '/PasswordScreen');
