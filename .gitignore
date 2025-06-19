@@ -20,10 +20,17 @@
 /frontend/ios/Runner/GeneratedPluginRegistrant.m
 
 /frontend/linux/flutter/ephemeral
+/frontend/linux/flutter/*.cc
+/frontend/linux/flutter/*.h
+/frontend/linux/flutter/*.cmake
 
 /frontend/macos/Flutter/ephemeral
+/frontend/macos/Flutter/*.swift
 
 /frontend/windows/flutter/ephemeral
+/frontend/windows/flutter/*.cc
+/frontend/windows/flutter/*.h
+/frontend/windows/flutter/*.cmake
 
 /frontend/web
 
