@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   pattern_formatter: ^4.0.0
   cupertino_icons: ^1.0.8
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:

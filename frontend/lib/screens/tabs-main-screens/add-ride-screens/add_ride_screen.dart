@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/user_data.dart';
+import 'package:http/http.dart' as http;
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -169,7 +172,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
     );
   }
 
-  void _saveRide() {
+  void _saveRide() async {
     Ride userRide = Ride(
       fullName: '${user.name} ${user.surname}',
       age: 5,
@@ -186,6 +189,16 @@ class _AddRideScreenState extends State<AddRideScreen> {
       carColor: carColor,
       carPlate: carPlate,
     );
+    var params = {
+      "driver_id": "1",
+      "begin_id": "1",
+      "end_id": "1",
+      "price": price,
+      "available_places": passengers,
+      "vehicle_number": "В234ЕЛ"
+    };
+    var response = await http.post(
+        Uri.http("127.0.0.1:8000", "/new/ride", params));
     yourRides.add(userRide);
     final addRideSnackBar = SnackBar(
       content: Row(

@@ -6,7 +6,7 @@ from src.repositories.rides_repository import rides_repository
 rides_router = fastapi.APIRouter()
 
 
-@rides_router.get("/new/ride")
+@rides_router.post("/new/ride")
 async def new_ride(driver_id: int | None = None,
                    begin_id: int | None = None,
                    end_id: int | None = None,

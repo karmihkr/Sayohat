@@ -83,7 +83,7 @@ append_setting = settings_manager.project_settings.add_row
 # Ancestor must be unique!
 append_setting(None, ROOT, dict())
 append_setting(ROOT, "database", dict())
-append_setting("database", "host", "http://localhost")
+append_setting("database", "host", "mongodb://localhost")
 append_setting("database", "docker_host", "mongo")
 append_setting("database", "port", 27017)
 append_setting("database", "docker_port", 27017)
@@ -94,3 +94,4 @@ append_setting(ROOT, "docker", dict())
 append_setting("docker", "base_container", "python:latest")
 
 settings_manager.build_project_settings()
+
