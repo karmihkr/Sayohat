@@ -38,11 +38,13 @@ class SettingsManager:
 
     def build_project_settings(self):
         if self.project_settings.name in os.listdir(pathlib.Path(__file__).parent):
-            self.file = yaml.safe_load(open(self.project_settings.name, 'r', encoding="utf-8"))
+            self.file = yaml.safe_load(open(os.path.join(os.path.dirname(__file__), self.project_settings.name),
+                                            'r', encoding="utf-8"))
             self.update_file()
         else:
             self.file = self.project_settings.content
-        yaml.dump(self.file, open(self.project_settings.name, 'w', encoding="utf-8"))
+        yaml.dump(self.file, open(os.path.join(os.path.dirname(__file__), self.project_settings.name),
+                                  'w', encoding="utf-8"))
 
 
     def update_file(self, history=tuple()):
@@ -76,21 +78,19 @@ class SettingsManager:
 
 
 settings_manager = SettingsManager()
-
 append_setting = settings_manager.project_settings.add_row
+
 # Ancestor must be unique!
 append_setting(None, ROOT, dict())
 append_setting(ROOT, "database", dict())
-append_setting("database", "host", "localhost")
+append_setting("database", "host", "http://localhost")
 append_setting("database", "docker_host", "mongo")
-append_setting("database", "port", "27017")
-append_setting("database", "docker_port", "27017")
+append_setting("database", "port", 27017)
+append_setting("database", "docker_port", 27017)
 append_setting(ROOT, "api", dict())
 append_setting("api", "host", "localhost")
-append_setting("api", "port", "8000")
+append_setting("api", "port", 8000)
 append_setting(ROOT, "docker", dict())
 append_setting("docker", "base_container", "python:latest")
 
 settings_manager.build_project_settings()
-
-
