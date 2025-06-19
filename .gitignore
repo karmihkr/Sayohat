@@ -26,3 +26,5 @@
 /frontend/windows/flutter/ephemeral
 
 /frontend/web
+
+/backend/project_settings.yaml
