@@ -1,5 +1,5 @@
 import fastapi
-from repositories.test_repository import mongodb
+from src.repositories.test_repository import mongodb
 
 
 test_router = fastapi.APIRouter()
