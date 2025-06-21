@@ -7,12 +7,12 @@ rides_router = fastapi.APIRouter()
 
 
 @rides_router.post("/new/ride")
-async def new_ride(driver_id: int | None = None,
-                   begin_id: int | None = None,
-                   end_id: int | None = None,
-                   price: int | None = None,
-                   available_places: int | None = None,
-                   vehicle_number: str | None = None):
+async def new_ride(driver_id: int,
+                   begin_id: int,
+                   end_id: int,
+                   price: int,
+                   available_places: int,
+                   vehicle_number: str):
     rides_repository.insert(driver_id=driver_id,
                             begin_id=begin_id,
                             end_id=end_id,

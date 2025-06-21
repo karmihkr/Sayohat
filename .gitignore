@@ -10,6 +10,8 @@
 
 /frontend/.idea
 
+/frontend/pubspec.lock
+
 /frontend/android/local.properties
 /frontend/android/app/src/main/java
 
