@@ -8,20 +8,20 @@ ROOT = "settings"
 class ProjectSettingsBuilder:
     def __init__(self):
         self.name = "project_settings.yaml"
-        self.content = dict()
+        self.file = dict()
         self.stack = list()
 
     def add_row(self, ancestor, setting, value):
         if not self.stack:
-            self.stack = [self.content]
+            self.stack = [self.file]
         if not ancestor:
-            self.content[setting] = value
+            self.file[setting] = value
             return
         for key, item in self.stack[-1].items():
             if isinstance(item, dict):
                 if key == ancestor:
                     item[setting] = value
-                    self.stack = [self.content]
+                    self.stack = [self.file]
                     return
                 self.stack.append(item)
                 self.add_row(ancestor, setting, value)
@@ -42,24 +42,29 @@ class SettingsManager:
                                             'r', encoding="utf-8"))
             self.update_file()
         else:
-            self.file = self.project_settings.content
+            self.file = self.project_settings.file
         yaml.dump(self.file, open(os.path.join(os.path.dirname(__file__), self.project_settings.name),
                                   'w', encoding="utf-8"))
 
 
     def update_file(self, history=tuple()):
         if not self.stack:
-            self.stack = [self.project_settings.content]
+            self.stack = [self.project_settings.file]
+        self_file_section = None
         for key, value in self.stack[-1].items():
-            if key not in (dictionary := self.reach_dictionary(history)):
-                dictionary[key] = value
+            if key not in (self_file_section := self.reach_file_section(history)):
+                self_file_section[key] = value
             if isinstance(value, dict):
                 self.stack.append(value)
                 self.update_file(history + (key,))
+        if self_file_section:
+            for key in list(self_file_section.keys()):
+                if key not in self.stack[-1]:
+                    del self_file_section[key]
         if self.stack:
             self.stack.pop(-1)
 
-    def reach_dictionary(self, history=tuple()):
+    def reach_file_section(self, history=tuple()):
         dictionary = self.file
         for elem in history:
             dictionary = dictionary[elem]
