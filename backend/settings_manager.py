@@ -85,7 +85,7 @@ class SettingsManager:
 settings_manager = SettingsManager()
 append_setting = settings_manager.project_settings.add_row
 
-# Ancestor must be unique!
+# Dicts must be unique! Place successors after predecessors
 append_setting(None, ROOT, dict())
 append_setting(ROOT, "database", dict())
 append_setting("database", "host", "mongodb://localhost")
@@ -95,6 +95,10 @@ append_setting("database", "docker_port", 27017)
 append_setting(ROOT, "api", dict())
 append_setting("api", "host", "localhost")
 append_setting("api", "port", 8000)
+append_setting("api", "token", dict())
+append_setting("token", "key", "64CHARACTERS")
+append_setting("token", "lifetime_minutes", 30)
+append_setting("token", "algorithm", "ALGORITHM_NAME")
 append_setting(ROOT, "docker", dict())
 append_setting("docker", "base_container", "python:latest")
 

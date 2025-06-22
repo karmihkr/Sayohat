@@ -2,4 +2,6 @@ fastapi[standard]
 fastapi-cli
 pymongo
 pyyaml
-httpx
+pyjwt
+passlib[bcrypt]
+python-multipart
