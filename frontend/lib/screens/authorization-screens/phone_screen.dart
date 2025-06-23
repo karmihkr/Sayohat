@@ -3,13 +3,15 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
 
+import '../registration-screens/confirm_phone_number_screen.dart';
+
 final _phoneTextController = TextEditingController();
 final _passwordTextController = TextEditingController();
 String? userPhone;
 String? userPassword;
 
-class PhonePasswordsScreen extends StatelessWidget {
-  const PhonePasswordsScreen({super.key});
+class PhoneScreen extends StatelessWidget {
+  const PhoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +32,6 @@ class PhonePasswordsScreen extends StatelessWidget {
               SizedBox(height: 15.0),
               _NameForm(),
               SizedBox(height: 15.0),
-              _SurnmaeForm(),
-              SizedBox(height: 15.0),
               _AuthorizeButton(),
             ],
           ),
@@ -45,7 +45,7 @@ class _AuthorizationnText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Authorization',
+      'Log in & Sign up',
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -59,7 +59,7 @@ class _PleaseText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Enter your phone number and password',
+      'Enter your phone number',
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 20.0,
@@ -160,10 +160,7 @@ class _AuthorizeButton extends StatelessWidget {
       onPressed: () {
         userPhone = _phoneTextController.text;
         userPassword = _passwordTextController.text;
-        if (userPhone == '' ||
-            userPhone == null ||
-            userPassword == '' ||
-            userPassword == null) {
+        if (userPhone?.isEmpty ?? true) {
           final phonePasswordSnackBar = SnackBar(
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +173,7 @@ class _AuthorizeButton extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Text(
-                    'Enter your phone number and password',
+                    'Enter your phone number',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       color: AppColors.primaryGreen,
@@ -193,7 +190,13 @@ class _AuthorizeButton extends StatelessWidget {
           );
           ScaffoldMessenger.of(context).showSnackBar(phonePasswordSnackBar);
         } else {
-          Navigator.pushNamed(context, '/WelcomeHub');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ConfirmPhoneNumberScreen(phoneNumber: userPhone),
+            ),
+          );
         }
       },
       style: ElevatedButton.styleFrom(
@@ -209,7 +212,7 @@ class _AuthorizeButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Log in",
+        "Proceed",
       ),
     );
   }

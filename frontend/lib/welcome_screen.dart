@@ -67,7 +67,7 @@ class _PhoneNumberFormState extends State<_PhoneNumberFormAndButton> {
           height: 46,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/AuthorizationScreen');
+              Navigator.pushNamed(context, '/PhoneScreen');
             },
             style: ElevatedButton.styleFrom(
               minimumSize: Size(246, 46),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/project_settings.dart';
+import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -86,7 +88,7 @@ class _GoBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/RegistrationScreen');
+        Navigator.pop(context);
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
@@ -113,7 +115,11 @@ class _GoNextButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         user.setPhone(pn);
-        Navigator.pushNamed(context, '/VerificationScreen');
+
+        if (checkIfProvidedNumberExists(user.phone)) {
+          persistentStorage.setString("phone", pn!);
+          Navigator.pushNamed(context, '/VerificationScreen');
+        }
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
@@ -132,4 +138,8 @@ class _GoNextButton extends StatelessWidget {
       ),
     );
   }
+}
+
+bool checkIfProvidedNumberExists(String? number) {
+  return true;
 }
