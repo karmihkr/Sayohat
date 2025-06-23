@@ -21,4 +21,4 @@ class RidesRepository:
         return {"matching_rides": result}
 
 
-rides_repository = RidesRepository(settings_manager.database.host.get(), settings_manager.database.port.get())
+rides_repository = RidesRepository(settings_manager.database.host, settings_manager.database.port)

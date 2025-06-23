@@ -16,11 +16,12 @@ registration_router = fastapi.APIRouter()
 async def token(standard_request: typing.Annotated[OAuth2PasswordRequestForm, fastapi.Depends()]):
     to_encode = {
         "sub": standard_request.username,
-        "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=settings_manager.api.token.lifetime_minutes.get())
+        "exp": datetime.datetime.now(datetime.timezone.utc) + \
+               datetime.timedelta(minutes=settings_manager.api.token.lifetime_minutes)
     }
     encoded_jwt = jwt.encode(to_encode,
-                             settings_manager.api.token.key.get(),
-                             settings_manager.api.token.algorithm.get())
+                             settings_manager.api.token.key,
+                             settings_manager.api.token.algorithm)
     return {
         "access_token": encoded_jwt,
         "token_type": "bearer"
@@ -33,7 +34,7 @@ async def protected_function(token: typing.Annotated[str, fastapi.Depends(oauth2
         detail="Your credentials are corrupted"
     )
     try:
-        encoded = jwt.decode(token, settings_manager.api.token.key.get(), settings_manager.api.token.algorithm.get())
+        encoded = jwt.decode(token, settings_manager.api.token.key, settings_manager.api.token.algorithm)
         if not encoded["sub"]:
             raise credential_exception
     except InvalidTokenError:

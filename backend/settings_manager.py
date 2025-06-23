@@ -5,6 +5,12 @@ import yaml
 ROOT = "settings"
 
 
+class dotdict(dict):
+    __getattr__ = dict.get
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
+
+
 class ProjectSettingsBuilder:
     def __init__(self):
         self.name = "project_settings.yaml"
@@ -34,7 +40,6 @@ class SettingsManager:
         self.project_settings = ProjectSettingsBuilder()
         self.file = None
         self.stack = list()
-        self.setting_selection = [ROOT]
 
     def build_project_settings(self):
         if self.project_settings.name in os.listdir(pathlib.Path(__file__).parent):
@@ -45,6 +50,7 @@ class SettingsManager:
             self.file = self.project_settings.file
         yaml.dump(self.file, open(os.path.join(os.path.dirname(__file__), self.project_settings.name),
                                   'w', encoding="utf-8"))
+        self.make_dotdict()
 
 
     def update_file(self, history=tuple()):
@@ -70,16 +76,14 @@ class SettingsManager:
             dictionary = dictionary[elem]
         return dictionary
 
-    def __getattr__(self, item):
-        self.setting_selection.append(item)
-        return self
-
-    def get(self):
-        value = self.file
-        for elem in self.setting_selection:
-            value = value[elem]
-        self.setting_selection = [ROOT]
-        return value
+    def make_dotdict(self):
+        self.file = dotdict(self.file)
+        detected_dictionaries = [self.file]
+        for elem in detected_dictionaries:
+            for key, el in elem.items():
+                if isinstance(el, dict):
+                    elem[key] = dotdict(el)
+                    detected_dictionaries.append(elem[key])
 
 
 settings_manager = SettingsManager()
@@ -103,4 +107,4 @@ append_setting(ROOT, "docker", dict())
 append_setting("docker", "base_container", "python:latest")
 
 settings_manager.build_project_settings()
-
+settings_manager = settings_manager.file.settings
