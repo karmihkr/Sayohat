@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
 import 'package:sayohat/screens/registration-screens/sms_code_screen.dart';
@@ -10,11 +11,15 @@ import 'package:sayohat/welcome_screen.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
 
-String? phone;
+String initialRoute = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  phone = await persistentStorage.getString("phone");
+  // await persistentStorage.clear();
+  // await persistentSecuredStorage.deleteAll();
+  initialRoute = await apiClient.checkTokenActuality(
+      await persistentSecuredStorage.read(key: "token")) ?
+      '/WelcomeHub' : '/PhoneScreen';
   runApp(const MyApp());
 }
 
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Sayohat Demo',
-      initialRoute: phone == null ? '/PhoneScreen' : '/WelcomeHub',
+      initialRoute: initialRoute,
       home: const PhoneScreen(),
       routes: {
         '/PhoneScreen': (context) => const PhoneScreen(),

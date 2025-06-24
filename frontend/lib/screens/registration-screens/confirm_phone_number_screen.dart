@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -35,7 +37,7 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
                 SizedBox(height: 15.0),
                 _GoBackButton(),
                 SizedBox(height: 15.0),
-                _GoNextButton(),
+                _GoNextButton()
               ],
             ),
           ),
@@ -113,12 +115,14 @@ class _GoNextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         user.setPhone(pn);
-
-        if (checkIfProvidedNumberExists(user.phone)) {
-          persistentStorage.setString("phone", pn!);
+        user.setVericodeRequestId(await apiClient.vericodeRequestId(pn!));
+        if (user.vericodeRequestId != "unsent") {
           Navigator.pushNamed(context, '/VerificationScreen');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("API unreachable. Please, contact support"));
         }
       },
       style: ElevatedButton.styleFrom(
@@ -138,8 +142,4 @@ class _GoNextButton extends StatelessWidget {
       ),
     );
   }
-}
-
-bool checkIfProvidedNumberExists(String? number) {
-  return true;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -164,38 +165,9 @@ class _ConfirmNameSurnameButton extends StatelessWidget {
       onPressed: () {
         userName = _nameTextController.text;
         userSurname = _surnameTextController.text;
-        if (userName == '' ||
-            userName == null ||
-            userSurname == '' ||
-            userSurname == null) {
-          final nameSurnameSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Enter your name and surname',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(nameSurnameSnackBar);
+        if ((userName?.isEmpty ?? true) || (userSurname?.isEmpty ?? true)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Enter your name and surname"));
         } else {
           user.setName(userName);
           user.setSurname(userSurname);

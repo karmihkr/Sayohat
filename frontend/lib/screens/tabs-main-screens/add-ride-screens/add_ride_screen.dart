@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
@@ -280,34 +281,8 @@ class _AddRideScreenState extends State<AddRideScreen> {
       Uri.http("127.0.0.1:8000", "/new/ride", params),
     );
     yourRides.add(userRide);
-    final addRideSnackBar = SnackBar(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            height: 40,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            child: Text(
-              'Ride was added successfuly!',
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                color: AppColors.primaryGreen,
-                fontWeight: FontWeight.w900,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ],
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(addRideSnackBar);
+    ScaffoldMessenger.of(context).showSnackBar(
+        snackBarFactory.createSnackBar("Ride was added successfully!"));
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -171,98 +172,17 @@ class _ConfirmPasswordButton extends StatelessWidget {
         userPassword = _passwordTextController.text;
         userConfirm = _confirmTextController.text;
         var passwordLength = _passwordTextController.text.length;
-        if (userPassword == '' ||
-            userPassword == null ||
-            userConfirm == '' ||
-            userConfirm == null) {
-          final emptyPasswordSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Fields seem to be empty',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(emptyPasswordSnackBar);
+        if ((userPassword?.isEmpty ?? true) || (userConfirm?.isEmpty ?? true)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Fields seem to be empty"));
         } else if (userPassword != userConfirm) {
-          final notMatchSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Password do not match',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(notMatchSnackBar);
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Password do not match"));
         } else if (passwordLength < 5) {
-          final shortPasswordSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Make a password atleast 5 symbols',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(shortPasswordSnackBar);
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Make a password at least 5 symbols"));
         } else {
-          user.setPasswords(userPassword);
+          //user.setPasswords(userPassword);
           Navigator.pushNamed(context, '/WelcomeHub');
         }
       },

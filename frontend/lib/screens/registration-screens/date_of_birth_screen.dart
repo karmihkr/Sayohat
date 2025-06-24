@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
+import 'package:sayohat/project_settings.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -128,69 +131,26 @@ class _ConfirmBirthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         userBirth = _birthTextController.text;
-        if (userBirth!.isEmpty || userBirth == null) {
-          final emptyDateSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Add the date of your birth',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(emptyDateSnackBar);
+        if (userBirth?.isEmpty ?? true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Add the date of your birth"));
         } else if (!isValidDate(userBirth!)) {
-          final nonValidDateSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Add the valid date of birth',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(nonValidDateSnackBar);
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Add the valid date of birth"));
         } else {
           user.setBirth(userBirth);
-          Navigator.pushNamed(context, '/PasswordScreen');
+          var response = await apiClient.registerNewUser(
+              user.phone!, user.name!, user.surname!, user.birth!);
+          if (response == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(
+                    "API unreachable, please, contact support"));
+            return;
+          }
+          persistentSecuredStorage.write(key: "token", value: response["access_token"]);
+          Navigator.pushNamed(context, '/WelcomeHub');
         }
       },
       style: ElevatedButton.styleFrom(
@@ -206,7 +166,7 @@ class _ConfirmBirthButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Confirm date of birth",
+        "Finish",
       ),
     );
   }

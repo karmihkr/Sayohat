@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/screens/registration-screens/confirm_phone_number_screen.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
@@ -108,35 +109,9 @@ class _PhoneNumberFormState extends State<_PhoneNumberFormAndButton> {
           child: ElevatedButton(
             onPressed: () {
               userPhoneNumber = _textController.text;
-              if (userPhoneNumber == "" || userPhoneNumber == null) {
-                final phoneNumberSnackBar = SnackBar(
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Text(
-                          'Enter your phone number',
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            color: AppColors.primaryGreen,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(phoneNumberSnackBar);
+              if (userPhoneNumber?.isEmpty ?? true) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    snackBarFactory.createSnackBar("Enter your phone number"));
               } else {
                 Navigator.push(
                   context,

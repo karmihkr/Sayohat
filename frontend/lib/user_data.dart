@@ -1,16 +1,12 @@
 class User {
   String? phone;
-  String? password;
   String? name;
   String? surname;
   String? birth;
+  String? vericodeRequestId;
 
   void setPhone(String? phone) {
     this.phone = phone;
-  }
-
-  void setPasswords(String? password) {
-    this.password = password;
   }
 
   void setName(String? name) {
@@ -23,6 +19,10 @@ class User {
 
   void setBirth(String? birth) {
     this.birth = birth;
+  }
+
+  void setVericodeRequestId(String? requestId) {
+    this.vericodeRequestId = requestId;
   }
 }
 

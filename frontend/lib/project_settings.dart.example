@@ -1,0 +1,20 @@
+// To use settings, remove .example from the name of the file
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Your values here, as the class members
+class ProjectSettings {
+  String apiUrl = "API_URL/API_HOST_PORT";
+  bool localHosted = true;
+  String telegramApiAccessToken = "ACCESS_TOKEN";
+  String telegramApiSendUrl = "https://gatewayapi.telegram.org/sendVerificationMessage";
+  String telegramApiCheckUrl = "https://gatewayapi.telegram.org/checkVerificationStatus";
+}
+
+
+var projectSettings = ProjectSettings();
+// Use shared preferences to keep usual app data after app closes
+var persistentStorage = SharedPreferencesAsync();
+// Use secure storage to keep sensitive app data after app closes
+var persistentSecuredStorage = FlutterSecureStorage();

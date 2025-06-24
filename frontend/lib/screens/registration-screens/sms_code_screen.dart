@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
+import 'package:sayohat/project_settings.dart';
+import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
+
+import '../../user_data.dart';
 
 final _codeTextController = TextEditingController();
 String? userCode;
@@ -25,7 +30,8 @@ class VerificationScreen extends StatelessWidget {
                 AppName(),
                 AppLogo(),
                 SizedBox(height: 80),
-                _RegistationText(),
+                _FillInTelegramText(),
+                _VerificationCodeText(),
                 SizedBox(height: 15.0),
                 _CodeForm(),
                 SizedBox(height: 15.0),
@@ -39,11 +45,25 @@ class VerificationScreen extends StatelessWidget {
   }
 }
 
-class _RegistationText extends StatelessWidget {
+class _FillInTelegramText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Registration',
+      'Fill in Telegram',
+      style: TextStyle(
+        color: AppColors.primaryGreen,
+        fontSize: 30.0,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+}
+
+class _VerificationCodeText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'verification code',
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -100,38 +120,40 @@ class _ConfirmCodeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         userCode = _codeTextController.text;
-        if (userCode == '' || userCode == null) {
-          final emptyCodeSnackBar = SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'Enter the code',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: AppColors.primaryGreen,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(emptyCodeSnackBar);
+        if (userCode?.isEmpty ?? true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar("Enter the code"));
         } else {
+          var telegramValidationResult = await apiClient.checkVericode(
+              user.vericodeRequestId!, userCode!);
+          if (telegramValidationResult == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar("API unreachable, please,"
+                    " contact support"));
+            return;
+          }
+          if (!telegramValidationResult) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar("Incorrect or expired code"));
+            return;
+          }
+          var userExistenceResult = await apiClient.checkUsernameExistance(
+              user.phone!
+          );
+          if (userExistenceResult == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar("API unreachable, please, "
+                    "contact support"));
+            return;
+          }
+          if (userExistenceResult["answer"]) {
+            persistentSecuredStorage.write(key: "token",
+                value: userExistenceResult["access_token"]);
+            Navigator.pushNamed(context, '/WelcomeHub');
+            return;
+          }
           Navigator.pushNamed(context, '/NameSurnameScreen');
         }
       },
@@ -148,7 +170,7 @@ class _ConfirmCodeButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Confirm the code",
+        "Confirm",
       ),
     );
   }
