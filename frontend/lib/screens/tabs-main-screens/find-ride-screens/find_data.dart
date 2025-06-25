@@ -12,10 +12,10 @@ class DataSearch {
   }
 
   DataSearch(String? from, String? to, String? date, String? passengers) {
-    this.from;
-    this.to;
-    this.date;
-    this.passengers;
+    this.from = from;
+    this.to = to;
+    this.date = date;
+    this.passengers = passengers;
   }
 }
 

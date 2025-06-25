@@ -3,7 +3,6 @@ import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/widgets/app_name.dart';
 import 'package:sayohat/widgets/app_logo.dart';
-import 'package:sayohat/user_data.dart';
 
 final _passwordTextController = TextEditingController();
 final _confirmTextController = TextEditingController();
@@ -174,13 +173,18 @@ class _ConfirmPasswordButton extends StatelessWidget {
         var passwordLength = _passwordTextController.text.length;
         if ((userPassword?.isEmpty ?? true) || (userConfirm?.isEmpty ?? true)) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Fields seem to be empty"));
+            snackBarFactory.createSnackBar("Fields seem to be empty"),
+          );
         } else if (userPassword != userConfirm) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Password do not match"));
+            snackBarFactory.createSnackBar("Password do not match"),
+          );
         } else if (passwordLength < 5) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Make a password at least 5 symbols"));
+            snackBarFactory.createSnackBar(
+              "Make a password at least 5 symbols",
+            ),
+          );
         } else {
           //user.setPasswords(userPassword);
           Navigator.pushNamed(context, '/WelcomeHub');

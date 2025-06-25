@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
@@ -145,21 +143,25 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 child: Column(
                   children: [
                     _CityField(
+                      key: Key('departureCityField'),
                       label: 'From',
                       onSaved: (value) => fromCity = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _CityField(
+                      key: Key('arrivalCityField'),
                       label: 'To',
                       onSaved: (value) => toCity = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _DateField(
+                      key: Key('dateField'),
                       onSaved: (value) => date = value ?? '',
                       validator: _validateDate,
                     ),
                     SizedBox(height: 10),
                     _PassengerNumberField(
+                      key: Key('passengersField'),
                       onSaved: (value) => passengers = value ?? '',
                       validator: _validatePassengers,
                     ),
@@ -175,16 +177,19 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 child: Column(
                   children: [
                     _AddressField(
+                      key: Key("departureAddressField"),
                       label: 'Departure address',
                       onSaved: (value) => addressFrom = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _AddressField(
+                      key: Key("arrivalAddressField"),
                       label: 'Destination address',
                       onSaved: (value) => addressTo = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _TimeField(
+                      key: Key("timeField"),
                       onSaved: (value) => time = value ?? '',
                       validator: _validateTime,
                     ),
@@ -192,6 +197,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
                     _PriceField(onSaved: (value) => price = value ?? ''),
                     SizedBox(height: 10),
                     _DescriptionField(
+                      key: Key("descriptionField"),
                       onSaved: (value) => description = value ?? '',
                     ),
                   ],
@@ -234,6 +240,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
                     ),
                   SizedBox(width: 10),
                   ElevatedButton(
+                    key: Key("Next/CompleteButton"),
                     onPressed: details.onStepContinue,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryGreen,
@@ -282,19 +289,26 @@ class _AddRideScreenState extends State<AddRideScreen> {
     );
     yourRides.add(userRide);
     ScaffoldMessenger.of(context).showSnackBar(
-        snackBarFactory.createSnackBar("Ride was added successfully!"));
+      snackBarFactory.createSnackBar("Ride was added successfully!"),
+    );
   }
 }
 
 class _CityField extends StatelessWidget {
   final String label;
+  final Key key;
   final Function(String?) onSaved;
 
-  const _CityField({required this.label, required this.onSaved});
+  const _CityField({
+    required this.label,
+    required this.onSaved,
+    required this.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
@@ -325,13 +339,19 @@ class _CityField extends StatelessWidget {
 
 class _AddressField extends StatelessWidget {
   final String label;
+  final Key key;
   final Function(String?) onSaved;
 
-  const _AddressField({required this.label, required this.onSaved});
+  const _AddressField({
+    required this.label,
+    required this.onSaved,
+    required this.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.location_on, color: AppColors.primaryGreen),
         hintText: label,
@@ -362,13 +382,15 @@ class _AddressField extends StatelessWidget {
 
 class _DateField extends StatelessWidget {
   final Function(String?) onSaved;
+  final Key key;
   final String? Function(String?)? validator;
 
-  const _DateField({required this.onSaved, this.validator});
+  const _DateField({required this.onSaved, this.validator, required this.key});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       inputFormatters: [DateInputFormatter()],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
@@ -400,13 +422,19 @@ class _DateField extends StatelessWidget {
 
 class _PassengerNumberField extends StatelessWidget {
   final Function(String?) onSaved;
+  final Key key;
   final String? Function(String?)? validator;
 
-  const _PassengerNumberField({required this.onSaved, this.validator});
+  const _PassengerNumberField({
+    required this.onSaved,
+    this.validator,
+    required this.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outlined, color: AppColors.primaryGreen),
         hintText: "Number of passengers",
@@ -438,13 +466,19 @@ class _PassengerNumberField extends StatelessWidget {
 
 class _TimeField extends StatelessWidget {
   final Function(String?) onSaved;
+  final Key key;
   final String? Function(String?)? validator;
 
-  const _TimeField({required this.onSaved, required this.validator});
+  const _TimeField({
+    required this.onSaved,
+    required this.validator,
+    required this.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       inputFormatters: <TextInputFormatter>[HourMinsFormatter()],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.access_time, color: AppColors.primaryGreen),
@@ -513,12 +547,14 @@ class _PriceField extends StatelessWidget {
 
 class _DescriptionField extends StatelessWidget {
   final Function(String?) onSaved;
+  final Key key;
 
-  const _DescriptionField({required this.onSaved});
+  const _DescriptionField({required this.onSaved, required this.key});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.info, color: AppColors.primaryGreen),
         hintText: "Contact info, rules etc.",

@@ -112,48 +112,6 @@ class _NameForm extends StatelessWidget {
   }
 }
 
-class _SurnmaeForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 246.0,
-      height: 46,
-      child: TextField(
-        controller: _passwordTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          hintText: "Password",
-          filled: true,
-          fillColor: Color.fromRGBO(255, 255, 255, 1),
-        ),
-      ),
-    );
-  }
-}
-
 class _AuthorizeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -163,7 +121,8 @@ class _AuthorizeButton extends StatelessWidget {
         userPassword = _passwordTextController.text;
         if (userPhone?.isEmpty ?? true) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Enter your phone number"));
+            snackBarFactory.createSnackBar("Enter your phone number"),
+          );
         } else {
           Navigator.push(
             context,
