@@ -2,6 +2,8 @@
 
 .venv
 
+/backend/**/__pycache__
+
 /frontend/lib/project_settings.dart
 
 /frontend/.dart_tool
