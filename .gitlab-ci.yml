@@ -1,13 +1,16 @@
-code-style-linting:
-  stage: .pre
+.job_prerequisites: &job_prerequisites
   image: "python:latest"
+
+code-style-linting:
+  <<: *job_prerequisites
+  stage: .pre
   script:
     - pip install pycodestyle
     - python backend/testing/linter.py
 
 backend-test:
+  <<: *job_prerequisites
   stage: test
-  image: "python:latest"
   script:
     - pip install -r backend/auto_settings/requirements.txt
     - echo "This will be replaced with Python tests"
