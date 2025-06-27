@@ -1,21 +1,26 @@
-.job_prerequisites: &job_prerequisites
+.python_preparations: &python_preparations
   image: "python:latest"
 
+.flutter_preparations: &flutter_preparations
+  image: "instrumentisto/flutter:latest"
+
 code-style-linting:
-  <<: *job_prerequisites
+  <<: *python_preparations
   stage: .pre
   script:
     - pip install pycodestyle
     - python backend/testing/linter.py
 
 backend-test:
-  <<: *job_prerequisites
+  <<: *python_preparations
   stage: test
   script:
     - pip install -r backend/auto_settings/requirements.txt
     - echo "This will be replaced with Python tests"
 
 frontend-test:
+  <<: *flutter_preparations
   stage: test
   script:
-    - echo "This will be replaced with Dart tests"
+    - cd frontend
+    - flutter test test/unit_tests/

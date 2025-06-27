@@ -8,6 +8,7 @@ class RideCreatedSuccessfully(httpx.Response):
         }
         super().__init__(200, json=json)
 
+
 class RideQueriedSuccessfully(httpx.Response):
     def __init__(self, json):
         json["Message"] = "Ride was queried successfully!"

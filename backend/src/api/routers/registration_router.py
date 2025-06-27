@@ -18,8 +18,8 @@ registration_router = fastapi.APIRouter()
 async def token(standard_request: typing.Annotated[OAuth2PasswordRequestForm, fastapi.Depends()]):
     to_encode = {
         "sub": standard_request.username,
-        "exp": datetime.datetime.now(datetime.timezone.utc) + \
-               datetime.timedelta(minutes=settings_manager.api.token.lifetime_minutes)
+        "exp": datetime.datetime.now(datetime.timezone.utc) +
+        datetime.timedelta(minutes=settings_manager.api.token.lifetime_minutes)
     }
     encoded_jwt = jwt.encode(to_encode,
                              settings_manager.api.token.key,
@@ -55,4 +55,3 @@ def user_existence(phone: str):
     del response["token_type"]
     response["answer"] = bool(users_repository.get_matching_user(phone=phone))
     return response
-

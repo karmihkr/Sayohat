@@ -24,21 +24,21 @@ async def new_ride(driver_id: int,
 
 @rides_router.get("/ride")
 async def find_matching_ride(driver_id: int | None = None,
-                   begin_id: int | None = None,
-                   end_id: int | None = None,
-                   price: int | None = None,
-                   available_places: int | None = None,
-                   vehicle_number: str | None = None):
+                             begin_id: int | None = None,
+                             end_id: int | None = None,
+                             price: int | None = None,
+                             available_places: int | None = None,
+                             vehicle_number: str | None = None):
     json = rides_repository.get_matching_ride(price=price)
     return RideQueriedSuccessfully(json)
 
 
 @rides_router.get("/rides")
 async def find_matching_rides(driver_id: int | None = None,
-                   begin_id: int | None = None,
-                   end_id: int | None = None,
-                   price: int | None = None,
-                   available_places: int | None = None,
-                   vehicle_number: str | None = None):
+                              begin_id: int | None = None,
+                              end_id: int | None = None,
+                              price: int | None = None,
+                              available_places: int | None = None,
+                              vehicle_number: str | None = None):
     json = rides_repository.get_matching_rides(price=price)
     return RideQueriedSuccessfully(json)

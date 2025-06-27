@@ -9,7 +9,7 @@ for root, files in map(lambda elem: [elem[0], list(filter(lambda el: re.fullmatc
                                                           elem[2]))], os.walk(pathlib.Path(__file__).parent.parent
                                                                               / "src")):
     for file in files:
-        was = True
-        pycodestyle.Checker(pathlib.Path(root) / file, max_line_length=120).check_all()
+        if pycodestyle.Checker(pathlib.Path(root) / file, max_line_length=120).check_all():
+            was = True
 if was:
     raise SyntaxError("pycodestyle linter found errors!")
