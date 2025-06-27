@@ -1,5 +1,5 @@
 code-style-linting:
-  stage: lint
+  stage: .pre
   image: "python:latest"
   script:
     - pip install pycodestyle
