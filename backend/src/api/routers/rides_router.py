@@ -42,4 +42,3 @@ async def find_matching_rides(driver_id: int | None = None,
                    vehicle_number: str | None = None):
     json = rides_repository.get_matching_rides(price=price)
     return RideQueriedSuccessfully(json)
-

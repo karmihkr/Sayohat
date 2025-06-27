@@ -1,0 +1,18 @@
+code-style-linting:
+  stage: lint
+  image: "python:latest"
+  script:
+    - pip install pycodestyle
+    - python backend/testing/linter.py
+
+backend-test:
+  stage: test
+  image: "python:latest"
+  script:
+    - pip install -r backend/auto_settings/requirements.txt
+    - echo "This will be replaced with Python tests"
+
+frontend-test:
+  stage: test
+  script:
+    - echo "This will be replaced with Dart tests"
