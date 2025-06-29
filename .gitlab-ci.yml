@@ -9,14 +9,14 @@ code-style-linting:
   stage: .pre
   script:
     - pip install pycodestyle
-    - python backend/testing/linter.py
+    - python backend/test/linter.py
 
 backend-test:
   <<: *python_preparations
   stage: test
   script:
     - pip install -r backend/auto_settings/requirements.txt
-    - echo "This will be replaced with Python tests"
+    - echo "Here tests will be run"
 
 frontend-test:
   <<: *flutter_preparations

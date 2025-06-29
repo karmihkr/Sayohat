@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
@@ -282,11 +283,9 @@ class _AddRideScreenState extends State<AddRideScreen> {
       "end_id": "1",
       "price": price,
       "available_places": passengers,
-      "vehicle_number": "В234ЕЛ",
+      "vehicle_number": carPlate,
     };
-    var response = await http.post(
-      Uri.http("127.0.0.1:8000", "/new/ride", params),
-    );
+    apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
     yourRides.add(userRide);
     ScaffoldMessenger.of(context).showSnackBar(
       snackBarFactory.createSnackBar("Ride was added successfully!"),
