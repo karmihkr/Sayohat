@@ -1,106 +1,51 @@
-name: "Backlog: User Story"
-description: "File a user story for a new feature or improvement."
-title: "[User Story]: "
-labels: ["Backlog: User Story", "Meta: Unknown Priority"]
-projects: ["inno-swp-2025/1"]
-type: "Backlog"
-body:
-  - type: textarea
-    id: user-story-sentence
-    attributes:
-      label: <h2> User Story </h2>
-      description: |
-        Keep the comment.
-        Follow the instructions in the comment.
-        Write your text in this input field after the comment.
-      value: |
-        <!--
-        Write a user story following the format:
+<!--
+Name: Backlog: User Story
+Description: File a user story for a new feature or improvement.
+Labels: Backlog: User Story, Meta: Unknown Priority
+-->
 
-        As a [persona],
-        I want to [action]
-        so that [outcome].
+## 📝 User Story
 
-        Example:
+<!--
+Write a user story following the format:
 
-        As a user reading comments,
-        I want to be protected from seeing harmful or offensive language
-        so that I can enjoy the content and discussions without being exposed to toxicity.
-        -->
-    validations:
-      required: true
+As a [persona],
+I want to [action]
+so that [outcome].
 
-  - type: textarea
-    id: acceptance-criteria
-    attributes:
-      label: "<h2> Acceptance criteria (AC) </h2>"
-      description: |
-        Keep the comment.
-        Follow the instructions in the comment.
-        Don't modify the default text in this input field.
-      value: |
-        <!--
-        Define specific, testable (pass-fail) scenarios that must be met for this story to be complete.
-        Each criterion should be in its own "AC" section below.
-        Add or remove "AC" sections if necessary.
-          
-        Use the GIVEN/WHEN/THEN format for clarity.
-        AND	continues a step from the previous keyword.
-        BUT is the same as AND and additionally expresses a negative assertion.
+Example:
 
-        Example: 
+As a user reading comments,
+I want to be protected from seeing harmful or offensive language
+so that I can enjoy the content and discussions without being exposed to toxicity.
+-->
+_As a_ [persona], _I want to_ [action] _so that_ [outcome].
 
-        GIVEN the user is logged in
-        AND a user is viewing a video's comment section
-        WHEN the user types a comment containing a banned word 
-        AND the user hits "Send"
-        THEN an error message "This comment violates our community guidelines" is displayed
-        BUT the comment does not appear in the comment list
-        AND the comment count on the video does not increase
-        -->
-    validations:
-      required: false
+---
 
-  - type: textarea
-    id: acceptance-criterion-1
-    attributes:
-      label: "AC-1"
-      placeholder: |
-        GIVEN ...
-        WHEN ...
-        THEN ...
-    validations:
-      required: true
+## ✅ Acceptance criteria (AC)
 
-  - type: textarea
-    id: acceptance-criterion-2
-    attributes:
-      label: "AC-2"
-      placeholder: |
-        GIVEN ...
-        WHEN ...
-        THEN ...
-    validations:
-      required: false
+<!--
+Define specific, testable (pass–fail) scenarios.
+Use the GIVEN/WHEN/THEN format for clarity.
+-->
+**AC-1**  
+GIVEN …  
+WHEN …  
+THEN …
 
-  - type: textarea
-    id: acceptance-criterion-3
-    attributes:
-      label: "AC-3"
-      placeholder: |
-        GIVEN ...
-        WHEN ...
-        THEN ...
-    validations:
-      required: false
+**AC-2**  
+GIVEN …  
+WHEN …  
+THEN …
 
-  - type: textarea
-    id: sub-issues
-    attributes:
-      label: "<h2> Sub-issues </h2>"
-      description: |
-        Don't modify the default text in this input field.
-      value: |
-        Sub-issues are type `Task` issues that must be resolved to resolve this issue.
-    validations:
-      required: false
+**AC-3**  
+GIVEN …  
+WHEN …  
+THEN …
+
+---
+
+## 🔗 Sub-issues
+
+_Sub-issues are type `Task` issues that must be resolved to resolve this issue._
