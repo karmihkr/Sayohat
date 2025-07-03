@@ -87,10 +87,7 @@ class _BirthForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
-        inputFormatters: [
-          DateInputFormatter(),
-          //LengthLimitingTextInputFormatter(10),
-        ],
+        inputFormatters: [DateInputFormatter()],
         controller: _birthTextController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -135,21 +132,32 @@ class _ConfirmBirthButton extends StatelessWidget {
         userBirth = _birthTextController.text;
         if (userBirth?.isEmpty ?? true) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Add the date of your birth"));
+            snackBarFactory.createSnackBar("Add the date of your birth"),
+          );
         } else if (!isValidDate(userBirth!)) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Add the valid date of birth"));
+            snackBarFactory.createSnackBar("Add the valid date of birth"),
+          );
         } else {
           user.setBirth(userBirth);
           var response = await apiClient.registerNewUser(
-              user.phone!, user.name!, user.surname!, user.birth!);
+            user.phone!,
+            user.name!,
+            user.surname!,
+            user.birth!,
+          );
           if (response == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar(
-                    "API unreachable, please, contact support"));
+              snackBarFactory.createSnackBar(
+                "API unreachable, please, contact support",
+              ),
+            );
             return;
           }
-          persistentSecuredStorage.write(key: "token", value: response["access_token"]);
+          persistentSecuredStorage.write(
+            key: "token",
+            value: response["access_token"],
+          );
           Navigator.pushNamed(context, '/WelcomeHub');
         }
       },
