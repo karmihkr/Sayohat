@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
@@ -335,20 +336,29 @@ class _ConfirmChanges extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           if (isValidDate(newBirth.text) &&
               isValidNameSurname(newName.text) &&
               isValidNameSurname(newSurname.text) &&
               isValidPhone(newPhone.text)) {
-            user.name = newName.text != "" ? newName.text : user.name;
-            user.surname = newSurname.text != ""
-                ? newSurname.text
-                : user.surname;
-            user.birth = newBirth.text != "" ? newBirth.text : user.birth;
-            user.phone = newPhone.text != "" ? newPhone.text : user.phone;
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Info updated successfully"),
-            );
+            Map<String, dynamic>? updatedUserData = await apiClient
+                .updateUserProfile(
+                  newPhone.text,
+                  newName.text,
+                  newSurname.text,
+                  newBirth.text,
+                );
+            if (updatedUserData != null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar("Info updated successfully"),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(
+                  "API unreachable. Please, contact support",
+                ),
+              );
+            }
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar("Something went wrong"),
