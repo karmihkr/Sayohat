@@ -7,7 +7,6 @@ import 'package:sayohat/screens/registration-screens/name_surname_screen.dart';
 import 'package:sayohat/screens/registration-screens/password_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/welcome_screen.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
 
@@ -17,9 +16,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await persistentStorage.clear();
   // await persistentSecuredStorage.deleteAll();
-  initialRoute = await apiClient.checkTokenActuality(
-      await persistentSecuredStorage.read(key: "token")) ?
-      '/WelcomeHub' : '/PhoneScreen';
+  initialRoute =
+      await apiClient.checkTokenActuality(
+        await persistentSecuredStorage.read(key: "token"),
+      )
+      ? '/WelcomeHub'
+      : '/PhoneScreen';
   runApp(const MyApp());
 }
 
