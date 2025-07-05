@@ -2,12 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/edit_info_screen.dart';
+import 'package:sayohat/api_client.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  Map<String, dynamic>? userData;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final data = await apiClient.getUserProfile();
+    setState(() {
+      userData = data;
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (userData == null) {
+      return const Center(child: Text("Data could not be resolved"));
+    }
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: EdgeInsets.only(top: 40),
@@ -20,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
         children: [
           _Avatar(),
           SizedBox(height: 20),
-          _NameSurname(),
+          _NameSurname(name: userData!['name'], surname: userData!['surname']),
           SizedBox(height: 20),
           Expanded(
             child: Container(
@@ -32,10 +61,10 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _PhoneNumber(),
+                  _PhoneNumber(phone: userData!['phone']),
                   Divider(height: 5, color: AppColors.primaryGreen),
                   SizedBox(height: 10),
-                  _DateOfBirth(),
+                  _DateOfBirth(userDateOfBirth: userData!['birth']),
                   Divider(height: 5, color: AppColors.primaryGreen),
                   SizedBox(height: 20),
                   _StatisticsText(),
@@ -71,11 +100,16 @@ class _Avatar extends StatelessWidget {
 }
 
 class _NameSurname extends StatelessWidget {
+  final String name;
+  final String surname;
+
+  const _NameSurname({required this.name, required this.surname});
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        '${user.name} ${user.surname}',
+        '$name $surname',
         style: TextStyle(
           fontFamily: 'Roboto',
           color: AppColors.primaryGreen,
@@ -87,6 +121,10 @@ class _NameSurname extends StatelessWidget {
 }
 
 class _PhoneNumber extends StatelessWidget {
+  final String phone;
+
+  const _PhoneNumber({required this.phone});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -101,7 +139,7 @@ class _PhoneNumber extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            user.phone ?? " ",
+            phone,
             style: const TextStyle(
               color: AppColors.primaryGreen,
               fontSize: 20,
@@ -115,7 +153,10 @@ class _PhoneNumber extends StatelessWidget {
 }
 
 class _DateOfBirth extends StatelessWidget {
-  final String userDateOfBirth = user.birth ?? " ";
+  final String userDateOfBirth;
+
+  const _DateOfBirth({required this.userDateOfBirth});
+
   @override
   Widget build(BuildContext context) {
     return Row(

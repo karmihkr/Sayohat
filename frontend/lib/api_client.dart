@@ -148,8 +148,24 @@ class APIClient {
         "phone": phone,
         "name": name,
         "surname": surname,
-        "birth": birth
+        "birth": birth,
       }, <String, String>{});
+    } finally {
+      if (response?.statusCode != 200) {
+        return null;
+      }
+      return jsonDecode(response!.body);
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    final token = await persistentSecuredStorage.read(key: 'token');
+    http.Response? response;
+    if (token == null) return null;
+    try {
+      response = await request(get, '/user/me', {}, {
+        'Authorization': 'Bearer $token',
+      });
     } finally {
       if (response?.statusCode != 200) {
         return null;
