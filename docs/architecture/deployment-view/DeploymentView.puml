@@ -1,0 +1,25 @@
+@startuml deployment_view
+
+title Deployment View 
+
+node "User Device\n(Mobile App)" as MobileDevice {
+  [Mobile Application]
+}
+
+node "Admin PC\n(Web Browser)" as AdminPC {
+  [Admin Web UI]
+}
+
+node "Application Server" as AppServer {
+  component "FastAPI Server"
+  database "MongoDB"
+}
+
+cloud "Telegram API\n(External Service)" as TelegramCloud
+
+MobileDevice --> AppServer : HTTPS requests (registration, trips, profile)
+AdminPC --> AppServer : HTTPS requests (admin UI)
+AppServer --> MongoDB : Data storage (users, trips, roles)
+AppServer --> TelegramCloud : Sends confirmation codes via Telegram
+
+@enduml
