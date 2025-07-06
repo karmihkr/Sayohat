@@ -26,4 +26,4 @@ frontend-test:
     - touch project_settings.yaml
     - cat project_settings.dart.example >> project_settings.dart
     - cd ..
-    - flutter test test/unit_tests/
+    - flutter test
