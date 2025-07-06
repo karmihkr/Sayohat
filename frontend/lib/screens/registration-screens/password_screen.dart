@@ -80,6 +80,7 @@ class _PasswordCreationForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        key: Key("FormCreation"),
         obscureText: true,
         enableSuggestions: false,
         autocorrect: false,
@@ -125,6 +126,7 @@ class _PasswordConfirmForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        key: Key("FormConfirm"),
         obscureText: true,
         enableSuggestions: false,
         autocorrect: false,

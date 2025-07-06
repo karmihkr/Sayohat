@@ -81,6 +81,7 @@ class _NameForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        key: Key("nameField"),
         controller: _nameTextController,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -123,6 +124,7 @@ class _SurnameForm extends StatelessWidget {
       width: 246.0,
       height: 46,
       child: TextField(
+        key: Key("surnameField"),
         controller: _surnameTextController,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -167,7 +169,8 @@ class _ConfirmNameSurnameButton extends StatelessWidget {
         userSurname = _surnameTextController.text;
         if ((userName?.isEmpty ?? true) || (userSurname?.isEmpty ?? true)) {
           ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Enter your name and surname"));
+            snackBarFactory.createSnackBar("Enter your name and surname"),
+          );
         } else {
           user.setName(userName);
           user.setSurname(userSurname);
