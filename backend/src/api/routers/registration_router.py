@@ -4,14 +4,24 @@ import typing
 import fastapi
 import jwt
 import requests
+from fastapi.security import OAuth2PasswordRequestForm
 from jwt import InvalidTokenError
 
 from settings_manager import settings_manager
-from src.api.application_security import OAuth2PasswordRequestForm
 from src.api.application_security import oauth2_scheme
 from src.repositories.users_repository import users_repository
 
 registration_router = fastapi.APIRouter()
+
+
+def check_token(token):
+    credential_exception = fastapi.HTTPException(status_code=fastapi.status.HTTP_401_UNAUTHORIZED)
+    try:
+        encoded = jwt.decode(token, settings_manager.api.token.key, settings_manager.api.token.algorithm)
+        if not encoded["sub"]:
+            raise credential_exception
+    except InvalidTokenError:
+        raise credential_exception
 
 
 @registration_router.post("/token")
@@ -28,16 +38,6 @@ async def token(standard_request: typing.Annotated[OAuth2PasswordRequestForm, fa
         "access_token": encoded_jwt,
         "token_type": "bearer"
     }
-
-
-def check_token(token):
-    credential_exception = fastapi.HTTPException(status_code=fastapi.status.HTTP_401_UNAUTHORIZED)
-    try:
-        encoded = jwt.decode(token, settings_manager.api.token.key, settings_manager.api.token.algorithm)
-        if not encoded["sub"]:
-            raise credential_exception
-    except InvalidTokenError:
-        raise credential_exception
 
 
 @registration_router.post("/hello")

@@ -1,38 +1,38 @@
+import typing
+
 import fastapi
 import jwt
 import requests
+from jwt import InvalidTokenError
 
 from settings_manager import settings_manager
-from src.repositories.users_repository import users_repository
-from typing import Annotated
-from fastapi import Depends, HTTPException
 from src.api.application_security import oauth2_scheme
-from fastapi import Depends, HTTPException
+from src.repositories.users_repository import users_repository
 
 users_router = fastapi.APIRouter()
 
 
+def check_token(token):
+    credential_exception = fastapi.HTTPException(status_code=fastapi.status.HTTP_401_UNAUTHORIZED)
+    try:
+        encoded = jwt.decode(token, settings_manager.api.token.key, settings_manager.api.token.algorithm)
+        if not encoded["sub"]:
+            raise credential_exception
+    except InvalidTokenError:
+        raise credential_exception
+    user = users_repository.get_matching_user(phone=encoded["sub"])
+    if not user:
+        raise credential_exception
+    return user
+
+
+@users_router.get("/user/me")
+def read_own_profile(token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
+    return check_token(token)
+
+
 @users_router.post("/user")
-def insert(phone, name, surname, birth):
+def post_user(phone, name, surname, birth):
     users_repository.insert(phone=phone, name=name, surname=surname, birth=birth)
     return requests.post(f"{settings_manager.api.host}:{settings_manager.api.port}/user_existence",
                          params={"phone": phone}).json()
-
-@users_router.get("/user/me")
-def read_own_profile(token: Annotated[str, Depends(oauth2_scheme)]):
-    try:
-        payload = jwt.decode(
-            token,
-            settings_manager.api.token.key,
-            algorithms=[settings_manager.api.token.algorithm],
-        )
-        phone = payload.get("sub")
-        if phone is None:
-            raise ValueError
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid authentication token")
-    user = users_repository.get_matching_user(phone=phone)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    user["_id"] = str(user["_id"])
-    return user
