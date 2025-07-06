@@ -39,6 +39,7 @@ def post_user(phone, name, surname, birth):
     return requests.post(f"{settings_manager.api.host}:{settings_manager.api.port}/user_existence",
                          params={"phone": phone}).json()
 
+
 @users_router.put("/user")
 def put_user(phone, name, surname, birth, token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
     user = check_token(token)
