@@ -58,7 +58,7 @@ Rules:
 - **Merging:** done via squash merge after CI passes and review is complete.
 - **Closing Issues:** issues are manually marked as closed by team members in GitLab once the related work is done.
 
-*Git workflow visualization:* ![Gitgraph diagram](nado)
+*Git workflow visualization:* [Gitgraph diagram](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/docs/GitGraph.png?ref_type=heads)
 
 ### Secrets management
 
