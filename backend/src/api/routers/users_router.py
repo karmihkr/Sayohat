@@ -28,7 +28,9 @@ def check_token(token):
 
 @users_router.get("/user/me")
 def read_own_profile(token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
-    return check_token(token)
+    user = check_token(token)
+    user["_id"] = str(user["_id"])
+    return user
 
 
 @users_router.post("/user")
