@@ -1,0 +1,27 @@
+@startuml
+package "Frontend (Flutter)" {
+  [Mobile App] --> [FastAPI Backend]
+}
+
+package "Backend (FastAPI)" {
+  [FastAPI Backend] --> [Auth Service]
+  [FastAPI Backend] --> [Ride Service]
+  [FastAPI Backend] --> [User Service]
+}
+
+package "Database" {
+  [MongoDB]
+}
+
+[Ride Service] --> [MongoDB]
+[User Service] --> [MongoDB]
+[Auth Service] --> [MongoDB]
+
+package "External Services" {
+  [Telegram Bot API] as Telegram
+  [Yandex Maps API] as Maps
+}
+
+[Auth Service] --> Telegram : login via Telegram
+[Mobile App] --> Maps : uses map SDK
+@enduml
