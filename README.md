@@ -2,7 +2,7 @@
 
 [![Pipeline Status](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/badges/main/pipeline.svg)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/pipelines)
 ![Closed Issues](https://img.shields.io/gitlab/issues/closed-raw/d.chegaev/shareyourride?gitlab_url=https%3A%2F%2Fgitlab.pg.innopolis.university&style=flat)
-[![Open Issues](https://img.shields.io/badge/Open%20Issues-6-orange?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
+[![Open Issues](https://img.shields.io/badge/Open%20Issues-Dynamic-orange?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **HamSafar** is a mobile application designed to simplify intercity ride-sharing across Central Asia. Whether you're a driver with empty seats or a passenger looking for a cost-effective and reliable trip — HamSafar connects you.
