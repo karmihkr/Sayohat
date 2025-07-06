@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_client.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
@@ -59,18 +59,47 @@ String? userSurname;
 String? userPhone;
 String? userBirth;
 
-class EditInfoScreen extends StatelessWidget {
-  final User user;
+class EditInfoScreen extends StatefulWidget {
+  const EditInfoScreen({super.key});
+
+  @override
+  State<EditInfoScreen> createState() => _EditInfoScreenState();
+}
+
+class _EditInfoScreenState extends State<EditInfoScreen> {
+  Map<String, dynamic>? userData;
+  bool isLoading = true;
 
   final nameTextController = TextEditingController();
+
   final surnameTextController = TextEditingController();
+
   final birthTextController = TextEditingController();
+
   final phoneTextController = TextEditingController();
 
-  EditInfoScreen({super.key, required this.user});
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final data = await apiClient.getUserProfile();
+    setState(() {
+      userData = data;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (userData == null) {
+      return const Center(child: Text("Data could not be resolved"));
+    }
     return Scaffold(
       backgroundColor: AppColors.backgroundBeige,
       appBar: AppBar(
@@ -87,28 +116,28 @@ class EditInfoScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Your name: ${user.name}",
+                "Your name: ${userData!['name']}",
                 style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
               ),
               SizedBox(height: 10),
               _NameForm(nameTextController: nameTextController),
               Divider(),
               Text(
-                "Your surname: ${user.surname}",
+                "Your surname: ${userData!['surname']}",
                 style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
               ),
               SizedBox(height: 10),
               _SurnameForm(surnameTextController: surnameTextController),
               Divider(),
               Text(
-                "Your phone number: ${user.phone}",
+                "Your phone number: ${userData!['phone']}",
                 style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
               ),
               SizedBox(height: 10),
               _PhoneNumberForm(phoneTextController: phoneTextController),
               Divider(),
               Text(
-                "Your date of birth: ${user.birth}",
+                "Your date of birth: ${userData!['birth']}",
                 style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
               ),
               SizedBox(height: 10),
@@ -335,20 +364,29 @@ class _ConfirmChanges extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           if (isValidDate(newBirth.text) &&
               isValidNameSurname(newName.text) &&
               isValidNameSurname(newSurname.text) &&
               isValidPhone(newPhone.text)) {
-            user.name = newName.text != "" ? newName.text : user.name;
-            user.surname = newSurname.text != ""
-                ? newSurname.text
-                : user.surname;
-            user.birth = newBirth.text != "" ? newBirth.text : user.birth;
-            user.phone = newPhone.text != "" ? newPhone.text : user.phone;
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Info updated successfully"),
-            );
+            Map<String, dynamic>? updatedUserData = await apiClient
+                .updateUserProfile(
+                  newPhone.text,
+                  newName.text,
+                  newSurname.text,
+                  newBirth.text,
+                );
+            if (updatedUserData != null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar("Info updated successfully"),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(
+                  "API unreachable. Please, contact support",
+                ),
+              );
+            }
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar("Something went wrong"),

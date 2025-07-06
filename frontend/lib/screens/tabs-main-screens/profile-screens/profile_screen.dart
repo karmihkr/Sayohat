@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/edit_info_screen.dart';
 import 'package:sayohat/api_client.dart';
 
@@ -281,7 +280,7 @@ class _EditProfileButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EditInfoScreen(user: user)),
+            MaterialPageRoute(builder: (context) => EditInfoScreen()),
           );
         },
         style: ElevatedButton.styleFrom(

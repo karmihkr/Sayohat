@@ -173,6 +173,36 @@ class APIClient {
       return jsonDecode(response!.body);
     }
   }
+
+  Future<Map<String, dynamic>?> updateUserProfile(
+    String phone,
+    String name,
+    String surname,
+    String birth,
+  ) async {
+    Map<String, dynamic>? userData = await apiClient.getUserProfile();
+    final token = await persistentSecuredStorage.read(key: 'token');
+    http.Response? response;
+    if (token == null) return null;
+    try {
+      response = await request(
+        put,
+        "/user/update",
+        <String, dynamic>{
+          "phone": phone.isEmpty ? userData!['phone'] : phone,
+          "name": name.isEmpty ? userData!['name'] : name,
+          "surname": surname.isEmpty ? userData!['surname'] : surname,
+          "birth": birth.isEmpty ? userData!['birth'] : birth,
+        },
+        {'Authorization': 'Bearer $token'},
+      );
+    } finally {
+      if (response?.statusCode != 200) {
+        return null;
+      }
+      return jsonDecode(response!.body);
+    }
+  }
 }
 
 var apiClient = APIClient();
