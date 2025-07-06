@@ -148,7 +148,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                 newSurname: surnameTextController,
                 newPhone: phoneTextController,
                 newBirth: birthTextController,
-              ),
+              )
             ],
           ),
         ),
@@ -369,14 +369,14 @@ class _ConfirmChanges extends StatelessWidget {
               isValidNameSurname(newName.text) &&
               isValidNameSurname(newSurname.text) &&
               isValidPhone(newPhone.text)) {
-            Map<String, dynamic>? updatedUserData = await apiClient
+            bool updatedUserDataResult = await apiClient
                 .updateUserProfile(
                   newPhone.text,
                   newName.text,
                   newSurname.text,
                   newBirth.text,
                 );
-            if (updatedUserData != null) {
+            if (updatedUserDataResult) {
               ScaffoldMessenger.of(context).showSnackBar(
                 snackBarFactory.createSnackBar("Info updated successfully"),
               );

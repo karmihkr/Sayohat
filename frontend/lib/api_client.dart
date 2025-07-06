@@ -174,7 +174,7 @@ class APIClient {
     }
   }
 
-  Future<Map<String, dynamic>?> updateUserProfile(
+  Future<bool> updateUserProfile(
     String phone,
     String name,
     String surname,
@@ -183,11 +183,11 @@ class APIClient {
     Map<String, dynamic>? userData = await apiClient.getUserProfile();
     final token = await persistentSecuredStorage.read(key: 'token');
     http.Response? response;
-    if (token == null) return null;
+    if (token == null) return false;
     try {
       response = await request(
         put,
-        "/user/update",
+        "/user",
         <String, dynamic>{
           "phone": phone.isEmpty ? userData!['phone'] : phone,
           "name": name.isEmpty ? userData!['name'] : name,
@@ -198,9 +198,9 @@ class APIClient {
       );
     } finally {
       if (response?.statusCode != 200) {
-        return null;
+        return false;
       }
-      return jsonDecode(response!.body);
+      return true;
     }
   }
 }
