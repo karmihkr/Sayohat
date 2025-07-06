@@ -9,7 +9,7 @@
 
 [Features](#features) | [How to Run](#how-to-run) | [Development](#development) | [Quality](#quality) | [Authors](#authors) | [License](#license)
 
-## Features## Quality
+## Features
 
 -  **User-friendly ride matching** — Quickly find available rides or passengers nearby.
 -  **Multi-language support** — Available in Tajik and English to serve Central Asian users.
