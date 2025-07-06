@@ -2,6 +2,5 @@ lib/project_settings.dart
 .dart_tool
 .flutter-plugins-dependencies
 build
-test
 .idea
 pubspec.lock
