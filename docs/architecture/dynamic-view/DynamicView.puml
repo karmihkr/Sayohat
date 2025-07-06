@@ -1,0 +1,45 @@
+@startuml
+actor Passenger
+actor Driver
+actor Admin
+
+participant "Mobile App" as App
+participant "Web UI (Admin Panel)" as WebUI
+participant "Telegram Bot" as Telegram
+participant "FastAPI Backend" as Backend
+participant "MongoDB" as DB
+
+== Registration via Telegram ==
+Passenger -> App : Enter phone number
+App -> Telegram : Request OTP code
+Telegram -> Passenger : Send OTP
+Passenger -> App : Enter OTP
+App -> Telegram : Verify OTP
+Telegram -> Backend : Confirm user
+Backend -> DB : Save user session
+
+== Search and join ride ==
+Passenger -> App : Search for ride
+App -> Backend : Get ride list
+Backend -> DB : Query rides
+DB --> Backend : Return results
+Backend --> App : Ride list
+App -> Passenger : Show options
+
+Passenger -> App : Tap "Join ride"
+App -> Backend : Join request
+Backend -> DB : Add passenger to ride
+Backend --> App : Booking confirmed
+
+== Driver adds a ride ==
+Driver -> App : Add a ride
+App -> Backend : Create ride
+Backend -> DB : Save ride
+
+== Admin actions ==
+Admin -> WebUI : Login
+WebUI -> Backend : Authenticate
+Admin -> WebUI : View rides/users
+WebUI -> Backend : Request data
+Backend -> DB : Fetch info
+@enduml
