@@ -22,5 +22,8 @@ frontend-test:
   <<: *flutter_preparations
   stage: test
   script:
-    - cd frontend
+    - cd frontend/lib
+    - touch project_settings.yaml
+    - cat project_settings.dart.example >> project_settings.dart
+    - cd ..
     - flutter test test/unit_tests/
