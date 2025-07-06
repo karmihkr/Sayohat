@@ -8,6 +8,7 @@ import 'package:sayohat/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -143,16 +144,16 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 key: _stepFormKeys[0],
                 child: Column(
                   children: [
-                    _CityField(
+                    CityField(
                       key: Key('departureCityField'),
                       label: 'From',
-                      onSaved: (value) => fromCity = value ?? '',
+                      onSaved: (value) => fromCity = value,
                     ),
                     SizedBox(height: 10),
-                    _CityField(
+                    CityField(
                       key: Key('arrivalCityField'),
                       label: 'To',
-                      onSaved: (value) => toCity = value ?? '',
+                      onSaved: (value) => toCity = value,
                     ),
                     SizedBox(height: 10),
                     _DateField(
@@ -293,45 +294,133 @@ class _AddRideScreenState extends State<AddRideScreen> {
   }
 }
 
-class _CityField extends StatelessWidget {
+class CityField extends StatefulWidget {
   final String label;
-  final Key key;
-  final Function(String?) onSaved;
+  final void Function(String) onSaved;
+  final String? initialValue;
 
-  const _CityField({
+  const CityField({
+    super.key,
     required this.label,
     required this.onSaved,
-    required this.key,
+    this.initialValue,
   });
 
   @override
+  _CityFieldState createState() => _CityFieldState();
+}
+
+class _CityFieldState extends State<CityField> {
+  final TextEditingController _controller = TextEditingController();
+  SuggestSession? _session;
+
+  final _bbox = BoundingBox(
+    northEast: Point(latitude: 56.0, longitude: 38.0),
+    southWest: Point(latitude: 55.5, longitude: 37.0),
+  );
+  final _options = SuggestOptions(
+    suggestType: SuggestType.geo,
+    suggestWords: true,
+    userPosition: Point(latitude: 55.75, longitude: 37.62),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialValue != null) {
+      _controller.text = widget.initialValue!;
+    }
+  }
+
+  @override
+  void dispose() {
+    _session?.close();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<List<SuggestItem>> _fetchSuggestions(String pattern) async {
+    if (pattern.isEmpty) return [];
+    await _session?.reset();
+    final record = await YandexSuggest.getSuggestions(
+      text: pattern,
+      boundingBox: _bbox,
+      suggestOptions: _options,
+    );
+    _session = record.$1;
+    final result = await record.$2;
+    if (result.error != null || result.items == null) {
+      return [];
+    }
+    return result.items!;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: key,
-      decoration: InputDecoration(
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    return Autocomplete<SuggestItem>(
+      optionsBuilder: (TextEditingValue tv) async {
+        return _fetchSuggestions(tv.text);
+      },
+      displayStringForOption: (SuggestItem item) {
+        final city = item.subtitle ?? '';
+        return city.isNotEmpty ? '${item.title}, $city' : item.title;
+      },
+      fieldViewBuilder:
+          (context, textEditingController, focusNode, onFieldSubmitted) {
+            return TextFormField(
+              controller: textEditingController,
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                labelText: widget.label,
+                hintText: 'Start enter the address',
+                prefixIcon: Icon(
+                  Icons.location_on,
+                  color: AppColors.primaryGreen,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primaryGreen),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.primaryGreen,
+                    width: 2,
+                  ),
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+              ),
+              onFieldSubmitted: (_) => onFieldSubmitted(),
+              validator: (v) =>
+                  (v == null || v.isEmpty) ? 'Please, enter the address' : null,
+              onSaved: (v) {
+                if (v != null) widget.onSaved(v);
+              },
+            );
+          },
+      optionsViewBuilder: (context, onSelected, options) => Material(
+        elevation: 4,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 200),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: options.length,
+            itemBuilder: (context, index) {
+              final item = options.elementAt(index);
+              return ListTile(
+                title: Text(item.title),
+                subtitle: Text(item.subtitle ?? ''),
+                onTap: () => onSelected(item),
+              );
+            },
+          ),
         ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
-        hintText: label,
-        filled: true,
-        fillColor: Colors.white,
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null,
-      onSaved: onSaved,
+      onSelected: (SuggestItem item) {
+        final city = item.subtitle ?? '';
+        final full = city.isNotEmpty ? '$city, ${item.title}' : item.title;
+        widget.onSaved(full);
+      },
     );
   }
 }
