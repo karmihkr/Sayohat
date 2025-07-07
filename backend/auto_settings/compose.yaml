@@ -1,7 +1,9 @@
 services:
   api:
-    container_name: fastapi
-    build: ..
+    container_name: hamsafarapi
+    build:
+      context: ..
+      dockerfile: auto_settings/Dockerfile
     restart: always
     ports:
       - 8000:8000
