@@ -1,0 +1,18 @@
+[git]
+conventional_commits = true
+filter_unconventional = true
+
+[changelog]
+header = "# 📝 Changelog\n\n"
+footer = "\n_Generated with [git-cliff](https://github.com/orhun/git-cliff)_"
+
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}
+## {{ group | upper_first }}
+
+{% for commit in commits %}
+- {{ commit.message | trim }} ([{{ commit.id | truncate(length=7) }}])
+{% endfor %}
+
+{% endfor %}
+"""
