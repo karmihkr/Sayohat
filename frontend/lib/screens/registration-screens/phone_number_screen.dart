@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/screens/registration-screens/confirm_phone_number_screen.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/widgets/app_name.dart';
-import 'package:sayohat/widgets/app_logo.dart';
 
 String? userPhoneNumber;
 
@@ -18,16 +16,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.backgroundGreen,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 150),
+          padding: EdgeInsets.only(top: 250),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppName(),
-              AppLogo(),
+              // AppName(),
+              // AppLogo(),
               SizedBox(height: 80),
               _RegistrationText(),
               SizedBox(height: 15.0),
@@ -111,7 +110,8 @@ class _PhoneNumberFormState extends State<_PhoneNumberFormAndButton> {
               userPhoneNumber = _textController.text;
               if (userPhoneNumber?.isEmpty ?? true) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    snackBarFactory.createSnackBar("Enter your phone number"));
+                  snackBarFactory.createSnackBar("Enter your phone number"),
+                );
               } else {
                 Navigator.push(
                   context,

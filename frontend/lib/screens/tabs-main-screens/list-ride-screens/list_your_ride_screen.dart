@@ -91,7 +91,7 @@ class _RideCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      color: AppColors.backgroundBeige,
+      color: AppColors.backgroundGreen,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

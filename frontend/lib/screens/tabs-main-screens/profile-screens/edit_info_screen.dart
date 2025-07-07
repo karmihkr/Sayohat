@@ -101,56 +101,59 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
       return const Center(child: Text("Data could not be resolved"));
     }
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         title: Text(
           'Edit your profile',
           style: TextStyle(fontFamily: 'Roboto'),
         ),
-        backgroundColor: AppColors.primaryGreen,
+        backgroundColor: AppColors.backgroundGreen,
       ),
-      body: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Your name: ${userData!['name']}",
-                style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              _NameForm(nameTextController: nameTextController),
-              Divider(),
-              Text(
-                "Your surname: ${userData!['surname']}",
-                style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              _SurnameForm(surnameTextController: surnameTextController),
-              Divider(),
-              Text(
-                "Your phone number: ${userData!['phone']}",
-                style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              _PhoneNumberForm(phoneTextController: phoneTextController),
-              Divider(),
-              Text(
-                "Your date of birth: ${userData!['birth']}",
-                style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              _BirthForm(birthTextController: birthTextController),
-              Spacer(),
-              _ConfirmChanges(
-                newName: nameTextController,
-                newSurname: surnameTextController,
-                newPhone: phoneTextController,
-                newBirth: birthTextController,
-              )
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 16.0,
+          left: 16.0,
+          right: 16.0,
+          bottom: 50.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Your name: ${userData!['name']}",
+              style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            _NameForm(nameTextController: nameTextController),
+            Divider(),
+            Text(
+              "Your surname: ${userData!['surname']}",
+              style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            _SurnameForm(surnameTextController: surnameTextController),
+            Divider(),
+            Text(
+              "Your phone number: ${userData!['phone']}",
+              style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            _PhoneNumberForm(phoneTextController: phoneTextController),
+            Divider(),
+            Text(
+              "Your date of birth: ${userData!['birth']}",
+              style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            _BirthForm(birthTextController: birthTextController),
+            Spacer(),
+            _ConfirmChanges(
+              newName: nameTextController,
+              newSurname: surnameTextController,
+              newPhone: phoneTextController,
+              newBirth: birthTextController,
+            ),
+          ],
         ),
       ),
     );
@@ -369,13 +372,12 @@ class _ConfirmChanges extends StatelessWidget {
               isValidNameSurname(newName.text) &&
               isValidNameSurname(newSurname.text) &&
               isValidPhone(newPhone.text)) {
-            bool updatedUserDataResult = await apiClient
-                .updateUserProfile(
-                  newPhone.text,
-                  newName.text,
-                  newSurname.text,
-                  newBirth.text,
-                );
+            bool updatedUserDataResult = await apiClient.updateUserProfile(
+              newPhone.text,
+              newName.text,
+              newSurname.text,
+              newBirth.text,
+            );
             if (updatedUserDataResult) {
               ScaffoldMessenger.of(context).showSnackBar(
                 snackBarFactory.createSnackBar("Info updated successfully"),
@@ -392,6 +394,7 @@ class _ConfirmChanges extends StatelessWidget {
               snackBarFactory.createSnackBar("Something went wrong"),
             );
           }
+          //print("Tap");
         },
         style: ElevatedButton.styleFrom(
           minimumSize: Size(200, 40),

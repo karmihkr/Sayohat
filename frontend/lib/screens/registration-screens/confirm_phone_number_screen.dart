@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/widgets/app_name.dart';
-import 'package:sayohat/widgets/app_logo.dart';
 import 'package:sayohat/user_data.dart';
 
 late String? pn;
@@ -18,16 +16,16 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: AppColors.backgroundBeige,
+        backgroundColor: AppColors.backgroundGreen,
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(top: 150),
+            padding: EdgeInsets.only(top: 250),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AppName(),
-                AppLogo(),
+                // AppName(),
+                // AppLogo(),
                 SizedBox(height: 80),
                 _ConfirmPhoneNumberText(),
                 SizedBox(height: 15.0),
@@ -67,7 +65,7 @@ class _PhoneNumberForm extends StatelessWidget {
       height: 46,
       child: Center(
         child: Container(
-          color: AppColors.backgroundBeige,
+          color: AppColors.backgroundGreen,
           child: Text(
             pn ?? "",
             style: TextStyle(

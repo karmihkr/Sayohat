@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/widgets/app_name.dart';
-import 'package:sayohat/widgets/app_logo.dart';
 
 import '../registration-screens/confirm_phone_number_screen.dart';
 
@@ -17,16 +15,17 @@ class PhoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.backgroundGreen,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 150),
+          padding: EdgeInsets.only(top: 250),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppName(),
-              AppLogo(),
+              // AppName(),
+              // AppLogo(),
               SizedBox(height: 80),
               _AuthorizationnText(),
               _PleaseText(),

@@ -3,8 +3,6 @@ import 'package:sayohat/api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/widgets/app_name.dart';
-import 'package:sayohat/widgets/app_logo.dart';
 
 import '../../user_data.dart';
 
@@ -19,16 +17,16 @@ class VerificationScreen extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: AppColors.backgroundBeige,
+        backgroundColor: AppColors.backgroundGreen,
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(top: 150),
+            padding: EdgeInsets.only(top: 250),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AppName(),
-                AppLogo(),
+                // AppName(),
+                // AppLogo(),
                 SizedBox(height: 80),
                 _FillInTelegramText(),
                 _VerificationCodeText(),
@@ -123,34 +121,46 @@ class _ConfirmCodeButton extends StatelessWidget {
       onPressed: () async {
         userCode = _codeTextController.text;
         if (userCode?.isEmpty ?? true) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Enter the code"));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(snackBarFactory.createSnackBar("Enter the code"));
         } else {
           var telegramValidationResult = await apiClient.checkVericode(
-              user.vericodeRequestId!, userCode!);
+            user.vericodeRequestId!,
+            userCode!,
+          );
           if (telegramValidationResult == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar("API unreachable, please,"
-                    " contact support"));
+              snackBarFactory.createSnackBar(
+                "API unreachable, please,"
+                " contact support",
+              ),
+            );
             return;
           }
           if (!telegramValidationResult) {
             ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar("Incorrect or expired code"));
+              snackBarFactory.createSnackBar("Incorrect or expired code"),
+            );
             return;
           }
           var userExistenceResult = await apiClient.checkUsernameExistance(
-              user.phone!
+            user.phone!,
           );
           if (userExistenceResult == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar("API unreachable, please, "
-                    "contact support"));
+              snackBarFactory.createSnackBar(
+                "API unreachable, please, "
+                "contact support",
+              ),
+            );
             return;
           }
           if (userExistenceResult["answer"]) {
-            persistentSecuredStorage.write(key: "token",
-                value: userExistenceResult["access_token"]);
+            persistentSecuredStorage.write(
+              key: "token",
+              value: userExistenceResult["access_token"],
+            );
             Navigator.pushNamed(context, '/WelcomeHub');
             return;
           }

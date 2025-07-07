@@ -50,15 +50,15 @@ class _WelcomeScreenState extends State<WelcomeHub> {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.backgroundGreen,
+          automaticallyImplyLeading: false,
+          toolbarHeight: 40,
+        ),
         body: Stack(
           children: [
             Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/map-background.jpeg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              decoration: const BoxDecoration(color: AppColors.primaryWhite),
             ),
             _showSearchList && _selectedTab == 0
                 ? const ListSearchRideScreen()
@@ -87,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeHub> {
             ),
           ],
           showUnselectedLabels: false,
-          backgroundColor: AppColors.backgroundBeige,
+          backgroundColor: AppColors.backgroundGreen,
           selectedItemColor: AppColors.primaryGreen,
           unselectedItemColor: AppColors.primaryGreen,
           onTap: onSelectTab,

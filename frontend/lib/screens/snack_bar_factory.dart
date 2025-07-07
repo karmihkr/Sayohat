@@ -30,9 +30,9 @@ class SnackBarFactory {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      margin: EdgeInsets.only(bottom: 50.0),
     );
   }
 }
-
 
 var snackBarFactory = SnackBarFactory();

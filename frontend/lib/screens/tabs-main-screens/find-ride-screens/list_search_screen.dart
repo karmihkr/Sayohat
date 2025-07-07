@@ -18,7 +18,6 @@ class ListSearchRideScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -81,7 +80,7 @@ class _RideCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      color: AppColors.backgroundBeige,
+      color: AppColors.backgroundGreen,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -89,10 +88,7 @@ class _RideCard extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _FullName(ride: ride),
-                _Rating(),
-              ],
+              children: [_FullName(ride: ride)],
             ),
             const SizedBox(height: 8),
             _Age(ride: ride),

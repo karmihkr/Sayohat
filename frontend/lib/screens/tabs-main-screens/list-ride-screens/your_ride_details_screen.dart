@@ -10,13 +10,13 @@ class YourRideDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.primaryWhite,
       appBar: AppBar(
         title: Text(
           'Your Ride Details',
           style: TextStyle(fontFamily: 'Roboto'),
         ),
-        backgroundColor: AppColors.primaryGreen,
+        backgroundColor: AppColors.backgroundGreen,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),

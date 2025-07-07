@@ -16,7 +16,7 @@ class _RegistrationScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.backgroundGreen,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(top: 150),
