@@ -4,3 +4,7 @@ lib/project_settings.dart
 build
 .idea
 pubspec.lock
+web
+windows
+linux
+macos
