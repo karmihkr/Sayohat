@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
 
 ### 🐛 Bug Fixes
 
@@ -69,7 +72,7 @@ All notable changes to this project will be documented in this file.
 - Delete endpoint function from app security, unify token checking, optimize python imports
 - Resolve issues highlighted by linter
 
-## [cup] - 2025-06-21
+## [MVP1] - 2025-06-21
 
 ### 🚀 Features
 
@@ -96,7 +99,7 @@ All notable changes to this project will be documented in this file.
 - Backend example fix
 - Delete auto generating file, minor clean up in api and AndroidManifest
 
-## [cake] - 2025-06-13
+## [MVP0] - 2025-06-13
 
 ### 🚀 Features
 
