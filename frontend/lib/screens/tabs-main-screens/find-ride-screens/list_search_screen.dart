@@ -238,22 +238,6 @@ class _Age extends StatelessWidget {
   }
 }
 
-class _Rating extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.star, color: Colors.amber, size: 16),
-        const SizedBox(width: 4),
-        Text(
-          '5.0',
-          style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
-        ),
-      ],
-    );
-  }
-}
-
 class _FullName extends StatelessWidget {
   const _FullName({required this.ride});
 
