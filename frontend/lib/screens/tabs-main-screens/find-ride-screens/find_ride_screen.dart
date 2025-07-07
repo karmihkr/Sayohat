@@ -106,7 +106,7 @@ class _FindRideScreenState extends State<FindRideScreen> {
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
-        padding: const EdgeInsets.all(60),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Color.fromRGBO(255, 255, 255, 1),
           borderRadius: BorderRadius.circular(12),

@@ -10,10 +10,10 @@ class RideDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.primaryWhite,
       appBar: AppBar(
         title: Text('Ride Details', style: TextStyle(fontFamily: 'Roboto')),
-        backgroundColor: AppColors.primaryGreen,
+        backgroundColor: AppColors.backgroundGreen,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -23,7 +23,6 @@ class RideDetailsScreen extends StatelessWidget {
             _FullName(ride: ride),
             SizedBox(height: 16),
             _Age(ride: ride),
-            _Rating(),
             SizedBox(height: 24),
             _RideDetailsText(),
             Divider(),
@@ -62,6 +61,7 @@ class _FullName extends StatelessWidget {
         fontSize: 20,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -76,15 +76,8 @@ class _Age extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Age: ${ride.age} years',
-      style: TextStyle(fontFamily: 'Roboto'),
+      style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
     );
-  }
-}
-
-class _Rating extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Text('Rating: 5.0', style: TextStyle(fontFamily: 'Roboto'));
   }
 }
 
@@ -97,6 +90,7 @@ class _RideDetailsText extends StatelessWidget {
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -113,7 +107,7 @@ class _FromAddress extends StatelessWidget {
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
         'From: ${ride.address1}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -130,7 +124,7 @@ class _ToAddress extends StatelessWidget {
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
         'To: ${ride.address2}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -147,7 +141,7 @@ class _DateStart extends StatelessWidget {
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
       title: Text(
         'Date: ${ride.date.day}.${ride.date.month}.${ride.date.year}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -164,7 +158,7 @@ class _StartTime extends StatelessWidget {
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
       title: Text(
         'Time: ${ride.date.hour}:${ride.date.min}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -179,6 +173,7 @@ class _CarDetailsText extends StatelessWidget {
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -195,7 +190,7 @@ class _CarModel extends StatelessWidget {
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
         'Model: ${ride.carModel}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -212,7 +207,7 @@ class _CarColor extends StatelessWidget {
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
       title: Text(
         'Color: ${ride.carColor}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -229,7 +224,7 @@ class _CarPlate extends StatelessWidget {
       leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
       title: Text(
         'Car plate: ${ride.carPlate}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -244,6 +239,7 @@ class _Description extends StatelessWidget {
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -258,7 +254,10 @@ class _DescriptionContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
-      title: Text(ride.description, style: TextStyle(fontFamily: 'Roboto')),
+      title: Text(
+        ride.description,
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
+      ),
     );
   }
 }

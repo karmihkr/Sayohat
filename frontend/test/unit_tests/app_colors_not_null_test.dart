@@ -5,6 +5,6 @@ void main() {
   test('primary and accent are defined and not equal', () {
     expect(AppColors.primaryGreen, isNotNull);
     expect(AppColors.primaryWhite, isNotNull);
-    expect(AppColors.backgroundBeige, isNotNull);
+    expect(AppColors.backgroundGreen, isNotNull);
   });
 }

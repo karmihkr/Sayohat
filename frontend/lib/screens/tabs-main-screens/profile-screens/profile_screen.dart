@@ -210,7 +210,7 @@ class _StatisticsBlocks extends StatelessWidget {
           height: 120,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.backgroundBeige,
+            color: AppColors.backgroundGreen,
             border: Border.all(),
             borderRadius: BorderRadius.circular(12),
           ),
@@ -241,7 +241,7 @@ class _StatisticsBlocks extends StatelessWidget {
           height: 120,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.backgroundBeige,
+            color: AppColors.backgroundGreen,
             border: Border.all(),
             borderRadius: BorderRadius.circular(12),
           ),
