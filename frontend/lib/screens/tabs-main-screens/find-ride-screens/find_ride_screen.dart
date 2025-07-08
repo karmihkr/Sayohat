@@ -37,10 +37,10 @@ class _FindRideScreenState extends State<FindRideScreen> {
     final passengers = int.parse(_passengersController.text);
 
     final ridesJson = await apiClient.searchRides(
-      from: from,
-      to: to,
-      date: date,
-      passengers: passengers,
+      from,
+      to,
+      date,
+      passengers
     );
 
     if (ridesJson == null) {
