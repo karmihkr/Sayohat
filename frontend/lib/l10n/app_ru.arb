@@ -728,5 +728,7 @@
   "error_enter_address": "Введите адрес",
   "@error_enter_address": {
     "description": "Validation message when address field is empty"
-  }
+  },
+
+  "error_search_ride": "Ошибка при загрузке списка поездок"
 }

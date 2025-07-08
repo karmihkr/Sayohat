@@ -394,4 +394,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tab_profile => 'Профил';
+
+  @override
+  String get error_search_ride => 'Хатогй хангоми боркунии руйхати каторхо';
 }

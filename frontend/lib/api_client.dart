@@ -203,6 +203,40 @@ class APIClient {
       return true;
     }
   }
+
+  Future<List<Map<String, dynamic>>?> searchRides({
+    required String from,
+    required String to,
+    required String date,
+    required int passengers,
+  }) async {
+    final params = {
+      'from': from,
+      'to': to,
+      'date': date,
+      'passengers': passengers.toString(),
+    };
+    final token = await persistentSecuredStorage.read(key: 'token');
+
+    final headers = <String, String>{
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+
+    http.Response? response;
+    try {
+      response = await request(get, '/rides/search', params, headers);
+    } finally {
+      if (response?.statusCode != 200) {
+        return null;
+      }
+      final body = jsonDecode(response!.body);
+      if (body is List) {
+        return body.cast<Map<String, dynamic>>();
+      } else {
+        return null;
+      }
+    }
+  }
 }
 
 var apiClient = APIClient();

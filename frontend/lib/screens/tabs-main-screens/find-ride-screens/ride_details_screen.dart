@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/screens/test_data_search_screen.dart';
+import 'package:sayohat/models/ride_model.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 class RideDetailsScreen extends StatelessWidget {
@@ -61,9 +61,10 @@ class _FullName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
+    //final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.driver_label(ride.fullName),
+      //loc.driver_label(ride.fullName),
+      "Mario",
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -81,9 +82,10 @@ class _Age extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
+    //final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.age_label("${ride.age}"),
+      "30",
+      //loc.age_label("${ride.age}"),
       style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
     );
   }
@@ -116,7 +118,7 @@ class _FromAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.from_address_label(ride.address1),
+        loc.from_address_label(ride.addressFrom),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -134,7 +136,7 @@ class _ToAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.to_address_label(ride.address2),
+        loc.to_address_label(ride.addressTo),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -148,11 +150,10 @@ class _DateStart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
       title: Text(
-        loc.date_label("${ride.date.day}.${ride.date.month}.${ride.date.year}"),
+        ride.date,
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -166,11 +167,10 @@ class _StartTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
       title: Text(
-        loc.time_label("${ride.date.hour}:${ride.date.min}"),
+        ride.time,
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );

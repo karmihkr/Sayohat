@@ -395,4 +395,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tab_profile => 'Profile';
+
+  @override
+  String get error_search_ride => 'Error while searching ride';
 }

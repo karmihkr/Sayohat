@@ -393,4 +393,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tab_profile => 'Профиль';
+
+  @override
+  String get error_search_ride => 'Ошибка при загрузке списка поездок';
 }
