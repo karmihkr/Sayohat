@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 class YourRideDetailsScreen extends StatelessWidget {
   final Ride ride;
@@ -13,6 +14,7 @@ class YourRideDetailsScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryWhite,
       appBar: AppBar(
         title: Text(
+          //
           'Your Ride Details',
           style: TextStyle(fontFamily: 'Roboto'),
         ),
@@ -26,14 +28,13 @@ class YourRideDetailsScreen extends StatelessWidget {
             _FullName(ride: ride),
             SizedBox(height: 16),
             _Age(ride: ride),
-            _Rating(),
             SizedBox(height: 24),
-            _TripDetails(),
+            _RideDetailsText(),
             Divider(),
             _FromAddress(ride: ride),
             _ToAddress(ride: ride),
-            _RideDate(ride: ride),
-            _RideStart(ride: ride),
+            _DateStart(ride: ride),
+            _StartTime(ride: ride),
             SizedBox(height: 24),
             _CarDetailsText(),
             Divider(),
@@ -41,9 +42,9 @@ class YourRideDetailsScreen extends StatelessWidget {
             _CarColor(ride: ride),
             _CarPlate(ride: ride),
             SizedBox(height: 24),
-            _RideDescription(),
+            _Description(),
             Divider(),
-            _RideDescriptionContext(ride: ride),
+            _DescriptionContent(ride: ride),
             _EditRideButton(),
           ],
         ),
@@ -59,12 +60,14 @@ class _FullName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Driver: ${ride.fullName}',
+      loc.driver_label(ride.fullName),
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -77,29 +80,25 @@ class _Age extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Age: ${ride.age} years',
-      style: TextStyle(fontFamily: 'Roboto'),
+      loc.age_label("${ride.age}"),
+      style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
     );
   }
 }
 
-class _Rating extends StatelessWidget {
+class _RideDetailsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('Rating: 5.0', style: TextStyle(fontFamily: 'Roboto'));
-  }
-}
-
-class _TripDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Trip Details',
+      loc.trip_details_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -112,11 +111,12 @@ class _FromAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        'From: ${ride.address1}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        loc.from_address_label(ride.address1),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -129,40 +129,49 @@ class _ToAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        'To: ${ride.address2}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        loc.to_address_label(ride.address2),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
 }
 
-class _RideDate extends StatelessWidget {
-  const _RideDate({required this.ride});
+class _DateStart extends StatelessWidget {
+  const _DateStart({required this.ride});
 
   final Ride ride;
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
-      title: Text('Date: ${ride.date}', style: TextStyle(fontFamily: 'Roboto')),
+      title: Text(
+        loc.date_label(ride.date),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
+      ),
     );
   }
 }
 
-class _RideStart extends StatelessWidget {
-  const _RideStart({required this.ride});
+class _StartTime extends StatelessWidget {
+  const _StartTime({required this.ride});
 
   final Ride ride;
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
-      title: Text('Time: ${ride.time}', style: TextStyle(fontFamily: 'Roboto')),
+      title: Text(
+        loc.time_label(ride.time),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
+      ),
     );
   }
 }
@@ -170,12 +179,14 @@ class _RideStart extends StatelessWidget {
 class _CarDetailsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Car Details',
+      loc.car_details_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
@@ -188,11 +199,13 @@ class _CarModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
+      //
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
-        'Model: ${ride.carModel}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        loc.model_label(ride.carModel),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -205,11 +218,12 @@ class _CarColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
       title: Text(
-        'Color: ${ride.carColor}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        loc.color_label(ride.carColor),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
@@ -222,32 +236,35 @@ class _CarPlate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
       title: Text(
-        'Plate: ${ride.carPlate}',
-        style: TextStyle(fontFamily: 'Roboto'),
+        loc.car_plate_label(ride.carPlate),
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
   }
 }
 
-class _RideDescription extends StatelessWidget {
+class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Description',
+      loc.description_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
         fontFamily: 'Roboto',
+        color: AppColors.primaryGreen,
       ),
     );
   }
 }
 
-class _RideDescriptionContext extends StatelessWidget {
-  const _RideDescriptionContext({required this.ride});
+class _DescriptionContent extends StatelessWidget {
+  const _DescriptionContent({required this.ride});
 
   final Ride ride;
 
@@ -255,7 +272,10 @@ class _RideDescriptionContext extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
-      title: Text(ride.description, style: TextStyle(fontFamily: 'Roboto')),
+      title: Text(
+        ride.description,
+        style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
+      ),
     );
   }
 }
@@ -263,6 +283,7 @@ class _RideDescriptionContext extends StatelessWidget {
 class _EditRideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: ElevatedButton(
         onPressed: () {},
@@ -271,7 +292,7 @@ class _EditRideButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         ),
         child: Text(
-          'Edit this ride',
+          loc.edit_this_ride,
           style: TextStyle(
             color: AppColors.primaryWhite,
             fontWeight: FontWeight.bold,

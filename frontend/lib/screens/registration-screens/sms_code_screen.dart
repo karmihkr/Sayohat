@@ -6,6 +6,8 @@ import 'package:sayohat/theme/app_colors.dart';
 
 import '../../user_data.dart';
 
+import 'package:sayohat/l10n/app_localizations.dart';
+
 final _codeTextController = TextEditingController();
 String? userCode;
 
@@ -25,8 +27,6 @@ class VerificationScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // AppName(),
-                // AppLogo(),
                 SizedBox(height: 80),
                 _FillInTelegramText(),
                 _VerificationCodeText(),
@@ -46,8 +46,9 @@ class VerificationScreen extends StatelessWidget {
 class _FillInTelegramText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Fill in Telegram',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.fill_in_telegram,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -60,8 +61,9 @@ class _FillInTelegramText extends StatelessWidget {
 class _VerificationCodeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'verification code',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.verification_code,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -74,6 +76,7 @@ class _VerificationCodeText extends StatelessWidget {
 class _CodeForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 246.0,
       height: 46,
@@ -105,7 +108,7 @@ class _CodeForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Code",
+          hintText: loc.hint_code,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -117,13 +120,14 @@ class _CodeForm extends StatelessWidget {
 class _ConfirmCodeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () async {
         userCode = _codeTextController.text;
         if (userCode?.isEmpty ?? true) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(snackBarFactory.createSnackBar("Enter the code"));
+          ).showSnackBar(snackBarFactory.createSnackBar(loc.error_enter_code));
         } else {
           var telegramValidationResult = await apiClient.checkVericode(
             user.vericodeRequestId!,
@@ -131,16 +135,13 @@ class _ConfirmCodeButton extends StatelessWidget {
           );
           if (telegramValidationResult == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(
-                "API unreachable, please,"
-                " contact support",
-              ),
+              snackBarFactory.createSnackBar(loc.error_api_unreachable),
             );
             return;
           }
           if (!telegramValidationResult) {
             ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Incorrect or expired code"),
+              snackBarFactory.createSnackBar(loc.error_incorrect_or_expired),
             );
             return;
           }
@@ -149,10 +150,7 @@ class _ConfirmCodeButton extends StatelessWidget {
           );
           if (userExistenceResult == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(
-                "API unreachable, please, "
-                "contact support",
-              ),
+              snackBarFactory.createSnackBar(loc.error_api_unreachable),
             );
             return;
           }
@@ -174,13 +172,13 @@ class _ConfirmCodeButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-      child: const Text(
+      child: Text(
         style: TextStyle(
           color: AppColors.primaryWhite,
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Confirm",
+        loc.button_confirm,
       ),
     );
   }

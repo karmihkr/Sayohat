@@ -1,0 +1,732 @@
+{
+  "@@locale": "ru",
+
+  "auth_type": "Вход и регистрация",
+  "@auth_type": {
+    "description": "Title on the authentication screen"
+  },
+
+  "enter_your_phone_number": "Введите номер телефона",
+  "@enter_your_phone_number": {
+    "description": "Prompt asking the user to input their phone number"
+  },
+
+  "phone_number": "Номер телефона",
+  "@phone_number": {
+    "description": "Label for the phone number field"
+  },
+
+  "proceed": "Продолжить",
+  "@proceed": {
+    "description": "Label for the button to proceed after entering phone number"
+  },
+
+  "is_your_phone_number_correct": "Номер телефона верен?",
+  "@is_your_phone_number_correct": {
+    "description": "Prompt asking the user to confirm their phone number"
+  },
+
+  "no_go_back": "Нет, вернуться",
+  "@no_go_back": {
+    "description": "Label for the button that returns the user to the previous screen"
+  },
+
+  "yes_go_next": "Да, дальше",
+  "@yes_go_next": {
+    "description": "Label for the button that proceeds to the verification screen"
+  },
+
+  "error_api_unreachable": "Сервис недоступен. Свяжитесь с поддержкой",
+  "@error_api_unreachable": {
+    "description": "Error message shown when the backend API cannot be reached"
+  },
+
+  "fill_in_telegram": "Введите Telegram-код",
+  "@fill_in_telegram": {
+    "description": "Header prompting the user to fill in their Telegram verification code"
+  },
+
+  "verification_code": "Код",
+  "@verification_code": {
+    "description": "Label for the verification code field"
+  },
+
+  "hint_code": "Код",
+  "@hint_code": {
+    "description": "Hint text inside the verification code input field"
+  },
+
+  "button_confirm": "Подтвердить",
+  "@button_confirm": {
+    "description": "Label for the button that submits the verification code"
+  },
+
+  "error_enter_code": "Введите код",
+  "@error_enter_code": {
+    "description": "Error message shown when the code field is empty"
+  },
+
+  "error_incorrect_or_expired": "Неверный или истёкший код",
+  "@error_incorrect_or_expired": {
+    "description": "Error message shown when the entered verification code is invalid or expired"
+  },
+
+  "enter_name_surname": "Введите имя и фамилию",
+  "@enter_name_surname": {
+    "description": "Instruction prompting the user to input both name and surname"
+  },
+
+  "hint_name": "Имя",
+  "@hint_name": {
+    "description": "Hint text inside the name input field"
+  },
+
+  "hint_surname": "Фамилия",
+  "@hint_surname": {
+    "description": "Hint text inside the surname input field"
+  },
+
+  "error_enter_name_surname": "Введите имя и фамилию",
+  "@error_enter_name_surname": {
+    "description": "Error shown when either name or surname is empty"
+  },
+
+  "button_go_next": "Далее",
+  "@button_go_next": {
+    "description": "Label for the button to proceed to the next screen"
+  },
+
+  "hint_date_of_birth": "Дата рождения",
+  "@hint_date_of_birth": {
+    "description": "Hint text inside the date of birth input field"
+  },
+
+  "button_finish": "Готово",
+  "@button_finish": {
+    "description": "Label for the button that completes the birth registration step"
+  },
+
+  "error_add_date_of_birth": "Укажите дату рождения",
+  "@error_add_date_of_birth": {
+    "description": "Error shown when the date of birth field is left empty"
+  },
+
+  "error_valid_date_of_birth": "Введите корректную дату",
+  "@error_valid_date_of_birth": {
+    "description": "Error shown when the entered date of birth is invalid"
+  },
+
+  "general": "Общее",
+  "@general": {
+    "description": "Title of the first step in the Add Ride stepper"
+  },
+
+  "ride_details": "Детали поездки",
+  "@ride_details": {
+    "description": "Title of the second step in the Add Ride stepper"
+  },
+
+  "car_information": "Информация об авто",
+  "@car_information": {
+    "description": "Title of the third step in the Add Ride stepper"
+  },
+
+  "hint_from": "Откуда",
+  "@hint_from": {
+    "description": "Hint text for the departure city input field"
+  },
+
+  "hint_to": "Куда",
+  "@hint_to": {
+    "description": "Hint text for the arrival city input field"
+  },
+
+  "hint_ddmmyyyy": "дд/мм/гггг",
+  "@hint_ddmmyyyy": {
+    "description": "Hint text for the date input in dd/mm/yyyy format"
+  },
+
+  "hint_number_of_passengers": "Кол-во мест",
+  "@hint_number_of_passengers": {
+    "description": "Hint text for the number of passengers input field"
+  },
+
+  "button_find_ride": "Найти поездку",
+  "@button_find_ride": {
+    "description": "Label for the button that triggers the ride search"
+  },
+
+  "please_enter_field": "Пожалуйста, введите {fieldName}",
+  "@please_enter_field": {
+    "description": "Generic validation message prompting the user to enter a required field",
+    "placeholders": {
+      "fieldName": {
+        "type": "String",
+        "example": "Откуда"
+      }
+    }
+  },
+
+  "please_enter_date": "Укажите дату",
+  "@please_enter_date": {
+    "description": "Validation message when the date field is empty"
+  },
+
+  "use_ddmmyyyy_format": "Используйте дд/мм/гггг",
+  "@use_ddmmyyyy_format": {
+    "description": "Validation message when the date string format is incorrect"
+  },
+
+  "invalid_date": "Неправильная дата",
+  "@invalid_date": {
+    "description": "Validation message when the date value is invalid"
+  },
+
+  "date_cannot_be_in_the_past": "Дата не может быть в прошлом",
+  "@date_cannot_be_in_the_past": {
+    "description": "Validation message when the chosen date is before today"
+  },
+
+  "please_enter_number_of_passengers": "Укажите кол-во мест",
+  "@please_enter_number_of_passengers": {
+    "description": "Validation message when the passengers field is empty"
+  },
+
+  "please_enter_a_valid_number": "Введите корректное число",
+  "@please_enter_a_valid_number": {
+    "description": "Validation message when the passengers value is not a number"
+  },
+
+  "number_should_be_positive": "Значение должно быть больше нуля",
+  "@number_should_be_positive": {
+    "description": "Validation message when the passengers value is zero or negative"
+  },
+
+  "no_rides_found": "По вашим параметрам ничего не найдено",
+  "@no_rides_found": {
+    "description": "Message shown when no rides match the search criteria"
+  },
+
+  "available_seats": "Свободных мест: {seats}",
+  "@available_seats": {
+    "description": "Label showing how many seats are available",
+    "placeholders": {
+      "seats": {
+        "type": "String",
+        "example": "3"
+      }
+    }
+  },
+
+  "cost_r": "Стоимость: {cost} р.",
+  "@cost_r": {
+    "description": "Label showing the cost of the ride in rubles",
+    "placeholders": {
+      "cost": {
+        "type": "String",
+        "example": "500"
+      }
+    }
+  },
+
+  "to_address_label": "Куда: {address}",
+  "@to_address_label": {
+    "description": "Label for the destination address",
+    "placeholders": {
+      "address": {
+        "type": "String",
+        "example": "ул. Ленина, 10"
+      }
+    }
+  },
+
+  "from_address_label": "Откуда: {address}",
+  "@from_address_label": {
+    "description": "Label for the departure address",
+    "placeholders": {
+      "address": {
+        "type": "String",
+        "example": "ул. Победы, 5"
+      }
+    }
+  },
+
+  "from_to_cities": "{from} – {to}",
+  "@from_to_cities": {
+    "description": "Label showing departure and arrival cities",
+    "placeholders": {
+      "from": {
+        "type": "String",
+        "example": "Москва"
+      },
+      "to": {
+        "type": "String",
+        "example": "СПб"
+      }
+    }
+  },
+
+  "date_time": "{date} – {time}",
+  "@date_time": {
+    "description": "Label showing the ride date and time",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "12.05.2025"
+      },
+      "time": {
+        "type": "String",
+        "example": "14:30"
+      }
+    }
+  },
+
+  "years_old": "{age} лет",
+  "@years_old": {
+    "description": "Label showing the driver's age",
+    "placeholders": {
+      "age": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  },
+
+  "ride_details_title": "Детали поездки",
+  "@ride_details_title": {
+    "description": "AppBar title on the ride details screen"
+  },
+
+  "driver_label": "Водитель: {fullName}",
+  "@driver_label": {
+    "description": "Label showing the driver’s full name",
+    "placeholders": {
+      "fullName": {
+        "type": "String",
+        "example": "Иван Иванов"
+      }
+    }
+  },
+
+  "age_label": "Возраст: {age} лет",
+  "@age_label": {
+    "description": "Label showing the driver’s age in years",
+    "placeholders": {
+      "age": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  },
+
+  "trip_details_heading": "Детали поездки",
+  "@trip_details_heading": {
+    "description": "Section heading for trip details"
+  },
+
+  "date_label": "Дата: {date}",
+  "@date_label": {
+    "description": "Label showing the trip date",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "12.05.2025"
+      }
+    }
+  },
+
+  "time_label": "Время: {time}",
+  "@time_label": {
+    "description": "Label showing the trip start time",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "14:30"
+      }
+    }
+  },
+
+  "car_details_heading": "Детали авто",
+  "@car_details_heading": {
+    "description": "Section heading for car details"
+  },
+
+  "model_label": "Модель: {carModel}",
+  "@model_label": {
+    "description": "Label showing the car model",
+    "placeholders": {
+      "carModel": {
+        "type": "String",
+        "example": "Toyota Camry"
+      }
+    }
+  },
+
+  "color_label": "Цвет: {carColor}",
+  "@color_label": {
+    "description": "Label showing the car color",
+    "placeholders": {
+      "carColor": {
+        "type": "String",
+        "example": "Красный"
+      }
+    }
+  },
+
+  "car_plate_label": "Номер: {carPlate}",
+  "@car_plate_label": {
+    "description": "Label showing the car’s plate number",
+    "placeholders": {
+      "carPlate": {
+        "type": "String",
+        "example": "А123ВС"
+      }
+    }
+  },
+
+  "description_heading": "Описание",
+  "@description_heading": {
+    "description": "Section heading for ride description"
+  },
+
+  "book_this_ride": "Забронировать поездку",
+  "@book_this_ride": {
+    "description": "Label for the button that confirms booking the ride"
+  },
+
+  "empty_your_rides": "Список появится после добавления поездок",
+  "@empty_your_rides": {
+    "description": "Message shown when the user has no rides in their list"
+  },
+
+  "your_ride_details": "Мои поездки",
+  "@your_ride_details": {
+    "description": "AppBar title on the user's ride details screen"
+  },
+
+  "trip_details_heading": "Детали поездки",
+  "from_address_label": "Откуда: {address}",
+  "to_address_label": "Куда: {address}",
+  "date_label": "Дата: {date}",
+  "time_label": "Время: {time}",
+  "car_details_heading": "Детали авто",
+  "model_label": "Модель: {carModel}",
+  "color_label": "Цвет: {carColor}",
+  "plate_label": "Номер: {carPlate}",
+  "description_heading": "Описание",
+  "edit_this_ride": "Редактировать поездку",
+
+  "error_data_unresolved": "Не удалось загрузить данные",
+  "@error_data_unresolved": {
+    "description": "Message shown when the user profile data could not be loaded"
+  },
+
+  "label_phone": "Телефон:",
+  "@label_phone": {
+    "description": "Label preceding the phone number in the profile screen"
+  },
+
+  "label_date_of_birth": "Дата рождения:",
+  "@label_date_of_birth": {
+    "description": "Label preceding the date of birth in the profile screen"
+  },
+
+  "rides_done": "Выполнено поездок: {count}",
+  "@rides_done": {
+    "description": "Header showing how many rides the user has completed",
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+
+  "as_passenger": "В качестве пассажира",
+  "@as_passenger": {
+    "description": "Label under passenger statistics block"
+  },
+
+  "as_driver": "В качестве водителя",
+  "@as_driver": {
+    "description": "Label under driver statistics block"
+  },
+
+  "button_edit_profile": "Редактировать профиль",
+  "@button_edit_profile": {
+    "description": "Label for the button that navigates to the profile editing screen"
+  },
+
+  "edit_your_profile": "Редактировать профиль",
+  "@edit_your_profile": {
+    "description": "AppBar title on the edit profile screen"
+  },
+
+  "label_your_name": "Ваше имя: {name}",
+  "@label_your_name": {
+    "description": "Label showing the user's current name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Алексей"
+      }
+    }
+  },
+
+  "label_your_surname": "Ваша фамилия: {surname}",
+  "@label_your_surname": {
+    "description": "Label showing the user's current surname",
+    "placeholders": {
+      "surname": {
+        "type": "String",
+        "example": "Иванов"
+      }
+    }
+  },
+
+  "label_your_phone_number": "Ваш телефон: {phone}",
+  "@label_your_phone_number": {
+    "description": "Label showing the user's current phone number",
+    "placeholders": {
+      "phone": {
+        "type": "String",
+        "example": "+71234567890"
+      }
+    }
+  },
+
+  "label_your_date_of_birth": "Ваша дата рождения: {birth}",
+  "@label_your_date_of_birth": {
+    "description": "Label showing the user's current date of birth",
+    "placeholders": {
+      "birth": {
+        "type": "String",
+        "example": "01/01/1990"
+      }
+    }
+  },
+
+  "hint_new_name": "Новое имя",
+  "@hint_new_name": {
+    "description": "Hint text for the new name input field"
+  },
+
+  "hint_new_surname": "Новая фамилия",
+  "@hint_new_surname": {
+    "description": "Hint text for the new surname input field"
+  },
+
+  "hint_new_phone_number": "Новый телефон",
+  "@hint_new_phone_number": {
+    "description": "Hint text for the new phone number input field"
+  },
+
+  "hint_new_date_of_birth": "Новая дата рождения",
+  "@hint_new_date_of_birth": {
+    "description": "Hint text for the new date of birth input field"
+  },
+
+  "button_confirm_changes": "Сохранить",
+  "@button_confirm_changes": {
+    "description": "Label for the button that submits profile changes"
+  },
+
+  "snackbar_info_updated": "Данные успешно обновлены",
+  "@snackbar_info_updated": {
+    "description": "Snackbar message shown when profile information is updated successfully"
+  },
+
+  "snackbar_something_went_wrong": "Что-то пошло не так",
+  "@snackbar_something_went_wrong": {
+    "description": "Snackbar message shown when an unexpected error occurs"
+  },
+
+  "tab_search": "Поиск",
+  "@tab_search": {
+    "description": "Label for the Search tab in the bottom navigation bar"
+  },
+
+  "tab_add": "Добавить",
+  "@tab_add": {
+    "description": "Label for the Add tab in the bottom navigation bar"
+  },
+
+  "tab_your_rides": "Мои поездки",
+  "@tab_your_rides": {
+    "description": "Label for the Your rides tab in the bottom navigation bar"
+  },
+
+  "tab_profile": "Профиль",
+  "@tab_profile": {
+    "description": "Label for the Profile tab in the bottom navigation bar"
+  }, 
+  "registration": "Регистрация",
+  "@registration": {
+    "description": "Header for registration screens"
+  },
+
+  "hint_start_enter_address": "Начните ввод адреса",
+  "@hint_start_enter_address": {
+    "description": "Hint text for the city autocomplete field"
+  },
+
+  "hint_date_ddmmyyyy": "дд/мм/гггг",
+  "@hint_date_ddmmyyyy": {
+    "description": "Hint text for date input in dd/mm/yyyy format"
+  },
+
+  "hint_time_hhmm": "чч:мм",
+  "@hint_time_hhmm": {
+    "description": "Hint text for time input in hh:mm format"
+  },
+
+  "hint_price": "Цена",
+  "@hint_price": {
+    "description": "Hint text for the price input field"
+  },
+
+  "hint_contact_info_rules": "Контактная информация, правила и т.д.",
+  "@hint_contact_info_rules": {
+    "description": "Hint text for the ride description input field"
+  },
+
+  "hint_car_model": "Модель авто",
+  "@hint_car_model": {
+    "description": "Hint text for the car model input field"
+  },
+
+  "hint_car_color": "Цвет авто",
+  "@hint_car_color": {
+    "description": "Hint text for the car color input field"
+  },
+
+  "hint_car_plate": "Номер авто",
+  "@hint_car_plate": {
+    "description": "Hint text for the car plate input field"
+  },
+
+  "button_back": "Назад",
+  "@button_back": {
+    "description": "Label for the Back button in the stepper controls"
+  },
+
+  "button_next": "Далее",
+  "@button_next": {
+    "description": "Label for the Next button in the stepper controls"
+  },
+
+  "button_complete": "Завершить",
+  "@button_complete": {
+    "description": "Label for the Complete button in the stepper controls"
+  },
+
+  "error_enter_time": "Укажите время",
+  "@error_enter_time": {
+    "description": "Validation message when time field is empty"
+  },
+
+  "error_invalid_time": "Неверное время",
+  "@error_invalid_time": {
+    "description": "Validation message when time value is out of range or malformed"
+  },
+
+  "error_enter_date": "Укажите дату",
+  "@error_enter_date": {
+    "description": "Validation message when date field is empty"
+  },
+
+  "error_format_date": "Используйте дд/мм/гггг",
+  "@error_format_date": {
+    "description": "Validation message when date string format is incorrect"
+  },
+
+  "error_invalid_date": "Неправильная дата",
+  "@error_invalid_date": {
+    "description": "Validation message when date value is invalid"
+  },
+
+  "error_date_past": "Дата не может быть в прошлом",
+  "@error_date_past": {
+    "description": "Validation message when the chosen date is before today"
+  },
+
+  "error_enter_passengers": "Укажите количество мест",
+  "@error_enter_passengers": {
+    "description": "Validation message when passengers field is empty"
+  },
+
+  "error_valid_number": "Введите корректное число",
+  "@error_valid_number": {
+    "description": "Validation message when passengers value is not a number"
+  },
+
+  "error_positive_number": "Число должно быть положительным",
+  "@error_positive_number": {
+    "description": "Validation message when passengers value is zero or negative"
+  },
+
+  "error_enter_address_short": "Введите адрес",
+  "@error_enter_address_short": {
+    "description": "Short validation message when address field is empty"
+  },
+
+  "error_enter_price": "Укажите стоимость",
+  "@error_enter_price": {
+    "description": "Validation message when price field is empty"
+  },
+
+  "error_enter_description": "Введите описание",
+  "@error_enter_description": {
+    "description": "Validation message when description field is empty"
+  },
+
+  "error_enter_car_model": "Укажите модель авто",
+  "@error_enter_car_model": {
+    "description": "Validation message when car model field is empty"
+  },
+
+  "error_enter_car_color": "Укажите цвет авто",
+  "@error_enter_car_color": {
+    "description": "Validation message when car color field is empty"
+  },
+
+  "error_enter_car_plate": "Укажите номер авто",
+  "@error_enter_car_plate": {
+    "description": "Validation message when car plate field is empty"
+  },
+
+  "success_ride_added": "Поездка успешно добавлена!",
+  "@success_ride_added": {
+    "description": "Snackbar message shown when a new ride has been added successfully"
+  },
+
+  "hint_departure_address": "Адрес отправления",
+  "@hint_departure_address": {
+    "description": "Hint text for the departure address field"
+  },
+
+  "hint_destination_address": "Адрес назначения",
+  "@hint_destination_address": {
+    "description": "Hint text for the destination address field"
+  },
+
+  "please_enter_from": "Укажите пункт отправления",
+  "@please_enter_from": {
+    "description": "Validation message when the departure city field is empty"
+  },
+
+  "please_enter_to": "Укажите пункт назначения",
+  "@please_enter_to": {
+    "description": "Validation message when the arrival city field is empty"
+  },
+
+  "number_should_be_possitive": "Число должно быть положительным",
+  "@number_should_be_possitive": {
+    "description": "Validation message when the entered number of passengers is zero or negative"
+  },
+  
+  "error_enter_address": "Введите адрес",
+  "@error_enter_address": {
+    "description": "Validation message when address field is empty"
+  }
+}

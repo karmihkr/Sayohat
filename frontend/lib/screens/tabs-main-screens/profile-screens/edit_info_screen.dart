@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_client.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
+
+final _dateMaskFormatter = MaskTextInputFormatter(
+  mask: '##/##/####',
+  filter: {"#": RegExp(r'\d')},
+);
 
 bool isValidDate(String input) {
   if (input == "") {
@@ -94,17 +100,18 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
     if (userData == null) {
-      return const Center(child: Text("Data could not be resolved"));
+      return Center(child: Text(loc.error_data_unresolved));
     }
     return Scaffold(
       backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         title: Text(
-          'Edit your profile',
+          loc.edit_your_profile,
           style: TextStyle(fontFamily: 'Roboto'),
         ),
         backgroundColor: AppColors.backgroundGreen,
@@ -120,28 +127,28 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Your name: ${userData!['name']}",
+              loc.label_your_name(userData!['name']),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _NameForm(nameTextController: nameTextController),
             Divider(),
             Text(
-              "Your surname: ${userData!['surname']}",
+              loc.label_your_surname(userData!['surname']),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _SurnameForm(surnameTextController: surnameTextController),
             Divider(),
             Text(
-              "Your phone number: ${userData!['phone']}",
+              loc.label_your_phone_number(userData!['phone']),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _PhoneNumberForm(phoneTextController: phoneTextController),
             Divider(),
             Text(
-              "Your date of birth: ${userData!['birth']}",
+              loc.label_your_date_of_birth(userData!['birth']),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
@@ -167,6 +174,7 @@ class _NameForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 200,
       height: 40,
@@ -197,7 +205,7 @@ class _NameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "New name",
+          hintText: loc.hint_new_name,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -213,6 +221,7 @@ class _SurnameForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 200,
       height: 40,
@@ -243,7 +252,7 @@ class _SurnameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "New surname",
+          hintText: loc.hint_new_surname,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -259,6 +268,7 @@ class _PhoneNumberForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 200,
       height: 40,
@@ -290,7 +300,7 @@ class _PhoneNumberForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "New phone number",
+          hintText: loc.hint_new_phone_number,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -305,11 +315,12 @@ class _BirthForm extends StatelessWidget {
   const _BirthForm({required this.birthTextController});
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 200.0,
       height: 40,
       child: TextField(
-        inputFormatters: [DateInputFormatter()],
+        inputFormatters: [_dateMaskFormatter],
         controller: birthTextController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -337,7 +348,7 @@ class _BirthForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "New date of birth",
+          hintText: loc.hint_new_date_of_birth,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -365,6 +376,7 @@ class _ConfirmChanges extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: ElevatedButton(
         onPressed: () async {
@@ -380,21 +392,18 @@ class _ConfirmChanges extends StatelessWidget {
             );
             if (updatedUserDataResult) {
               ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar("Info updated successfully"),
+                snackBarFactory.createSnackBar(loc.snackbar_info_updated),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar(
-                  "API unreachable. Please, contact support",
-                ),
+                snackBarFactory.createSnackBar(loc.error_api_unreachable),
               );
             }
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar("Something went wrong"),
+              snackBarFactory.createSnackBar(loc.snackbar_something_went_wrong),
             );
           }
-          //print("Tap");
         },
         style: ElevatedButton.styleFrom(
           minimumSize: Size(200, 40),
@@ -403,13 +412,13 @@ class _ConfirmChanges extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
-        child: const Text(
+        child: Text(
           style: TextStyle(
             color: AppColors.primaryWhite,
             fontSize: 26.0,
             fontFamily: 'Roboto',
           ),
-          "Confirm Changes",
+          loc.button_confirm_changes,
         ),
       ),
     );

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:yandex_mapkit/yandex_mapkit.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
+
+final _dateMaskFormatter = MaskTextInputFormatter(
+  mask: '##/##/####',
+  filter: {"#": RegExp(r'\d')},
+);
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -27,8 +33,9 @@ class _AddRideScreenState extends State<AddRideScreen> {
   ];
 
   String? _validateTime(String? value) {
+    final loc = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Enter time';
+      return loc.error_enter_time;
     }
     final timeParts = value.split(":");
 
@@ -36,17 +43,18 @@ class _AddRideScreenState extends State<AddRideScreen> {
       final hours = int.parse(timeParts[0]);
       final mins = int.parse(timeParts[1]);
       if (hours >= 24 || mins >= 60) {
-        return "Invalid time";
+        return loc.error_invalid_time;
       }
       return null;
     } catch (e) {
-      return "Invalid time";
+      return loc.error_invalid_time;
     }
   }
 
   String? _validateDate(String? value) {
+    final loc = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please enter date';
+      return loc.error_enter_date;
     }
 
     final dateParts = value.split('/');
@@ -54,7 +62,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
         dateParts[0].length != 2 ||
         dateParts[1].length != 2 ||
         dateParts[2].length != 4) {
-      return 'Use dd/mm/yyyy format';
+      return loc.error_format_date;
     }
 
     try {
@@ -66,7 +74,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
       if (inputDate.year != year ||
           inputDate.month != month ||
           inputDate.day != day) {
-        return 'Invalid date';
+        return loc.error_invalid_date;
       }
 
       final today = DateTime.now();
@@ -74,24 +82,25 @@ class _AddRideScreenState extends State<AddRideScreen> {
       final inputDateOnly = DateTime(year, month, day);
 
       if (inputDateOnly.isBefore(todayDate)) {
-        return 'Date cannot be in the past';
+        return loc.error_date_past;
       }
 
       return null;
     } catch (e) {
-      return 'Invalid date';
+      return loc.error_invalid_date;
     }
   }
 
   String? _validatePassengers(String? value) {
+    final loc = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please enter number of passengers';
+      return loc.error_enter_passengers;
     }
     if (int.tryParse(value) == null) {
-      return 'Please enter a valid number';
+      return loc.error_valid_number;
     }
     if (int.parse(value) <= 0) {
-      return 'Number should be positive';
+      return loc.error_positive_number;
     }
     return null;
   }
@@ -111,6 +120,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -139,20 +149,20 @@ class _AddRideScreenState extends State<AddRideScreen> {
           },
           steps: [
             Step(
-              title: Text('General'),
+              title: Text(loc.general),
               content: Form(
                 key: _stepFormKeys[0],
                 child: Column(
                   children: [
                     CityField(
                       key: Key('departureCityField'),
-                      label: 'From',
+                      label: loc.hint_from,
                       onSaved: (value) => fromCity = value,
                     ),
                     SizedBox(height: 10),
                     CityField(
                       key: Key('arrivalCityField'),
-                      label: 'To',
+                      label: loc.hint_to,
                       onSaved: (value) => toCity = value,
                     ),
                     SizedBox(height: 10),
@@ -173,20 +183,20 @@ class _AddRideScreenState extends State<AddRideScreen> {
               isActive: _currentStep >= 0,
             ),
             Step(
-              title: Text('Ride details'),
+              title: Text(loc.ride_details),
               content: Form(
                 key: _stepFormKeys[1],
                 child: Column(
                   children: [
                     _AddressField(
                       key: Key("departureAddressField"),
-                      label: 'Departure address',
+                      label: loc.hint_departure_address,
                       onSaved: (value) => addressFrom = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _AddressField(
                       key: Key("arrivalAddressField"),
-                      label: 'Destination address',
+                      label: loc.hint_destination_address,
                       onSaved: (value) => addressTo = value ?? '',
                     ),
                     SizedBox(height: 10),
@@ -208,7 +218,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
               isActive: _currentStep >= 1,
             ),
             Step(
-              title: Text('Car information'),
+              title: Text(loc.car_information),
               content: Form(
                 key: _stepFormKeys[2],
                 child: Column(
@@ -236,7 +246,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
                         backgroundColor: AppColors.primaryGreen,
                       ),
                       child: Text(
-                        'Back',
+                        loc.button_back,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -248,7 +258,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
                       backgroundColor: AppColors.primaryGreen,
                     ),
                     child: Text(
-                      _currentStep == 2 ? 'Complete' : 'Next',
+                      _currentStep == 2 ? loc.button_complete : loc.button_next,
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -262,6 +272,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
   }
 
   void _saveRide() async {
+    final loc = AppLocalizations.of(context)!;
     Ride userRide = Ride(
       fullName: '${user.name} ${user.surname}',
       age: 5,
@@ -288,9 +299,9 @@ class _AddRideScreenState extends State<AddRideScreen> {
     };
     apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
     yourRides.add(userRide);
-    ScaffoldMessenger.of(context).showSnackBar(
-      snackBarFactory.createSnackBar("Ride was added successfully!"),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(snackBarFactory.createSnackBar(loc.success_ride_added));
   }
 }
 
@@ -357,6 +368,7 @@ class _CityFieldState extends State<CityField> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Autocomplete<SuggestItem>(
       optionsBuilder: (TextEditingValue tv) async {
         return _fetchSuggestions(tv.text);
@@ -372,7 +384,7 @@ class _CityFieldState extends State<CityField> {
               focusNode: focusNode,
               decoration: InputDecoration(
                 labelText: widget.label,
-                hintText: 'Start enter the address',
+                hintText: loc.hint_start_enter_address,
                 prefixIcon: Icon(
                   Icons.location_on,
                   color: AppColors.primaryGreen,
@@ -392,7 +404,7 @@ class _CityFieldState extends State<CityField> {
               ),
               onFieldSubmitted: (_) => onFieldSubmitted(),
               validator: (v) =>
-                  (v == null || v.isEmpty) ? 'Please, enter the address' : null,
+                  (v == null || v.isEmpty) ? loc.error_enter_address : null,
               onSaved: (v) {
                 if (v != null) widget.onSaved(v);
               },
@@ -438,6 +450,7 @@ class _AddressField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
       decoration: InputDecoration(
@@ -462,7 +475,8 @@ class _AddressField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter address' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_address_short : null,
       onSaved: onSaved,
     );
   }
@@ -477,12 +491,13 @@ class _DateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      inputFormatters: [DateInputFormatter()],
+      inputFormatters: [_dateMaskFormatter],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
-        hintText: 'Date dd/mm/yyyy',
+        hintText: loc.hint_date_ddmmyyyy,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -521,11 +536,12 @@ class _PassengerNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outlined, color: AppColors.primaryGreen),
-        hintText: "Number of passengers",
+        hintText: loc.hint_number_of_passengers,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -565,12 +581,13 @@ class _TimeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
       inputFormatters: <TextInputFormatter>[HourMinsFormatter()],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.access_time, color: AppColors.primaryGreen),
-        hintText: "Time hh:mm",
+        hintText: loc.hint_time_hhmm,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -603,10 +620,11 @@ class _PriceField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.money, color: AppColors.primaryGreen),
-        hintText: "Price",
+        hintText: loc.hint_price,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -626,7 +644,8 @@ class _PriceField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter price' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_price : null,
       onSaved: onSaved,
       keyboardType: TextInputType.number,
     );
@@ -641,11 +660,12 @@ class _DescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.info, color: AppColors.primaryGreen),
-        hintText: "Contact info, rules etc.",
+        hintText: loc.hint_contact_info_rules,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -665,7 +685,8 @@ class _DescriptionField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter description' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_description : null,
       onSaved: onSaved,
     );
   }
@@ -678,10 +699,11 @@ class _CarModelField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.directions_car, color: AppColors.primaryGreen),
-        hintText: "Car Model",
+        hintText: loc.hint_car_model,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -701,7 +723,8 @@ class _CarModelField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter car model' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_model : null,
       onSaved: onSaved,
     );
   }
@@ -714,10 +737,11 @@ class _CarColorField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.color_lens, color: AppColors.primaryGreen),
-        hintText: "Car color",
+        hintText: loc.hint_car_color,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -737,7 +761,8 @@ class _CarColorField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter car color' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_color : null,
       onSaved: onSaved,
     );
   }
@@ -750,10 +775,11 @@ class _CarPlateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
-        hintText: "Car plate",
+        hintText: loc.hint_car_plate,
         filled: true,
         fillColor: Colors.white,
         focusedBorder: UnderlineInputBorder(
@@ -773,7 +799,8 @@ class _CarPlateField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) => value?.isEmpty ?? true ? 'Enter car plate' : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
       onSaved: onSaved,
     );
   }

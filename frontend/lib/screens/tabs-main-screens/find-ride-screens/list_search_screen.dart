@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/test_data_search_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/ride_details_screen.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 class ListSearchRideScreen extends StatelessWidget {
   const ListSearchRideScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -47,11 +49,11 @@ class ListSearchRideScreen extends StatelessWidget {
                     },
                   )
                 else
-                  const Center(
+                  Center(
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text(
-                        'Sorry, we did not find rides by your preferences, try another city or date',
+                        loc.no_rides_found,
                         style: TextStyle(
                           fontSize: 23,
                           color: AppColors.primaryGreen,
@@ -116,6 +118,7 @@ class _SeatsAndCost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -124,15 +127,15 @@ class _SeatsAndCost extends StatelessWidget {
             Icon(Icons.person, size: 16, color: Colors.grey),
             SizedBox(width: 8),
             Text(
-              'Available seats: ${ride.seats}',
+              loc.available_seats(ride.seats.toString()),
               style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
             ),
           ],
         ),
         Text(
-          'Cost: ${ride.cost} r.',
+          loc.cost_r(ride.cost.toString()),
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
             color: AppColors.primaryGreen,
           ),
@@ -149,14 +152,15 @@ class _ToAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Row(
       children: [
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
           ride.address2.length > 20
-              ? 'To: ${ride.address2.substring(0, 20)}...'
-              : 'To: ${ride.address2}',
+              ? loc.to_address_label(ride.address2.substring(0, 20))
+              : loc.to_address_label(ride.address2),
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
@@ -171,14 +175,15 @@ class _FromAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Row(
       children: [
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
           ride.address1.length > 20
-              ? 'From: ${ride.address1.substring(0, 20)}...'
-              : 'From: ${ride.address1}',
+              ? loc.from_address_label(ride.address1.substring(0, 20))
+              : loc.from_address_label(ride.address1),
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
@@ -193,10 +198,14 @@ class _FromToCities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      '${ride.from} - ${ride.to}'.length > 25
-          ? '${ride.from.substring(0, 5)}. - ${ride.to.substring(0, 5)}.'
-          : '${ride.from} - ${ride.to}',
+      loc.from_to_cities(ride.from, ride.to).length > 25
+          ? loc.from_to_cities(
+              ride.from.substring(0, 5),
+              ride.to.substring(0, 5),
+            )
+          : loc.from_to_cities(ride.from, ride.to),
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
@@ -231,8 +240,9 @@ class _Age extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      '${ride.age} years old',
+      loc.years_old("${ride.age}"),
       style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
     );
   }

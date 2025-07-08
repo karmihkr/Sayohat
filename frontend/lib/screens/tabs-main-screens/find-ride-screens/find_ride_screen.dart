@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/find_data.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
+
+final _dateMaskFormatter = MaskTextInputFormatter(
+  mask: '##/##/####',
+  filter: {"#": RegExp(r'\d')},
+);
 
 class FindRideScreen extends StatefulWidget {
   final Function(bool) onShowSearchList;
@@ -33,16 +39,10 @@ class _FindRideScreenState extends State<FindRideScreen> {
     widget.onShowSearchList(true);
   }
 
-  String? _validateRequired(String? value, String fieldName) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter $fieldName';
-    }
-    return null;
-  }
-
   String? _validateDate(String? value) {
+    final loc = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please enter date';
+      return loc.please_enter_date;
     }
 
     final dateParts = value.split('/');
@@ -50,7 +50,7 @@ class _FindRideScreenState extends State<FindRideScreen> {
         dateParts[0].length != 2 ||
         dateParts[1].length != 2 ||
         dateParts[2].length != 4) {
-      return 'Use dd/mm/yyyy format';
+      return loc.use_ddmmyyyy_format;
     }
 
     try {
@@ -62,7 +62,7 @@ class _FindRideScreenState extends State<FindRideScreen> {
       if (inputDate.year != year ||
           inputDate.month != month ||
           inputDate.day != day) {
-        return 'Invalid date';
+        return loc.invalid_date;
       }
 
       final today = DateTime.now();
@@ -70,24 +70,25 @@ class _FindRideScreenState extends State<FindRideScreen> {
       final inputDateOnly = DateTime(year, month, day);
 
       if (inputDateOnly.isBefore(todayDate)) {
-        return 'Date cannot be in the past';
+        return loc.error_date_past;
       }
 
       return null;
     } catch (e) {
-      return 'Invalid date';
+      return loc.invalid_date;
     }
   }
 
   String? _validatePassengers(String? value) {
+    final loc = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please enter number of passengers';
+      return loc.please_enter_number_of_passengers;
     }
     if (int.tryParse(value) == null) {
-      return 'Please enter a valid number';
+      return loc.please_enter_a_valid_number;
     }
     if (int.parse(value) <= 0) {
-      return 'Number should be possitive';
+      return loc.number_should_be_possitive;
     }
     return null;
   }
@@ -116,15 +117,9 @@ class _FindRideScreenState extends State<FindRideScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _FromField(
-                controller: _fromController,
-                validator: (value) => _validateRequired(value, 'from'),
-              ),
+              _FromField(controller: _fromController),
               SizedBox(height: 10),
-              _ToField(
-                controller: _toController,
-                validator: (value) => _validateRequired(value, 'to'),
-              ),
+              _ToField(controller: _toController),
               SizedBox(height: 10),
               _DateField(controller: _dateController, validator: _validateDate),
               SizedBox(height: 10),
@@ -144,15 +139,21 @@ class _FindRideScreenState extends State<FindRideScreen> {
 
 class _FromField extends StatelessWidget {
   final TextEditingController controller;
-  final FormFieldValidator<String>? validator;
 
-  const _FromField({required this.controller, this.validator});
+  const _FromField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       controller: controller,
-      validator: validator,
+      validator: (value) {
+        final loc = AppLocalizations.of(context)!;
+        if (value == null || value.isEmpty) {
+          return loc.please_enter_field(loc.hint_from);
+        }
+        return null;
+      },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(
@@ -171,7 +172,7 @@ class _FromField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "From",
+        hintText: loc.hint_from,
         filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
@@ -181,15 +182,21 @@ class _FromField extends StatelessWidget {
 
 class _ToField extends StatelessWidget {
   final TextEditingController controller;
-  final FormFieldValidator<String>? validator;
 
-  const _ToField({required this.controller, this.validator});
+  const _ToField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       controller: controller,
-      validator: validator,
+      validator: (value) {
+        final loc = AppLocalizations.of(context)!;
+        if (value == null || value.isEmpty) {
+          return loc.please_enter_field(loc.hint_from);
+        }
+        return null;
+      },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(
@@ -208,7 +215,7 @@ class _ToField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "To",
+        hintText: loc.hint_to,
         filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
@@ -224,10 +231,11 @@ class _DateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       controller: controller,
       validator: validator,
-      inputFormatters: [DateInputFormatter()],
+      inputFormatters: [_dateMaskFormatter],
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
         focusedBorder: UnderlineInputBorder(
@@ -246,7 +254,7 @@ class _DateField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "dd/mm/yyyy",
+        hintText: loc.hint_date_ddmmyyyy,
         filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
@@ -262,6 +270,7 @@ class _PassengerNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return TextFormField(
       controller: controller,
       validator: validator,
@@ -284,7 +293,7 @@ class _PassengerNumberField extends StatelessWidget {
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
-        hintText: "Number of Passengers",
+        hintText: loc.hint_number_of_passengers,
         filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
@@ -299,6 +308,7 @@ class _FindRideButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -314,7 +324,7 @@ class _FindRideButton extends StatelessWidget {
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        'Find a ride!',
+        loc.button_find_ride,
       ),
     );
   }

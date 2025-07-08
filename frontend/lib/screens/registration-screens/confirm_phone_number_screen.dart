@@ -3,6 +3,7 @@ import 'package:sayohat/api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 late String? pn;
 
@@ -24,8 +25,6 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // AppName(),
-                // AppLogo(),
                 SizedBox(height: 80),
                 _ConfirmPhoneNumberText(),
                 SizedBox(height: 15.0),
@@ -46,8 +45,9 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
 class _ConfirmPhoneNumberText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Is your phone number correct?',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.is_your_phone_number_correct,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 25.0,
@@ -84,6 +84,7 @@ class _PhoneNumberForm extends StatelessWidget {
 class _GoBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () {
         Navigator.pop(context);
@@ -95,13 +96,13 @@ class _GoBackButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-      child: const Text(
+      child: Text(
         style: TextStyle(
           color: AppColors.primaryWhite,
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "No, go back",
+        loc.no_go_back,
       ),
     );
   }
@@ -110,6 +111,7 @@ class _GoBackButton extends StatelessWidget {
 class _GoNextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () async {
         user.setPhone(pn);
@@ -118,9 +120,7 @@ class _GoNextButton extends StatelessWidget {
           Navigator.pushNamed(context, '/VerificationScreen');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            snackBarFactory.createSnackBar(
-              "API unreachable. Please, contact support",
-            ),
+            snackBarFactory.createSnackBar(loc.error_api_unreachable),
           );
         }
       },
@@ -131,13 +131,13 @@ class _GoNextButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-      child: const Text(
+      child: Text(
         style: TextStyle(
           color: AppColors.primaryWhite,
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Yes, go next!",
+        loc.yes_go_next,
       ),
     );
   }

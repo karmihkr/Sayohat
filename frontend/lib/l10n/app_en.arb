@@ -1,0 +1,687 @@
+{
+  "@@locale": "en",
+
+  "auth_type": "Log in & Sign up",
+  "@auth_type": {
+    "description": "Title on the authentication screen"
+  },
+
+  "enter_your_phone_number": "Enter your phone number",
+  "@enter_your_phone_number": {
+    "description": "Prompt asking the user to input their phone number"
+  },
+
+  "phone_number": "Phone number",
+  "@phone_number": {
+    "description": "Label for the phone number field"
+  },
+
+  "proceed": "Proceed",
+  "@proceed": {
+    "description": "Label for the button to proceed after entering phone number"
+  },
+
+  "is_your_phone_number_correct": "Is your phone number correct?",
+  "@is_your_phone_number_correct": {
+    "description": "Prompt asking the user to confirm their phone number"
+  },
+
+  "no_go_back": "No, go back",
+  "@no_go_back": {
+    "description": "Label for the button that returns the user to the previous screen"
+  },
+
+  "yes_go_next": "Yes, go next!",
+  "@yes_go_next": {
+    "description": "Label for the button that proceeds to the verification screen"
+  },
+
+  "error_api_unreachable": "API unreachable. Please, contact support",
+  "@error_api_unreachable": {
+    "description": "Error message shown when the backend API cannot be reached"
+  },
+
+  "fill_in_telegram": "Fill in Telegram",
+  "@fill_in_telegram": {
+    "description": "Header prompting the user to fill in their Telegram verification code"
+  },
+
+  "verification_code": "Verification code",
+  "@verification_code": {
+    "description": "Label for the verification code field"
+  },
+
+  "hint_code": "Code",
+  "@hint_code": {
+    "description": "Hint text inside the verification code input field"
+  },
+
+  "button_confirm": "Confirm",
+  "@button_confirm": {
+    "description": "Label for the button that submits the verification code"
+  },
+
+  "error_enter_code": "Enter the code",
+  "@error_enter_code": {
+    "description": "Error message shown when the code field is empty"
+  },
+
+  "error_api_unreachable": "API unreachable, please contact support",
+  "@error_api_unreachable": {
+    "description": "Error message shown when the backend API cannot be reached"
+  },
+
+  "error_incorrect_or_expired": "Incorrect or expired code",
+  "@error_incorrect_or_expired": {
+    "description": "Error message shown when the entered verification code is invalid or expired"
+  },
+
+  "registration": "Registration",
+
+  "enter_name_surname": "Enter your name and surname",
+  "@enter_name_surname": {
+    "description": "Instruction prompting the user to input both name and surname"
+  },
+
+  "hint_name": "Name",
+  "@hint_name": {
+    "description": "Hint text inside the name input field"
+  },
+
+  "hint_surname": "Surname",
+  "@hint_surname": {
+    "description": "Hint text inside the surname input field"
+  },
+
+  "error_enter_name_surname": "Enter your name and surname",
+  "@error_enter_name_surname": {
+    "description": "Error shown when either name or surname is empty"
+  },
+
+  "button_go_next": "Go next!",
+  "@button_go_next": {
+    "description": "Label for the button to proceed to the next screen"
+  },
+
+  "hint_date_of_birth": "Date of birth",
+  "@hint_date_of_birth": {
+    "description": "Hint text inside the date of birth input field"
+  },
+
+  "button_finish": "Finish",
+  "@button_finish": {
+    "description": "Label for the button that completes the birth registration step"
+  },
+
+  "error_add_date_of_birth": "Add the date of your birth",
+  "@error_add_date_of_birth": {
+    "description": "Error shown when the date of birth field is left empty"
+  },
+
+  "error_valid_date_of_birth": "Add the valid date of birth",
+  "@error_valid_date_of_birth": {
+    "description": "Error shown when the entered date of birth is invalid"
+  }, 
+
+  "general": "General",
+  "@general": {
+    "description": "Title of the first step in the Add Ride stepper"
+  },
+
+  "ride_details": "Ride details",
+  "@ride_details": {
+    "description": "Title of the second step in the Add Ride stepper"
+  },
+
+  "car_information": "Car information",
+  "@car_information": {
+    "description": "Title of the third step in the Add Ride stepper"
+  },
+
+  "hint_start_enter_address": "Start enter the address",
+  "@hint_start_enter_address": {
+    "description": "Hint text for the city autocomplete field"
+  },
+
+  "hint_date_ddmmyyyy": "Date dd/mm/yyyy",
+  "@hint_date_ddmmyyyy": {
+    "description": "Hint text for the date input field in dd/mm/yyyy format"
+  },
+
+  "hint_number_of_passengers": "Number of passengers",
+  "@hint_number_of_passengers": {
+    "description": "Hint text for the passengers input field"
+  },
+
+  "hint_time_hhmm": "Time hh:mm",
+  "@hint_time_hhmm": {
+    "description": "Hint text for the time input field in hh:mm format"
+  },
+
+  "hint_price": "Price",
+  "@hint_price": {
+    "description": "Hint text for the price input field"
+  },
+
+  "hint_contact_info_rules": "Contact info, rules etc.",
+  "@hint_contact_info_rules": {
+    "description": "Hint text for the ride description input field"
+  },
+
+  "hint_car_model": "Car Model",
+  "@hint_car_model": {
+    "description": "Hint text for the car model input field"
+  },
+
+  "hint_car_color": "Car color",
+  "@hint_car_color": {
+    "description": "Hint text for the car color input field"
+  },
+
+  "hint_car_plate": "Car plate",
+  "@hint_car_plate": {
+    "description": "Hint text for the car plate input field"
+  },
+
+  "button_back": "Back",
+  "@button_back": {
+    "description": "Label for the Back button in the stepper controls"
+  },
+
+  "button_next": "Next",
+  "@button_next": {
+    "description": "Label for the Next button in the stepper controls"
+  },
+
+  "button_complete": "Complete",
+  "@button_complete": {
+    "description": "Label for the Complete button in the stepper controls"
+  },
+
+  "error_enter_time": "Enter time",
+  "@error_enter_time": {
+    "description": "Validation message when time field is empty"
+  },
+
+  "error_invalid_time": "Invalid time",
+  "@error_invalid_time": {
+    "description": "Validation message when time value is out of range or malformed"
+  },
+
+  "error_enter_date": "Please enter date",
+  "@error_enter_date": {
+    "description": "Validation message when date field is empty"
+  },
+
+  "error_format_date": "Use dd/mm/yyyy format",
+  "@error_format_date": {
+    "description": "Validation message when date string format is incorrect"
+  },
+
+  "error_invalid_date": "Invalid date",
+  "@error_invalid_date": {
+    "description": "Validation message when date value is invalid"
+  },
+
+  "error_date_past": "Date cannot be in the past",
+  "@error_date_past": {
+    "description": "Validation message when the chosen date is before today"
+  },
+
+  "error_enter_passengers": "Please enter number of passengers",
+  "@error_enter_passengers": {
+    "description": "Validation message when passengers field is empty"
+  },
+
+  "error_valid_number": "Please enter a valid number",
+  "@error_valid_number": {
+    "description": "Validation message when passengers value is not a number"
+  },
+
+  "error_positive_number": "Number should be positive",
+  "@error_positive_number": {
+    "description": "Validation message when passengers value is zero or negative"
+  },
+
+  "error_enter_address": "Please, enter the address",
+  "@error_enter_address": {
+    "description": "Validation message when address field is empty"
+  },
+
+  "error_enter_address_short": "Enter address",
+
+  "error_enter_price": "Enter price",
+  "@error_enter_price": {
+    "description": "Validation message when price field is empty"
+  },
+
+  "error_enter_description": "Enter description",
+  "@error_enter_description": {
+    "description": "Validation message when description field is empty"
+  },
+
+  "error_enter_car_model": "Enter car model",
+
+  "error_enter_car_color": "Enter car color",
+
+  "error_enter_car_plate": "Enter car plate",
+
+  "success_ride_added": "Ride was added successfully!",
+  "@success_ride_added": {
+    "description": "Snackbar message shown when a new ride has been added successfully"
+  },
+
+  "hint_from": "From",
+  "@hint_from_field": {
+    "description": "Error shown when the entered date of birth is invalid"
+  }, 
+
+  "hint_to": "To",
+  "@hint_to_field": {
+    "description": "Error shown when the entered date of birth is invalid"
+  },
+
+  "hint_departure_address": "Departure address",
+
+  "hint_destination_address": "Destination address", 
+
+  "please_enter_from": "Please enter from",
+  "@please_enter_from": {
+    "description": "Validation message when the departure city field is empty"
+  },
+
+  "please_enter_to": "Please enter to",
+  "@please_enter_to": {
+    "description": "Validation message when the arrival city field is empty"
+  },
+
+  "number_should_be_possitive": "Number should be possitive",
+  "@number_should_be_possitive": {
+    "description": "Validation message when the entered number of passengers is zero or negative (note typo matches code)"
+  }, 
+
+  "please_enter_field": "Please enter {fieldName}",
+  "@please_enter_field": {
+    "description": "Generic validation message prompting the user to enter a required field",
+    "placeholders": {
+      "fieldName": {
+        "type": "String",
+        "example": "From"
+      }
+    }
+  },
+
+  "please_enter_date": "Please enter date",
+  "@please_enter_date": {
+    "description": "Validation message when the date field is empty"
+  },
+
+  "use_ddmmyyyy_format": "Use dd/mm/yyyy format",
+  "@use_ddmmyyyy_format": {
+    "description": "Validation message when the date string format is incorrect"
+  },
+
+  "invalid_date": "Invalid date",
+  "@invalid_date": {
+    "description": "Validation message when the date value is invalid"
+  },
+
+  "date_cannot_be_in_the_past": "Date cannot be in the past",
+  "@date_cannot_be_in_the_past": {
+    "description": "Validation message when the chosen date is before today"
+  },
+
+  "please_enter_number_of_passengers": "Please enter number of passengers",
+  "@please_enter_number_of_passengers": {
+    "description": "Validation message when the passengers field is empty"
+  },
+
+  "please_enter_a_valid_number": "Please enter a valid number",
+  "@please_enter_a_valid_number": {
+    "description": "Validation message when the passengers value is not a number"
+  },
+
+  "number_should_be_positive": "Number should be positive",
+  "@number_should_be_positive": {
+    "description": "Validation message when the passengers value is zero or negative"
+  }, 
+
+  "button_find_ride": "Find a ride!",
+
+  "no_rides_found": "Sorry, we did not find rides by your preferences, try another city or date",
+  "@no_rides_found": {
+    "description": "Message shown when no rides match the search criteria"
+  },
+
+  "available_seats": "Available seats: {seats}",
+  "@available_seats": {
+    "description": "Label showing how many seats are available",
+    "placeholders": {
+      "seats": {
+        "type": "String",
+        "example": "3"
+      }
+    }
+  },
+
+  "cost_r": "Cost: {cost} r.",
+  "@cost_r": {
+    "description": "Label showing the cost of the ride in rubles",
+    "placeholders": {
+      "cost": {
+        "type": "String",
+        "example": "500"
+      }
+    }
+  },
+
+  "to_address_label": "To: {address}",
+  "@to_address_label": {
+    "description": "Label for the destination address",
+    "placeholders": {
+      "address": {
+        "type": "String",
+        "example": "Main St, 123"
+      }
+    }
+  },
+
+  "from_address_label": "From: {address}",
+  "@from_address_label": {
+    "description": "Label for the departure address",
+    "placeholders": {
+      "address": {
+        "type": "String",
+        "example": "First Ave, 45"
+      }
+    }
+  },
+
+  "from_to_cities": "{from} - {to}",
+  "@from_to_cities": {
+    "description": "Label showing departure and arrival cities",
+    "placeholders": {
+      "from": {
+        "type": "String",
+        "example": "CityA"
+      },
+      "to": {
+        "type": "String",
+        "example": "CityB"
+      }
+    }
+  },
+
+  "date_time": "{date} - {time}",
+  "@date_time": {
+    "description": "Label showing the ride date and time",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "12.05.2025"
+      },
+      "time": {
+        "type": "String",
+        "example": "14:30"
+      }
+    }
+  },
+
+  "years_old": "{age} years old",
+  "@years_old": {
+    "description": "Label showing the driver's age",
+    "placeholders": {
+      "age": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  }, 
+
+  "ride_details_title": "Ride Details",
+  "@ride_details_title": {
+    "description": "AppBar title on the ride details screen"
+  },
+
+  "driver_label": "Driver: {fullName}",
+  "@driver_label": {
+    "description": "Label showing the driver’s full name",
+    "placeholders": {
+      "fullName": {
+        "type": "String",
+        "example": "Alex Johnson"
+      }
+    }
+  },
+
+  "age_label": "Age: {age} years",
+  "@age_label": {
+    "description": "Label showing the driver’s age in years",
+    "placeholders": {
+      "age": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  },
+
+  "trip_details_heading": "Trip Details",
+  "@trip_details_heading": {
+    "description": "Section heading for trip details"
+  },
+
+  "date_label": "Date: {date}",
+  "@date_label": {
+    "description": "Label showing the trip date",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "12.05.2025"
+      }
+    }
+  },
+
+  "time_label": "Time: {time}",
+  "@time_label": {
+    "description": "Label showing the trip start time",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "14:30"
+      }
+    }
+  },
+
+  "car_details_heading": "Car Details",
+  "@car_details_heading": {
+    "description": "Section heading for car details"
+  },
+
+  "model_label": "Model: {carModel}",
+  "@model_label": {
+    "description": "Label showing the car model",
+    "placeholders": {
+      "carModel": {
+        "type": "String",
+        "example": "Toyota Camry"
+      }
+    }
+  },
+
+  "color_label": "Color: {carColor}",
+  "@color_label": {
+    "description": "Label showing the car color",
+    "placeholders": {
+      "carColor": {
+        "type": "String",
+        "example": "Red"
+      }
+    }
+  },
+
+  "car_plate_label": "Car plate: {carPlate}",
+  "@car_plate_label": {
+    "description": "Label showing the car’s plate number",
+    "placeholders": {
+      "carPlate": {
+        "type": "String",
+        "example": "A123BC"
+      }
+    }
+  },
+
+  "description_heading": "Description",
+  "@description_heading": {
+    "description": "Section heading for ride description"
+  },
+
+  "book_this_ride": "Book this ride",
+  "@book_this_ride": {
+    "description": "Label for the button that confirms booking the ride"
+  }, 
+
+  "empty_your_rides": "There you will see list of your rides after adding",
+  "@empty_your_rides": {
+    "description": "Message shown when the user has no rides in their list"
+  }, 
+
+  "edit_this_ride": "Edit this ride",
+  "@edit_this_ride": {
+    "description": "Label for the button that edits the existing ride"
+  },
+
+  "error_data_unresolved": "Data could not be resolved",
+  "@error_data_unresolved": {
+    "description": "Message shown when the user profile data could not be loaded"
+  },
+
+  "label_phone": "Phone:",
+  "@label_phone": {
+    "description": "Label preceding the phone number in the profile screen"
+  },
+
+  "label_date_of_birth": "Date of birth:",
+  "@label_date_of_birth": {
+    "description": "Label preceding the date of birth in the profile screen"
+  },
+
+  "rides_done": "{count} rides were done",
+  "@rides_done": {
+    "description": "Header showing how many rides the user has completed",
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+
+  "button_edit_profile": "Edit profile",
+  "@button_edit_profile": {
+    "description": "Label for the button that navigates to the profile editing screen"
+  },
+
+  "edit_your_profile": "Edit your profile",
+  "@edit_your_profile": {
+    "description": "AppBar title on the edit profile screen"
+  },
+
+  "label_your_name": "Your name: {name}",
+  "@label_your_name": {
+    "description": "Label showing the user's current name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Alex"
+      }
+    }
+  },
+
+  "label_your_surname": "Your surname: {surname}",
+  "@label_your_surname": {
+    "description": "Label showing the user's current surname",
+    "placeholders": {
+      "surname": {
+        "type": "String",
+        "example": "Johnson"
+      }
+    }
+  },
+
+  "label_your_phone_number": "Your phone number: {phone}",
+  "@label_your_phone_number": {
+    "description": "Label showing the user's current phone number",
+    "placeholders": {
+      "phone": {
+        "type": "String",
+        "example": "+1234567890"
+      }
+    }
+  },
+
+  "label_your_date_of_birth": "Your date of birth: {birth}",
+  "@label_your_date_of_birth": {
+    "description": "Label showing the user's current date of birth",
+    "placeholders": {
+      "birth": {
+        "type": "String",
+        "example": "01/01/1990"
+      }
+    }
+  },
+
+  "hint_new_name": "New name",
+  "@hint_new_name": {
+    "description": "Hint text for the new name input field"
+  },
+
+  "hint_new_surname": "New surname",
+  "@hint_new_surname": {
+    "description": "Hint text for the new surname input field"
+  },
+
+  "hint_new_phone_number": "New phone number",
+  "@hint_new_phone_number": {
+    "description": "Hint text for the new phone number input field"
+  },
+
+  "hint_new_date_of_birth": "New date of birth",
+  "@hint_new_date_of_birth": {
+    "description": "Hint text for the new date of birth input field"
+  },
+
+  "button_confirm_changes": "Confirm Changes",
+  "@button_confirm_changes": {
+    "description": "Label for the button that submits profile changes"
+  },
+
+  "snackbar_info_updated": "Info updated successfully",
+  "@snackbar_info_updated": {
+    "description": "Snackbar message shown when profile information is updated successfully"
+  },
+
+  "snackbar_something_went_wrong": "Something went wrong",
+  "@snackbar_something_went_wrong": {
+    "description": "Snackbar message shown when an unexpected error occurs"
+  },
+
+  "tab_search": "Search",
+  "@tab_search": {
+    "description": "Label for the Search tab in the bottom navigation bar"
+  },
+
+  "tab_add": "Add",
+  "@tab_add": {
+    "description": "Label for the Add tab in the bottom navigation bar"
+  },
+
+  "tab_your_rides": "Your rides",
+  "@tab_your_rides": {
+    "description": "Label for the Your rides tab in the bottom navigation bar"
+  },
+
+  "tab_profile": "Profile",
+  "@tab_profile": {
+    "description": "Label for the Profile tab in the bottom navigation bar"
+  }
+}
