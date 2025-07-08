@@ -56,6 +56,7 @@ class _WelcomeScreenState extends State<WelcomeHub> {
         body: _showSearchList && _selectedTab == 0
             ? const ListSearchRideScreen()
             : widgetOptions[_selectedTab],
+        backgroundColor: AppColors.primaryWhite,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedTab,
           type: BottomNavigationBarType.fixed,
