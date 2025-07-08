@@ -10,6 +10,7 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
 import 'package:yandex_maps_mapkit/init.dart' as init;
+import 'package:yandex_maps_mapkit/search.dart';
 
 String initialRoute = "";
 

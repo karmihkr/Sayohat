@@ -6,6 +6,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:flutter/services.dart';
+import 'package:sayohat/yandexApiClient.dart';
 import 'dart:math' as math;
 
 import 'package:yandex_maps_mapkit/search.dart';
@@ -377,12 +378,14 @@ class _CityFieldState extends State<CityField> {
       ),
       validator: widget.validator,
       onSaved: widget.onSaved,
-      onChanged: (value) {
+      onChanged: (value) async {
         try {
           _searchWindow.remove();
         } finally {
           if (value.isNotEmpty) {
-            _searchWindow = _createSearchWindow(yandexSearch(value));
+            print("first");
+            _searchWindow = _createSearchWindow(await yandexSearch(value));
+            print("second");
             Overlay.of(context).insert(_searchWindow);
           }
         }
@@ -391,24 +394,15 @@ class _CityFieldState extends State<CityField> {
   }
 }
 
-Map<String, String> yandexSearch(String request) {
-  /*final searchManager = SearchFactory.instance.createSearchManager(SearchManagerType.Online);
-  final searchOptions = SearchOptions(
-    searchTypes: SearchType.Geo,
-    resultPageSize: 5
+Future<Map<String, String>> yandexSearch(String request) async {
+  final response = await yandexApiClient.yandexSearch(
+      request,
+      yandex.Point(latitude: 55.751762, longitude: 48.747863)
   );
-  final session = searchManager.submit(
-    yandex.Geometry.fromPoint(yandex.Point(
-      latitude: 555,
-      longitude: 5555
-    )),
-    searchOptions,
-    SearchSessionSearchListener(onSearchResponse: (SearchResponse response) {
-
-    }, onSearchError: (error) { print("hi"); }),
-    text: "where to eat",
-  );*/
   var result = <String, String>{};
+  for (yandex.GeoObject geoObject in response.collection.children as List<yandex.GeoObject>) {
+    print(geoObject.name);
+  }
   result["021554488"] = "Moscow";
   return result;
 }
