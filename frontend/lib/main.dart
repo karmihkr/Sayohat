@@ -9,6 +9,8 @@ import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
 
 String initialRoute = "";
 
@@ -25,20 +27,48 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en');
+
+  void _setLocale(Locale newLocale) {
+    setState(() {
+      _locale = newLocale;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: _locale,
+      supportedLocales: const [Locale('en'), Locale('ru'), Locale('uk')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        if (supportedLocales.contains(locale)) {
+          return locale;
+        }
+        return const Locale('en');
+      },
       theme: ThemeData(
         snackBarTheme: SnackBarThemeData(
           contentTextStyle: TextStyle(color: AppColors.primaryGreen),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      title: 'Sayohat Demo',
+      title: 'HamSafar',
       initialRoute: initialRoute,
-      home: const PhoneScreen(),
+      home: PhoneScreen(onLocaleChanged: _setLocale),
       routes: {
         '/PhoneScreen': (context) => const PhoneScreen(),
         '/RegistrationScreen': (context) => const RegistrationScreen(),
@@ -46,7 +76,7 @@ class MyApp extends StatelessWidget {
         '/NameSurnameScreen': (context) => const NameSurnameScreen(),
         '/BirthScreen': (context) => const DateOfBirthScreen(),
         '/PasswordScreen': (context) => const PasswordScreen(),
-        '/WelcomeHub': (context) => const WelcomeHub(),
+        '/WelcomeHub': (context) => WelcomeHub(onLocaleChanged: _setLocale),
       },
     );
   }

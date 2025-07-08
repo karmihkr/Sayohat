@@ -5,9 +5,11 @@ import 'package:sayohat/screens/tabs-main-screens/list-ride-screens/list_your_ri
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/profile_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/list_search_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 class WelcomeHub extends StatefulWidget {
-  const WelcomeHub({super.key});
+  final void Function(Locale) onLocaleChanged;
+  const WelcomeHub({super.key, required this.onLocaleChanged});
 
   @override
   State<WelcomeHub> createState() => _WelcomeScreenState();
@@ -16,13 +18,6 @@ class WelcomeHub extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeHub> {
   int _selectedTab = 0;
   bool _showSearchList = false;
-
-  final List<Widget> _widgetOptions = <Widget>[
-    FindRideScreen(onShowSearchList: (show) {}),
-    AddRideScreen(),
-    ListRideScreen(),
-    ProfileScreen(),
-  ];
 
   void onSelectTab(int index) {
     if (_selectedTab == index && _showSearchList) {
@@ -39,13 +34,16 @@ class _WelcomeScreenState extends State<WelcomeHub> {
 
   @override
   Widget build(BuildContext context) {
-    _widgetOptions[0] = FindRideScreen(
-      onShowSearchList: (show) {
-        setState(() {
-          _showSearchList = show;
-        });
-      },
-    );
+    final loc = AppLocalizations.of(context)!;
+
+    final widgetOptions = <Widget>[
+      FindRideScreen(
+        onShowSearchList: (show) => setState(() => _showSearchList = show),
+      ),
+      AddRideScreen(),
+      ListRideScreen(),
+      ProfileScreen(onLocaleChanged: widget.onLocaleChanged),
+    ];
 
     return PopScope(
       canPop: false,
@@ -55,35 +53,28 @@ class _WelcomeScreenState extends State<WelcomeHub> {
           automaticallyImplyLeading: false,
           toolbarHeight: 40,
         ),
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(color: AppColors.primaryWhite),
-            ),
-            _showSearchList && _selectedTab == 0
-                ? const ListSearchRideScreen()
-                : _widgetOptions[_selectedTab],
-          ],
-        ),
+        body: _showSearchList && _selectedTab == 0
+            ? const ListSearchRideScreen()
+            : widgetOptions[_selectedTab],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedTab,
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.search_outlined, color: AppColors.primaryGreen),
-              label: 'Search',
+              label: loc.tab_search,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add_circle, color: AppColors.primaryGreen),
-              label: 'Add',
+              label: loc.tab_add,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list_rounded, color: AppColors.primaryGreen),
-              label: 'Your rides',
+              label: loc.tab_your_rides,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline, color: AppColors.primaryGreen),
-              label: 'Profile',
+              label: loc.tab_profile,
             ),
           ],
           showUnselectedLabels: false,

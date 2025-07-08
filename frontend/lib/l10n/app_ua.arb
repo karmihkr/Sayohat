@@ -1,0 +1,416 @@
+{
+  "@@locale": "uk",
+
+  "auth_type": "Вуруд ва сабти ном",
+  "@auth_type": { "description": "Title on the authentication screen" },
+
+  "enter_your_phone_number": "Рагами телефонро ворид кунед",
+  "@enter_your_phone_number": { "description": "Prompt asking the user to input their phone number" },
+
+  "phone_number": "Рагами телефон",
+  "@phone_number": { "description": "Label for the phone number field" },
+
+  "proceed": "Идома",
+  "@proceed": { "description": "Label for the button to proceed after entering phone number" },
+
+  "is_your_phone_number_correct": "Рагаматон дуруст аст?",
+  "@is_your_phone_number_correct": { "description": "Prompt asking the user to confirm their phone number" },
+
+  "no_go_back": "Не, баргашта равед",
+  "@no_go_back": { "description": "Label for the button that returns the user to the previous screen" },
+
+  "yes_go_next": "Бале, ба кадами баъди",
+  "@yes_go_next": { "description": "Label for the button that proceeds to the verification screen" },
+
+  "error_api_unreachable": "Хизматрасони дастнорас. Бо дастгирй тамос гиред",
+  "@error_api_unreachable": { "description": "Error message shown when the backend API cannot be reached" },
+
+  "fill_in_telegram": "Кодро аз Телеграм ворид кунед",
+  "@fill_in_telegram": { "description": "Header prompting the user to fill in their Telegram verification code" },
+
+  "verification_code": "Код",
+  "@verification_code": { "description": "Label for the verification code field" },
+
+  "hint_code": "Код",
+  "@hint_code": { "description": "Hint text inside the verification code input field" },
+
+  "button_confirm": "Тасдик кунед",
+  "@button_confirm": { "description": "Label for the button that submits the verification code" },
+
+  "error_enter_code": "Кодро ворид кунед",
+  "@error_enter_code": { "description": "Error message shown when the code field is empty" },
+
+  "error_incorrect_or_expired": "Код нодуруст ё мухлаташ гузаштааст",
+  "@error_incorrect_or_expired": { "description": "Error message shown when the entered verification code is invalid or expired" },
+
+  "enter_name_surname": "Номи аввал ва насаби худро ворид кунед",
+  "@enter_name_surname": { "description": "Instruction prompting the user to input both name and surname" },
+
+  "hint_name": "Ном",
+  "@hint_name": { "description": "Hint text inside the name input field" },
+
+  "hint_surname": "Насаб",
+  "@hint_surname": { "description": "Hint text inside the surname input field" },
+
+  "error_enter_name_surname": "Ном ва насабро ворид кунед",
+  "@error_enter_name_surname": { "description": "Error shown when either name or surname is empty" },
+
+  "button_go_next": "Баъди",
+  "@button_go_next": { "description": "Label for the button to proceed to the next screen" },
+
+  "hint_date_of_birth": "Санаи таваллуд",
+  "@hint_date_of_birth": { "description": "Hint text inside the date of birth input field" },
+
+  "button_finish": "Анчом",
+  "@button_finish": { "description": "Label for the button that completes the birth registration step" },
+
+  "error_add_date_of_birth": "Санаи таваллудро муайян кунед",
+  "@error_add_date_of_birth": { "description": "Error shown when the date of birth field is left empty" },
+
+  "error_valid_date_of_birth": "Санаи дурустро ворид кунед",
+  "@error_valid_date_of_birth": { "description": "Error shown when the entered date of birth is invalid" },
+
+  "registration": "Регистрация",
+  "@registration": { "description": "Header for registration screens" },
+
+  "general": "Умумй",
+  "@general": { "description": "Title of the first step in the Add Ride stepper" },
+
+  "ride_details": "Тафсилоти сафар",
+  "@ride_details": { "description": "Title of the second step in the Add Ride stepper" },
+
+  "car_information": "Маълумоти мошин",
+  "@car_information": { "description": "Title of the third step in the Add Ride stepper" },
+
+  "hint_start_enter_address": "Сурога ворид кунед",
+  "@hint_start_enter_address": { "description": "Hint text for the city autocomplete field" },
+
+  "hint_date_ddmmyyyy": "дд/мм/гггг",
+  "@hint_date_ddmmyyyy": { "description": "Hint text for the date input field in dd/mm/yyyy format" },
+
+  "hint_time_hhmm": "чч:мм",
+  "@hint_time_hhmm": { "description": "Hint text for the time input field in hh:mm format" },
+
+  "hint_price": "Нарх",
+  "@hint_price": { "description": "Hint text for the price input field" },
+
+  "hint_contact_info_rules": "Маълумоти тамос, коидахо ва г.",
+  "@hint_contact_info_rules": { "description": "Hint text for the ride description input field" },
+
+  "hint_car_model": "Намуди мошин",
+  "@hint_car_model": { "description": "Hint text for the car model input field" },
+
+  "hint_car_color": "Ранги мошин",
+  "@hint_car_color": { "description": "Hint text for the car color input field" },
+
+  "hint_car_plate": "Рагами мошин",
+  "@hint_car_plate": { "description": "Hint text for the car plate input field" },
+
+  "button_back": "Бозгашт",
+  "@button_back": { "description": "Label for the Back button in the stepper controls" },
+
+  "button_next": "Баъди",
+  "@button_next": { "description": "Label for the Next button in the stepper controls" },
+
+  "button_complete": "Анчом",
+  "@button_complete": { "description": "Label for the Complete button in the stepper controls" },
+
+  "success_ride_added": "Сафар бо муваффакият илова шуд!",
+  "@success_ride_added": { "description": "Snackbar message shown when a new ride has been added successfully" },
+
+  "hint_from": "Аз кучо",
+  "@hint_from": { "description": "Hint text for the departure city input field" },
+
+  "hint_to": "Ба кучо",
+  "@hint_to": { "description": "Hint text for the arrival city input field" },
+
+  "hint_number_of_passengers": "Чойхои холй",
+  "@hint_number_of_passengers": { "description": "Hint text for the number of passengers input field" },
+
+  "button_find_ride": "Чустучуюи сафар",
+  "@button_find_ride": { "description": "Label for the button that triggers the ride search" },
+
+  "please_enter_field": "Лутфан {fieldName}-ро ворид кунед",
+  "@please_enter_field": {
+    "description": "Generic validation message prompting the user to enter a required field",
+    "placeholders": { "fieldName": { "type": "String", "example": "Аз кучо" } }
+  },
+
+  "error_enter_time": "Вактро ворид кунед",
+  "@error_enter_time": { "description": "Validation message when the time field is empty" },
+
+  "error_invalid_time": "Вакт нодуруст аст",
+  "@error_invalid_time": { "description": "Validation message when the entered time is invalid" },
+
+  "error_enter_date": "Сана ворид кунед",
+  "@error_enter_date": { "description": "Validation message when the date field is empty" },
+
+  "error_format_date": "Формати дд/мм/гггг-ро истифода баред",
+  "@error_format_date": { "description": "Validation message when the date string format is incorrect" },
+
+  "error_invalid_date": "Сана нодуруст аст",
+  "@error_invalid_date": { "description": "Validation message when the date value is invalid" },
+
+  "error_date_past": "Сана дар гузашта буда наметавонад",
+  "@error_date_past": { "description": "Validation message when the chosen date is before today" },
+
+  "error_enter_passengers": "Чойхоро муайян кунед",
+  "@error_enter_passengers": { "description": "Validation message when the passengers field is empty" },
+
+  "error_valid_number": "Рагами дурустро ворид кунед",
+  "@error_valid_number": { "description": "Validation message when the passengers value is not a number" },
+
+  "error_positive_number": "Рагам бояд мусбат бошад",
+  "@error_positive_number": { "description": "Validation message when the passengers value is zero or negative" },
+
+  "error_enter_address": "Сурога ворид кунед",
+  "@error_enter_address": { "description": "Validation message when the address field is empty" },
+
+  "error_enter_address_short": "Сурогаи кутох аст",
+  "@error_enter_address_short": { "description": "Validation message when the entered address is too short" },
+
+  "error_enter_price": "Нархро ворид кунед",
+  "@error_enter_price": { "description": "Validation message when the price field is empty" },
+
+  "error_enter_description": "Тавсифро ворид кунед",
+  "@error_enter_description": { "description": "Validation message when the description field is empty" },
+
+  "error_enter_car_model": "Моделро ворид кунед",
+  "@error_enter_car_model": { "description": "Validation message when the car model field is empty" },
+
+  "error_enter_car_color": "Рангро ворид кунед",
+  "@error_enter_car_color": { "description": "Validation message when the car color field is empty" },
+
+  "error_enter_car_plate": "Рагами мошинро ворид кунед",
+  "@error_enter_car_plate": { "description": "Validation message when the car plate field is empty" },
+
+  "hint_departure_address": "Сурогаи баромад",
+  "@hint_departure_address": { "description": "Hint text for the departure address input field" },
+
+  "hint_destination_address": "Сурогаи нишаст",
+  "@hint_destination_address": { "description": "Hint text for the destination address input field" },
+
+  "please_enter_from": "Аз кучоро ворид кунед",
+  "@please_enter_from": { "description": "Validation message prompting to enter departure city" },
+
+  "please_enter_to": "Ба кучоро ворид кунед",
+  "@please_enter_to": { "description": "Validation message prompting to enter arrival city" },
+
+  "edit_this_ride": "Сафарро тахрир кунед",
+  "@edit_this_ride": { "description": "Label for the button that edits an existing ride" },
+
+  "edit_your_profile": "Тагйир додани профил",
+  "@edit_your_profile": { "description": "AppBar title on the edit profile screen" },
+
+  "label_your_name": "Номи шумо: {name}",
+  "@label_your_name": {
+    "description": "Label showing the user's current name",
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "label_your_surname": "Насаби шумо: {surname}",
+  "@label_your_surname": {
+    "description": "Label showing the user's current surname",
+    "placeholders": { "surname": { "type": "String" } }
+  },
+
+  "label_your_phone_number": "Телефони шумо: {phone}",
+  "@label_your_phone_number": {
+    "description": "Label showing the user's current phone number",
+    "placeholders": { "phone": { "type": "String" } }
+  },
+
+  "label_your_date_of_birth": "Санаи таваллуди шумо: {birth}",
+  "@label_your_date_of_birth": {
+    "description": "Label showing the user's current date of birth",
+    "placeholders": { "birth": { "type": "String" } }
+  },
+
+  "hint_new_name": "Номи нав",
+  "@hint_new_name": { "description": "Hint text for the new name input field" },
+
+  "hint_new_surname": "Насаби нав",
+  "@hint_new_surname": { "description": "Hint text for the new surname input field" },
+
+  "hint_new_phone_number": "Телефони нав",
+  "@hint_new_phone_number": { "description": "Hint text for the new phone number input field" },
+
+  "hint_new_date_of_birth": "Санаи таваллуди нав",
+  "@hint_new_date_of_birth": { "description": "Hint text for the new date of birth input field" },
+
+  "button_confirm_changes": "Тасдик кунед",
+  "@button_confirm_changes": { "description": "Label for the button that submits profile changes" },
+
+  "snackbar_info_updated": "Маълумот бо муваффакият навсозӣ шуд",
+  "@snackbar_info_updated": { "description": "Snackbar message shown when profile information is updated successfully" },
+
+  "snackbar_something_went_wrong": "Чизе нодуруст шуд",
+  "@snackbar_something_went_wrong": { "description": "Snackbar message shown when an unexpected error occurs" },
+
+  "tab_search": "Чустучу",
+  "@tab_search": { "description": "Label for the Search tab in the bottom navigation bar" },
+
+  "tab_add": "Идома",
+  "@tab_add": { "description": "Label for the Add tab in the bottom navigation bar" },
+
+  "tab_your_rides": "Сафархои ман",
+  "@tab_your_rides": { "description": "Label for the Your rides tab in the bottom navigation bar" },
+
+  "tab_profile": "Профил",
+  "@tab_profile": { "description": "Label for the Profile tab in the bottom navigation bar" },
+
+  "number_should_be_possitive": "Ракам бояд мусбат бошад",
+  "@number_should_be_possitive": { "description": "Validation message when a number must be positive" },
+
+  "please_enter_date": "Сана ворид кунед",
+  "@please_enter_date": { "description": "Validation message when the date field is empty" },
+
+  "use_ddmmyyyy_format": "Формати дд/мм/гггг-ро истифода баред",
+  "@use_ddmmyyyy_format": { "description": "Validation message when the date string format is incorrect" },
+
+  "invalid_date": "Сана нодуруст аст",
+  "@invalid_date": { "description": "Validation message when the date value is invalid" },
+
+  "date_cannot_be_in_the_past": "Сана дар гузашта буда наметавонад",
+  "@date_cannot_be_in_the_past": { "description": "Validation message when the chosen date is before today" },
+
+  "please_enter_number_of_passengers": "Чойхоро муайян кунед",
+  "@please_enter_number_of_passengers": { "description": "Validation message when the passengers field is empty" },
+
+  "please_enter_a_valid_number": "Раками дурустро ворид кунед",
+  "@please_enter_a_valid_number": { "description": "Validation message when the passengers value is not a number" },
+
+  "no_rides_found": "Барои параметрхои шумо ягон сафар ёфт нашуд",
+  "@no_rides_found": { "description": "Message shown when no rides match the search criteria" },
+
+  "available_seats": "Чойхои холӣ: {seats}",
+  "@available_seats": {
+    "description": "Label showing how many seats are available",
+    "placeholders": { "seats": { "type": "String", "example": "3" } }
+  },
+
+  "cost_r": "Нарх: {cost} р.",
+  "@cost_r": {
+    "description": "Label showing the cost of the ride in rubles",
+    "placeholders": { "cost": { "type": "String", "example": "500" } }
+  },
+
+  "to_address_label": "Ба: {address}",
+  "@to_address_label": {
+    "description": "Label for the destination address",
+    "placeholders": { "address": { "type": "String", "example": "Кулоб" } }
+  },
+
+  "from_address_label": "Аз: {address}",
+  "@from_address_label": {
+    "description": "Label for the departure address",
+    "placeholders": { "address": { "type": "String", "example": "Душанбе" } }
+  },
+
+  "from_to_cities": "{from} – {to}",
+  "@from_to_cities": {
+    "description": "Label showing departure and arrival cities",
+    "placeholders": {
+      "from": { "type": "String", "example": "Душанбе" },
+      "to": { "type": "String", "example": "Хучанд" }
+    }
+  },
+
+  "date_time": "{date} – {time}",
+  "@date_time": {
+    "description": "Label showing the ride date and time",
+    "placeholders": {
+      "date": { "type": "String", "example": "12.05.2025" },
+      "time": { "type": "String", "example": "14:30" }
+    }
+  },
+
+  "years_old": "{age} сол",
+  "@years_old": {
+    "description": "Label showing the driver's age",
+    "placeholders": { "age": { "type": "String", "example": "30" } }
+  },
+
+  "ride_details_title": "Тафсилоти сафар",
+  "@ride_details_title": { "description": "AppBar title on the ride details screen" },
+
+  "driver_label": "Ронанда: {fullName}",
+  "@driver_label": {
+    "description": "Label showing the driver’s full name",
+    "placeholders": { "fullName": { "type": "String", "example": "Чамшед Саидов" } }
+  },
+
+  "age_label": "Синн: {age} сол",
+  "@age_label": {
+    "description": "Label showing the driver’s age in years",
+    "placeholders": { "age": { "type": "String", "example": "30" } }
+  },
+
+  "trip_details_heading": "Тафсилоти сафар",
+  "@trip_details_heading": { "description": "Section heading for trip details" },
+
+  "date_label": "Сана: {date}",
+  "@date_label": {
+    "description": "Label showing the trip date",
+    "placeholders": { "date": { "type": "String", "example": "12.05.2025" } }
+  },
+
+  "time_label": "Вакт: {time}",
+  "@time_label": {
+    "description": "Label showing the trip start time",
+    "placeholders": { "time": { "type": "String", "example": "14:30" } }
+  },
+
+  "car_details_heading": "Маълумоти мошин",
+  "@car_details_heading": { "description": "Section heading for car details" },
+
+  "model_label": "Модел: {carModel}",
+  "@model_label": {
+    "description": "Label showing the car model",
+    "placeholders": { "carModel": { "type": "String", "example": "Lada Vesta" } }
+  },
+
+  "color_label": "Ранг: {carColor}",
+  "@color_label": {
+    "description": "Label showing the car color",
+    "placeholders": { "carColor": { "type": "String", "example": "Сурх" } }
+  },
+
+  "car_plate_label": "Раками мошин: {carPlate}",
+  "@car_plate_label": {
+    "description": "Label showing the car’s plate number",
+    "placeholders": { "carPlate": { "type": "String", "example": "A123BC" } }
+  },
+
+  "description_heading": "Тавсиф",
+  "@description_heading": { "description": "Section heading for ride description" },
+
+  "book_this_ride": "Сафарро фармоиш дихед",
+  "@book_this_ride": { "description": "Label for the button that confirms booking the ride" },
+
+  "empty_your_rides": "Пас аз илова кардани сафархо руйхат пайдо мешавад",
+  "@empty_your_rides": { "description": "Message shown when the user has no rides in their list" },
+
+  "error_data_unresolved": "Маълумот дастнорас аст",
+  "@error_data_unresolved": { "description": "Message shown when the user profile data could not be loaded" },
+
+  "label_phone": "Телефон:",
+  "@label_phone": { "description": "Label preceding the phone number in the profile screen" },
+
+  "label_date_of_birth": "Санаи таваллуд:",
+  "@label_date_of_birth": { "description": "Label preceding the date of birth in the profile screen" },
+
+  "rides_done": "Сафархо анчом дода шуданд: {count}",
+  "@rides_done": {
+    "description": "Header showing how many rides the user has completed",
+    "placeholders": { "count": { "type": "String", "example": "5" } }
+  },
+
+  "button_edit_profile": "Тагйир додани профил",
+  "@button_edit_profile": { "description": "Label for the button that navigates to the profile editing screen" },
+
+  "number_should_be_positive": "Ракам бояд мусбат бошад",
+  "@number_should_be_positive": {
+    "description": "Validation message when a number must be positive"
+  }
+}

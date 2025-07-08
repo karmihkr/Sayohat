@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/test_data_search_screen.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 class RideDetailsScreen extends StatelessWidget {
   final Ride ride;
@@ -9,10 +10,15 @@ class RideDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.primaryWhite,
       appBar: AppBar(
-        title: Text('Ride Details', style: TextStyle(fontFamily: 'Roboto')),
+        //
+        title: Text(
+          loc.ride_details_title,
+          style: TextStyle(fontFamily: 'Roboto'),
+        ),
         backgroundColor: AppColors.backgroundGreen,
       ),
       body: SingleChildScrollView(
@@ -55,8 +61,9 @@ class _FullName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Driver: ${ride.fullName}',
+      loc.driver_label(ride.fullName),
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -74,8 +81,9 @@ class _Age extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Age: ${ride.age} years',
+      loc.age_label("${ride.age}"),
       style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
     );
   }
@@ -84,8 +92,9 @@ class _Age extends StatelessWidget {
 class _RideDetailsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Trip Details',
+      loc.trip_details_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -103,10 +112,11 @@ class _FromAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        'From: ${ride.address1}',
+        loc.from_address_label(ride.address1),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -120,10 +130,11 @@ class _ToAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        'To: ${ride.address2}',
+        loc.to_address_label(ride.address2),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -137,10 +148,11 @@ class _DateStart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
       title: Text(
-        'Date: ${ride.date.day}.${ride.date.month}.${ride.date.year}',
+        loc.date_label("${ride.date.day}.${ride.date.month}.${ride.date.year}"),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -154,10 +166,11 @@ class _StartTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
       title: Text(
-        'Time: ${ride.date.hour}:${ride.date.min}',
+        loc.time_label("${ride.date.hour}:${ride.date.min}"),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -167,8 +180,9 @@ class _StartTime extends StatelessWidget {
 class _CarDetailsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Car Details',
+      loc.car_details_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -186,10 +200,12 @@ class _CarModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
+      //
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
-        'Model: ${ride.carModel}',
+        loc.model_label(ride.carModel),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -203,10 +219,11 @@ class _CarColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
       title: Text(
-        'Color: ${ride.carColor}',
+        loc.color_label(ride.carColor),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -220,10 +237,11 @@ class _CarPlate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ListTile(
       leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
       title: Text(
-        'Car plate: ${ride.carPlate}',
+        loc.car_plate_label(ride.carPlate),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -233,8 +251,9 @@ class _CarPlate extends StatelessWidget {
 class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Text(
-      'Description',
+      loc.description_heading,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -265,6 +284,7 @@ class _DescriptionContent extends StatelessWidget {
 class _BookingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: ElevatedButton(
         onPressed: () {},
@@ -273,7 +293,7 @@ class _BookingButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         ),
         child: Text(
-          'Book this ride',
+          loc.book_this_ride,
           style: TextStyle(
             color: AppColors.primaryWhite,
             fontWeight: FontWeight.bold,

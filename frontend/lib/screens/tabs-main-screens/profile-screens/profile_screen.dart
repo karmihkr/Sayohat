@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/edit_info_screen.dart';
 import 'package:sayohat/api_client.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final void Function(Locale) onLocaleChanged;
+  const ProfileScreen({super.key, required this.onLocaleChanged});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -30,11 +32,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
     if (userData == null) {
-      return const Center(child: Text("Data could not be resolved"));
+      return Center(child: Text(loc.error_data_unresolved));
     }
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -69,6 +72,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _StatisticsText(),
                   SizedBox(height: 15),
                   _StatisticsBlocks(),
+                  SizedBox(height: 5),
+                  Center(
+                    child: DropdownButton<Locale>(
+                      value: Localizations.localeOf(context),
+                      underline: const SizedBox(),
+                      icon: const Icon(
+                        Icons.language,
+                        color: AppColors.primaryGreen,
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: Locale('en'),
+                          child: Text('EN'),
+                        ),
+                        DropdownMenuItem(
+                          value: Locale('ru'),
+                          child: Text('RU'),
+                        ),
+                        DropdownMenuItem(
+                          value: Locale('uk'),
+                          child: Text('TG'),
+                        ),
+                      ],
+                      onChanged: (locale) {
+                        if (locale != null) {
+                          widget.onLocaleChanged(locale);
+                        }
+                      },
+                    ),
+                  ),
                   Spacer(),
                   _EditProfileButton(),
                 ],
@@ -126,13 +159,14 @@ class _PhoneNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           width: 120,
           child: Text(
-            "Phone:",
+            loc.label_phone,
             style: const TextStyle(fontSize: 20, color: AppColors.primaryGreen),
           ),
         ),
@@ -158,13 +192,14 @@ class _DateOfBirth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           width: 150,
           child: Text(
-            "Date of birth:",
+            loc.label_date_of_birth,
             style: const TextStyle(fontSize: 20, color: AppColors.primaryGreen),
           ),
         ),
@@ -188,6 +223,7 @@ class _StatisticsText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
+        //
         'N rides were done',
         style: const TextStyle(
           color: AppColors.primaryGreen,
@@ -226,6 +262,7 @@ class _StatisticsBlocks extends StatelessWidget {
                 ),
               ),
               Text(
+                //
                 'As a passenger',
                 style: const TextStyle(
                   color: AppColors.primaryGreen,
@@ -257,6 +294,7 @@ class _StatisticsBlocks extends StatelessWidget {
                 ),
               ),
               Text(
+                //
                 'As a driver',
                 style: const TextStyle(
                   color: AppColors.primaryGreen,
@@ -275,6 +313,7 @@ class _StatisticsBlocks extends StatelessWidget {
 class _EditProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: ElevatedButton(
         onPressed: () {
@@ -290,13 +329,13 @@ class _EditProfileButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
-        child: const Text(
+        child: Text(
           style: TextStyle(
             color: AppColors.primaryWhite,
             fontSize: 26.0,
             fontFamily: 'Roboto',
           ),
-          "Edit profile",
+          loc.button_edit_profile,
         ),
       ),
     );

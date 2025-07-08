@@ -3,6 +3,7 @@ import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 import '../registration-screens/confirm_phone_number_screen.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 final _phoneTextController = TextEditingController();
 final _passwordTextController = TextEditingController();
@@ -10,7 +11,8 @@ String? userPhone;
 String? userPassword;
 
 class PhoneScreen extends StatelessWidget {
-  const PhoneScreen({super.key});
+  final void Function(Locale)? onLocaleChanged;
+  const PhoneScreen({super.key, this.onLocaleChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,6 @@ class PhoneScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // AppName(),
-              // AppLogo(),
               SizedBox(height: 80),
               _AuthorizationnText(),
               _PleaseText(),
@@ -44,8 +44,9 @@ class PhoneScreen extends StatelessWidget {
 class _AuthorizationnText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Log in & Sign up',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.auth_type,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -58,8 +59,9 @@ class _AuthorizationnText extends StatelessWidget {
 class _PleaseText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Enter your phone number',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.enter_your_phone_number,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 20.0,
@@ -72,6 +74,7 @@ class _PleaseText extends StatelessWidget {
 class _NameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 246.0,
       height: 46,
@@ -102,7 +105,7 @@ class _NameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Phone number",
+          hintText: loc.phone_number,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -114,13 +117,14 @@ class _NameForm extends StatelessWidget {
 class _AuthorizeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () {
         userPhone = _phoneTextController.text;
         userPassword = _passwordTextController.text;
         if (userPhone?.isEmpty ?? true) {
           ScaffoldMessenger.of(context).showSnackBar(
-            snackBarFactory.createSnackBar("Enter your phone number"),
+            snackBarFactory.createSnackBar(loc.enter_your_phone_number),
           );
         } else {
           Navigator.push(
@@ -139,13 +143,13 @@ class _AuthorizeButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-      child: const Text(
+      child: Text(
         style: TextStyle(
           color: AppColors.primaryWhite,
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Proceed",
+        loc.proceed,
       ),
     );
   }

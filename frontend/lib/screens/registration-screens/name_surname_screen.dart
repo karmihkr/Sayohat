@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
+import 'package:sayohat/l10n/app_localizations.dart';
 
 final _nameTextController = TextEditingController();
 final _surnameTextController = TextEditingController();
@@ -24,8 +25,6 @@ class NameSurnameScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // AppName(),
-                // AppLogo(),
                 SizedBox(height: 80),
                 _RegistrationText(),
                 _PleaseText(),
@@ -47,8 +46,9 @@ class NameSurnameScreen extends StatelessWidget {
 class _RegistrationText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Registration',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.registration,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 30.0,
@@ -61,8 +61,9 @@ class _RegistrationText extends StatelessWidget {
 class _PleaseText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Enter your name and surname',
+    final loc = AppLocalizations.of(context)!;
+    return Text(
+      loc.enter_name_surname,
       style: TextStyle(
         color: AppColors.primaryGreen,
         fontSize: 20.0,
@@ -75,6 +76,7 @@ class _PleaseText extends StatelessWidget {
 class _NameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 246.0,
       height: 46,
@@ -106,7 +108,7 @@ class _NameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Name",
+          hintText: loc.hint_name,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -118,6 +120,7 @@ class _NameForm extends StatelessWidget {
 class _SurnameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: 246.0,
       height: 46,
@@ -149,7 +152,7 @@ class _SurnameForm extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)),
             borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
           ),
-          hintText: "Surname",
+          hintText: loc.hint_surname,
           filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
@@ -161,13 +164,14 @@ class _SurnameForm extends StatelessWidget {
 class _ConfirmNameSurnameButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () {
         userName = _nameTextController.text;
         userSurname = _surnameTextController.text;
         if ((userName?.isEmpty ?? true) || (userSurname?.isEmpty ?? true)) {
           ScaffoldMessenger.of(context).showSnackBar(
-            snackBarFactory.createSnackBar("Enter your name and surname"),
+            snackBarFactory.createSnackBar(loc.error_enter_name_surname),
           );
         } else {
           user.setName(userName);
@@ -182,13 +186,13 @@ class _ConfirmNameSurnameButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-      child: const Text(
+      child: Text(
         style: TextStyle(
           color: AppColors.primaryWhite,
           fontSize: 26.0,
           fontFamily: 'Roboto',
         ),
-        "Go next!",
+        loc.button_go_next,
       ),
     );
   }
