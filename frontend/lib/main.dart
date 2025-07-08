@@ -9,6 +9,7 @@ import 'package:sayohat/screens/tabs-main-screens/main_hub_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/authorization-screens/phone_screen.dart';
 import 'package:sayohat/screens/registration-screens/date_of_birth_screen.dart';
+import 'package:yandex_maps_mapkit/init.dart' as init;
 
 String initialRoute = "";
 
@@ -16,12 +17,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await persistentStorage.clear();
   // await persistentSecuredStorage.deleteAll();
+  await init.initMapkit(apiKey: projectSettings.yandexApiAccessToken);
   initialRoute =
       await apiClient.checkTokenActuality(
         await persistentSecuredStorage.read(key: "token"),
       )
       ? '/WelcomeHub'
       : '/PhoneScreen';
+  initialRoute = '/WelcomeHub';
   runApp(const MyApp());
 }
 
