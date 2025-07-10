@@ -9,7 +9,7 @@ import 'package:yandex_maps_mapkit/search.dart';
 class YandexAPIClient {
   SearchSession? session;
 
-  Future<SearchResponse> yandexSearch(String request, Point near) {
+  Future<SearchResponse> searchToponyms(String request, Point near) {
     final searchManager = SearchFactory.instance.createSearchManager(SearchManagerType.Online);
     final completer = Completer<SearchResponse>();
     final searchOptions = SearchOptions(

@@ -9,8 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:sayohat/yandexApiClient.dart';
 import 'dart:math' as math;
 
-import 'package:yandex_maps_mapkit/search.dart';
-import 'package:yandex_maps_mapkit/mapkit.dart' as yandex;
+import 'package:yandex_maps_mapkit/mapkit.dart' as mapkit;
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -395,12 +394,12 @@ class _CityFieldState extends State<CityField> {
 }
 
 Future<Map<String, String>> yandexSearch(String request) async {
-  final response = await yandexApiClient.yandexSearch(
+  final response = await yandexApiClient.searchToponyms(
       request,
-      yandex.Point(latitude: 55.751762, longitude: 48.747863)
+      mapkit.Point(latitude: 55.751762, longitude: 48.747863)
   );
   var result = <String, String>{};
-  for (yandex.GeoObject geoObject in response.collection.children as List<yandex.GeoObject>) {
+  for (mapkit.GeoObject geoObject in response.collection.children as List<mapkit.GeoObject>) {
     print(geoObject.name);
   }
   result["021554488"] = "Moscow";
