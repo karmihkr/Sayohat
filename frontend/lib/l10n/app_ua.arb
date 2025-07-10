@@ -412,5 +412,7 @@
   "number_should_be_positive": "Ракам бояд мусбат бошад",
   "@number_should_be_positive": {
     "description": "Validation message when a number must be positive"
-  }
+  },
+
+  "error_search_ride": "Хатогй хангоми боркунии руйхати каторхо"
 }

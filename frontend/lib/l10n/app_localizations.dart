@@ -789,6 +789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get tab_profile;
+
+  /// No description provided for @error_search_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Error while searching ride'**
+  String get error_search_ride;
 }
 
 class _AppLocalizationsDelegate

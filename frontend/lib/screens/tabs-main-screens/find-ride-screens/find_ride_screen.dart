@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/find_data.dart';
+import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/list_search_screen.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
+import 'package:sayohat/api_client.dart';
+import 'package:sayohat/models/ride_model.dart';
 
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
@@ -25,18 +27,35 @@ class _FindRideScreenState extends State<FindRideScreen> {
   final _dateController = TextEditingController();
   final _passengersController = TextEditingController();
 
-  void _handleFindRide() {
-    if (!_formKey.currentState!.validate()) {
+  void _handleFindRide() async {
+    final loc = AppLocalizations.of(context)!;
+    if (!_formKey.currentState!.validate()) return;
+
+    final from = _fromController.text;
+    final to = _toController.text;
+    final date = _dateController.text;
+    final passengers = int.parse(_passengersController.text);
+
+    final ridesJson = await apiClient.searchRides(
+      from,
+      to,
+      date,
+      passengers
+    );
+
+    if (ridesJson == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(loc.error_search_ride)));
       return;
     }
 
-    userSearch = DataSearch(
-      _fromController.text,
-      _toController.text,
-      _dateController.text,
-      _passengersController.text,
+    final rides = ridesJson.map((m) => Ride.fromJson(m)).toList();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ListSearchRideScreen(rides: rides)),
     );
-    widget.onShowSearchList(true);
   }
 
   String? _validateDate(String? value) {

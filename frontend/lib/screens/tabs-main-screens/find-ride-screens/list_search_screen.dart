@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/screens/test_data_search_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/ride_details_screen.dart';
+import 'package:sayohat/models/ride_model.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 class ListSearchRideScreen extends StatelessWidget {
-  const ListSearchRideScreen({super.key});
+  final List<Ride> rides;
+  const ListSearchRideScreen({super.key, required this.rides});
 
   @override
   Widget build(BuildContext context) {
@@ -158,9 +159,9 @@ class _ToAddress extends StatelessWidget {
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
-          ride.address2.length > 20
-              ? loc.to_address_label(ride.address2.substring(0, 20))
-              : loc.to_address_label(ride.address2),
+          ride.addressTo.length > 20
+              ? loc.to_address_label(ride.addressTo.substring(0, 20))
+              : loc.to_address_label(ride.addressTo),
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
@@ -181,9 +182,9 @@ class _FromAddress extends StatelessWidget {
         Icon(Icons.location_on, size: 16, color: Colors.grey),
         SizedBox(width: 8),
         Text(
-          ride.address1.length > 20
-              ? loc.from_address_label(ride.address1.substring(0, 20))
-              : loc.from_address_label(ride.address1),
+          ride.addressFrom.length > 20
+              ? loc.from_address_label(ride.addressFrom.substring(0, 20))
+              : loc.from_address_label(ride.addressFrom),
           style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
         ),
       ],
@@ -200,12 +201,12 @@ class _FromToCities extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.from_to_cities(ride.from, ride.to).length > 25
+      loc.from_to_cities(ride.fromCity, ride.toCity).length > 25
           ? loc.from_to_cities(
-              ride.from.substring(0, 5),
-              ride.to.substring(0, 5),
+              ride.fromCity.substring(0, 5),
+              ride.toCity.substring(0, 5),
             )
-          : loc.from_to_cities(ride.from, ride.to),
+          : loc.from_to_cities(ride.fromCity, ride.toCity),
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
@@ -223,7 +224,7 @@ class _Date extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${ride.date.day}.${ride.date.month}.${ride.date.year} - ${ride.date.hour}:${ride.date.min}',
+      '${ride.date} - ${ride.time}',
       style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
@@ -240,9 +241,10 @@ class _Age extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
+    //final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.years_old("${ride.age}"),
+      //loc.years_old("${ride.age}"),
+      "30",
       style: TextStyle(fontSize: 14, color: AppColors.primaryGreen),
     );
   }
@@ -256,9 +258,10 @@ class _FullName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      ride.fullName.length > 20
-          ? "${ride.fullName.substring(0, 21)}..."
-          : ride.fullName,
+      // ride.fullName.length > 20
+      //     ? "${ride.fullName.substring(0, 21)}..."
+      //     : ride.fullName,
+      "Mario",
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,

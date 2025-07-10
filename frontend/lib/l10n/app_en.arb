@@ -683,5 +683,7 @@
   "tab_profile": "Profile",
   "@tab_profile": {
     "description": "Label for the Profile tab in the bottom navigation bar"
-  }
+  },
+
+  "error_search_ride": "Error while searching ride"
 }

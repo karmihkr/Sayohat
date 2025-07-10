@@ -181,9 +181,9 @@ class APIClient {
     String birth,
   ) async {
     Map<String, dynamic>? userData = await apiClient.getUserProfile();
+    if (userData == null) return false;
     final token = await persistentSecuredStorage.read(key: 'token');
     http.Response? response;
-    if (token == null) return false;
     try {
       response = await request(
         put,
@@ -201,6 +201,37 @@ class APIClient {
         return false;
       }
       return true;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>?> searchRides(
+    String from,
+    String to,
+    String date,
+    int passengers,
+  ) async {
+    final token = await persistentSecuredStorage.read(key: 'token');
+    if (token == null) return null;
+    http.Response? response;
+    try {
+      final params = {
+        'from': from,
+        'to': to,
+        'date': date,
+        'passengers': passengers.toString(),
+      };
+      response = await request(get, '/rides/search', params,
+        {'Authorization': 'Bearer $token'},);
+    } finally {
+      if (response?.statusCode != 200) {
+        return null;
+      }
+      final body = jsonDecode(response!.body);
+      if (body is List) {
+        return body.cast<Map<String, dynamic>>();
+      } else {
+        return null;
+      }
     }
   }
 }

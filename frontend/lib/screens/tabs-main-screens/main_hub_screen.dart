@@ -3,7 +3,6 @@ import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/find_ride_sc
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/add_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/list-ride-screens/list_your_ride_screen.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/profile_screen.dart';
-import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/list_search_screen.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
@@ -53,10 +52,7 @@ class _WelcomeScreenState extends State<WelcomeHub> {
           automaticallyImplyLeading: false,
           toolbarHeight: 40,
         ),
-        body: _showSearchList && _selectedTab == 0
-            ? const ListSearchRideScreen()
-            : widgetOptions[_selectedTab],
-        backgroundColor: AppColors.primaryWhite,
+        body: widgetOptions[_selectedTab],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedTab,
           type: BottomNavigationBarType.fixed,
