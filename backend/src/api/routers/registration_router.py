@@ -9,7 +9,6 @@ from jwt import InvalidTokenError
 
 from settings_manager import settings_manager
 from src.api.application_security import oauth2_scheme
-from src.repositories.users_repository import users_repository
 
 registration_router = fastapi.APIRouter()
 
@@ -24,8 +23,30 @@ def check_token(token):
         raise credential_exception
 
 
+@registration_router.post("/telegram_verification")
+async def end_telegram_verification(code: str, request_id: str):
+    response = requests.post(settings_manager.telegram.check_verification_url, params={
+        "request_id": request_id, "code": code
+    }, headers={
+        "Authorization": f"Bearer {settings_manager.telegram.key}",
+        "Content-Type": "application/json",
+    })
+    if response.status_code != 200:
+        raise fastapi.HTTPException(status_code=response.status_code, detail=response.reason)
+    response = response.json()
+    try:
+        if response["result"]["verification_status"]["status"] != "code_valid":
+            raise fastapi.HTTPException(status_code=fastapi.status.HTTP_417_EXPECTATION_FAILED)
+    except KeyError:
+        raise fastapi.HTTPException(status_code=fastapi.status.HTTP_204_NO_CONTENT)
+    return {
+        "result": True
+    }
+
+
 @registration_router.post("/token")
-async def token(standard_request: typing.Annotated[OAuth2PasswordRequestForm, fastapi.Depends()]):
+async def token(standard_request: typing.Annotated[OAuth2PasswordRequestForm, fastapi.Depends()],
+                side_verification_success: typing.Annotated[bool, fastapi.Depends(end_telegram_verification)]):
     to_encode = {
         "sub": standard_request.username,
         "exp": datetime.datetime.now(datetime.timezone.utc) +
@@ -45,13 +66,22 @@ async def hello(token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
     check_token(token)
 
 
-@registration_router.post("/user_existence")
-def user_existence(phone: str):
-    response = requests.post(f"{settings_manager.api.host}:{settings_manager.api.port}/token", data={
-        "username": phone,
-        "password": phone
+@registration_router.get("/telegram_verification")
+async def begin_telegram_verification(phone: str):
+    response = requests.post(settings_manager.telegram.send_verification_url, params={
+        "phone_number": phone, "code_length": "4"
+    }, headers={
+        "Authorization": f"Bearer {settings_manager.telegram.key}",
+        "Content-Type": "application/json",
     })
+    if response.status_code != 200:
+        raise fastapi.HTTPException(status_code=response.status_code, detail=response.reason)
     response = response.json()
-    del response["token_type"]
-    response["answer"] = bool(users_repository.get_matching_user(phone=phone))
-    return response
+    try:
+        if response["result"]["delivery_status"]["status"] != "sent":
+            raise fastapi.HTTPException(status_code=fastapi.status.HTTP_417_EXPECTATION_FAILED)
+    except KeyError:
+        raise fastapi.HTTPException(status_code=fastapi.status.HTTP_204_NO_CONTENT)
+    return {
+        "request_id": response["result"]["request_id"]
+    }

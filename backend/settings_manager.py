@@ -106,6 +106,11 @@ append_setting("token", "lifetime_minutes", 43200)
 append_setting("token", "algorithm", "ALGORITHM_NAME")
 append_setting(ROOT, "docker", dict())
 append_setting("docker", "base_container", "python:latest")
+append_setting(ROOT, "telegram", dict())
+append_setting("telegram", "send_verification_url", "https://gatewayapi.telegram.org/sendVerificationMessage")
+append_setting("telegram", "check_verification_url", "https://gatewayapi.telegram.org/checkVerificationStatus")
+append_setting("telegram", "key", "API_KEY")
+
 
 settings_manager.build_project_settings()
 settings_manager = settings_manager.file.settings
