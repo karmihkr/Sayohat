@@ -30,36 +30,6 @@ We track work on the GitLab **Issue Board**: [https://gitlab.pg.innopolis.univer
 
 ---
 
-## ⚙️ Local Development Setup
-
-```bash
-# 1. Clone
-git clone https://gitlab.pg.innopolis.university/d.chegaev/shareyourride.git
-cd shareyourride
-
-# 2. Backend
-cd backend
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-uvicorn api.application:app --reload  # or `fastapi dev` if installed
-
-# 3. Frontend
-cd ../frontend
-flutter pub get
-flutter run   # choose a device/emulator
-```
-
-Run tests & linters before every commit:
-
-```bash
-# backend
-pytest && pycodestyle .
-# frontend
-flutter test && dart format --set-exit-if-changed .
-```
-
----
-
 ## 🔄 Git Workflow
 
 ### Branching model
