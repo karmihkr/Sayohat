@@ -3,10 +3,10 @@
 [![Open Issues](https://img.shields.io/badge/Open%20Issues-Dynamic-orange?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# ??? HamSafar � Ride-Sharing App for Central Asia
+# HamSafar - Ride-Sharing App for Central Asia
 
 
-![�������� �����������](frontend/assets/images/splash-logo.png)
+![logo](frontend/assets/images/splash-logo.png)
 
 
 **HamSafar** is a mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
