@@ -6,6 +6,7 @@ import 'package:sayohat/l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   final void Function(Locale) onLocaleChanged;
+
   const ProfileScreen({super.key, required this.onLocaleChanged});
 
   @override
@@ -23,11 +24,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadProfile() async {
-    final data = await apiClient.getUserProfile();
-    setState(() {
-      userData = data;
-      isLoading = false;
-    });
+    try {
+      final data = await apiClient.getUserProfile();
+      setState(() {
+        userData = data;
+        isLoading = false;
+      });
+    } on Exception {
+      setState(() {
+        userData = null;
+        isLoading = false;
+      });
+    }
   }
 
   @override

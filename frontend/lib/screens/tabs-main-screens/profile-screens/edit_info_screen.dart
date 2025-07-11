@@ -91,11 +91,18 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   }
 
   Future<void> _loadProfile() async {
-    final data = await apiClient.getUserProfile();
-    setState(() {
-      userData = data;
-      isLoading = false;
-    });
+    try {
+      final data = await apiClient.getUserProfile();
+      setState(() {
+        userData = data;
+        isLoading = false;
+      });
+    } on Exception {
+      setState(() {
+        userData = null;
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -313,6 +320,7 @@ class _BirthForm extends StatelessWidget {
   final TextEditingController birthTextController;
 
   const _BirthForm({required this.birthTextController});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -380,28 +388,28 @@ class _ConfirmChanges extends StatelessWidget {
     return Center(
       child: ElevatedButton(
         onPressed: () async {
-          if (isValidDate(newBirth.text) &&
-              isValidNameSurname(newName.text) &&
-              isValidNameSurname(newSurname.text) &&
-              isValidPhone(newPhone.text)) {
-            bool updatedUserDataResult = await apiClient.updateUserProfile(
+          if (!isValidDate(newBirth.text) ||
+              !isValidNameSurname(newName.text) ||
+              !isValidNameSurname(newSurname.text) ||
+              !isValidPhone(newPhone.text)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar(loc.snackbar_something_went_wrong),
+            );
+            return;
+          }
+          try {
+            await apiClient.updateUserProfile(
               newPhone.text,
               newName.text,
               newSurname.text,
               newBirth.text,
             );
-            if (updatedUserDataResult) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar(loc.snackbar_info_updated),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar(loc.error_api_unreachable),
-              );
-            }
-          } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(loc.snackbar_something_went_wrong),
+              snackBarFactory.createSnackBar(loc.snackbar_info_updated),
+            );
+          } on Exception {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar(loc.error_api_unreachable),
             );
           }
         },

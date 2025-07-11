@@ -4,7 +4,7 @@ import 'package:sayohat/api_client.dart';
 void main() {
   final client = APIClient();
   test('vericodeRequestId returns "unsent" for invalid number', () async {
-    final result = await client.vericodeRequestId('invalid-number');
+    final result = await client.sendTelegramVerificationCode('invalid-number');
     expect(result, 'unsent');
   });
 }

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Your values here, as the class members
 class ProjectSettings {
   String apiUrl = "API_URL/API_HOST_PORT";
-  bool localHosted = true;
   String telegramApiAccessToken = "ACCESS_TOKEN";
   String telegramApiUrl = "gatewayapi.telegram.org";
   String telegramApiSendEndpoint = "/sendVerificationMessage";

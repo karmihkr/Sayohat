@@ -36,8 +36,13 @@ def read_own_profile(token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)
 @users_router.post("/user")
 def post_user(phone, name, surname, birth):
     users_repository.insert(phone=phone, name=name, surname=surname, birth=birth)
-    return requests.post(f"{settings_manager.api.host}:{settings_manager.api.port}/user_existence",
-                         params={"phone": phone}).json()
+
+
+@users_router.get("/user_exists")
+def post_user(phone):
+    return {
+        "result": bool(users_repository.get_matching_user(phone=phone))
+    }
 
 
 @users_router.put("/user")

@@ -297,7 +297,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
       "available_places": passengers,
       "vehicle_number": carPlate,
     };
-    apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
+    // apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
     yourRides.add(userRide);
     ScaffoldMessenger.of(context).showSnackBar(
       snackBarFactory.createSnackBar(loc.success_ride_added),

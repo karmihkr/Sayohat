@@ -142,26 +142,20 @@ class _ConfirmBirthButton extends StatelessWidget {
           );
           return;
         }
-
         user.setBirth(userBirth);
-        final resp = await apiClient.registerNewUser(
-          user.phone!,
-          user.name!,
-          user.surname!,
-          user.birth!,
-        );
-        if (resp == null) {
+        try {
+          await apiClient.registerUser(
+            user.phone!,
+            user.name!,
+            user.surname!,
+            user.birth!,
+          );
+          Navigator.pushNamed(context, '/WelcomeHub');
+        } on Exception {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),
           );
-          return;
         }
-
-        persistentSecuredStorage.write(
-          key: 'token',
-          value: resp['access_token'],
-        );
-        Navigator.pushNamed(context, '/WelcomeHub');
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(246, 46),

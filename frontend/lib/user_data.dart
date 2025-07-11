@@ -3,7 +3,7 @@ class User {
   String? name;
   String? surname;
   String? birth;
-  String? vericodeRequestId;
+  String? telegramRequestId;
 
   void setPhone(String? phone) {
     this.phone = phone;
@@ -21,8 +21,8 @@ class User {
     this.birth = birth;
   }
 
-  void setVericodeRequestId(String? requestId) {
-    this.vericodeRequestId = requestId;
+  void setTelegramRequestId(String? requestId) {
+    this.telegramRequestId = requestId;
   }
 }
 

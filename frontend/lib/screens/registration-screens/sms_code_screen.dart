@@ -128,41 +128,37 @@ class _ConfirmCodeButton extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(snackBarFactory.createSnackBar(loc.error_enter_code));
-        } else {
-          var telegramValidationResult = await apiClient.checkVericode(
-            user.vericodeRequestId!,
+          return;
+        }
+        try {
+          String apiAccessToken = await apiClient.obtainAccessToken(
+            user.phone!,
+            user.telegramRequestId!,
             userCode!,
           );
-          if (telegramValidationResult == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(loc.error_api_unreachable),
-            );
-            return;
-          }
-          if (!telegramValidationResult) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(loc.error_incorrect_or_expired),
-            );
-            return;
-          }
-          var userExistenceResult = await apiClient.checkUsernameExistance(
-            user.phone!,
-          );
-          if (userExistenceResult == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(loc.error_api_unreachable),
-            );
-            return;
-          }
-          if (userExistenceResult["answer"]) {
-            persistentSecuredStorage.write(
-              key: "token",
-              value: userExistenceResult["access_token"],
-            );
+          persistentSecuredStorage.write(key: "token", value: apiAccessToken);
+          try {
+          if (await apiClient.userExists(user.phone!)) {
             Navigator.pushNamed(context, '/WelcomeHub');
             return;
           }
           Navigator.pushNamed(context, '/NameSurnameScreen');
+          } on Exception {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar(loc.error_api_unreachable),
+            );
+          }
+        } on Exception catch (error) {
+          if (error.toString().contains("incorrect")) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar(loc.error_incorrect_or_expired),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackBarFactory.createSnackBar(loc.error_api_unreachable),
+            );
+          }
+          return;
         }
       },
       style: ElevatedButton.styleFrom(

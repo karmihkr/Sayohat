@@ -115,14 +115,15 @@ class _GoNextButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         user.setPhone(pn);
-        user.setVericodeRequestId(await apiClient.vericodeRequestId(pn!));
-        if (user.vericodeRequestId != "unsent") {
-          Navigator.pushNamed(context, '/VerificationScreen');
-        } else {
+        try {
+          user.setTelegramRequestId(await apiClient.sendTelegramVerificationCode(pn!));
+        } on Exception {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),
           );
+          return;
         }
+        Navigator.pushNamed(context, '/VerificationScreen');
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(246, 46),
