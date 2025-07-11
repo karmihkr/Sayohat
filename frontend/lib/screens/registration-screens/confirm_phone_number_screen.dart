@@ -6,11 +6,13 @@ import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 late String? pn;
+bool loading = false;
 
 class ConfirmPhoneNumberScreen extends StatelessWidget {
   final String? phoneNumber;
 
   const ConfirmPhoneNumberScreen({super.key, required this.phoneNumber});
+
   @override
   Widget build(BuildContext context) {
     pn = phoneNumber;
@@ -30,9 +32,16 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
                 SizedBox(height: 15.0),
                 _PhoneNumberForm(),
                 SizedBox(height: 15.0),
-                _GoBackButton(),
+                _GoBackButton(mainContext: context),
                 SizedBox(height: 15.0),
-                _GoNextButton(),
+                _GoNextButton(mainContext: context),
+                if (loading) SizedBox(height: 15.0),
+                if (loading)
+                  Image.asset(
+                    "assets/images/loading.gif",
+                    height: 50,
+                    width: 50,
+                  ),
               ],
             ),
           ),
@@ -82,11 +91,17 @@ class _PhoneNumberForm extends StatelessWidget {
 }
 
 class _GoBackButton extends StatelessWidget {
+  final BuildContext? mainContext;
+
+  const _GoBackButton({required this.mainContext});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () {
+        loading = false;
+        (mainContext as Element).markNeedsBuild();
         Navigator.pop(context);
       },
       style: ElevatedButton.styleFrom(
@@ -109,14 +124,22 @@ class _GoBackButton extends StatelessWidget {
 }
 
 class _GoNextButton extends StatelessWidget {
+  final BuildContext? mainContext;
+
+  const _GoNextButton({required this.mainContext});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () async {
+        loading = true;
+        (mainContext as Element).markNeedsBuild();
         user.setPhone(pn);
         try {
-          user.setTelegramRequestId(await apiClient.sendTelegramVerificationCode(pn!));
+          user.setTelegramRequestId(
+            await apiClient.sendTelegramVerificationCode(pn!),
+          );
         } on Exception {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),

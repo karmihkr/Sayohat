@@ -26,7 +26,7 @@ class APIClient {
         : type == RequestType.delete
         ? client.delete
         : client.put)(
-      Uri.https(projectSettings.apiUrl, endpoint, params),
+      Uri.http(projectSettings.apiUrl, endpoint, params),
       headers: headers,
       body: body,
     );
@@ -88,9 +88,19 @@ class APIClient {
     http.Response response = await request(
       RequestType.post,
       "/token",
-      <String, dynamic>{"code": code, "request_id": telegramRequestId},
-      {},
-      {"password": phone, "username": phone},
+      {"code": code, "request_id": telegramRequestId},
+      {
+        "accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      {
+        "grant_type": "password",
+        "username": phone,
+        "password": phone,
+        "scope": "",
+        "client_id": "string",
+        "client_secret": "********",
+      },
     );
     if (response.statusCode == 417) throw http.ClientException("incorrect");
     if (response.statusCode != 200) throw http.ClientException("");

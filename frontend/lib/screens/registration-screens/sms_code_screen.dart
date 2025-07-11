@@ -10,6 +10,7 @@ import 'package:sayohat/l10n/app_localizations.dart';
 
 final _codeTextController = TextEditingController();
 String? userCode;
+bool loading = false;
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
@@ -33,7 +34,14 @@ class VerificationScreen extends StatelessWidget {
                 SizedBox(height: 15.0),
                 _CodeForm(),
                 SizedBox(height: 15.0),
-                _ConfirmCodeButton(),
+                _ConfirmCodeButton(mainContext: context),
+                if (loading) SizedBox(height: 15.0),
+                if (loading)
+                  Image.asset(
+                    "assets/images/loading.gif",
+                    height: 50,
+                    width: 50,
+                  ),
               ],
             ),
           ),
@@ -118,11 +126,17 @@ class _CodeForm extends StatelessWidget {
 }
 
 class _ConfirmCodeButton extends StatelessWidget {
+  final BuildContext? mainContext;
+
+  const _ConfirmCodeButton({required this.mainContext});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () async {
+        loading = true;
+        (mainContext as Element).markNeedsBuild();
         userCode = _codeTextController.text;
         if (userCode?.isEmpty ?? true) {
           ScaffoldMessenger.of(
@@ -138,11 +152,11 @@ class _ConfirmCodeButton extends StatelessWidget {
           );
           persistentSecuredStorage.write(key: "token", value: apiAccessToken);
           try {
-          if (await apiClient.userExists(user.phone!)) {
-            Navigator.pushNamed(context, '/WelcomeHub');
-            return;
-          }
-          Navigator.pushNamed(context, '/NameSurnameScreen');
+            if (await apiClient.userExists(user.phone!)) {
+              Navigator.pushNamed(context, '/WelcomeHub');
+              return;
+            }
+            Navigator.pushNamed(context, '/NameSurnameScreen');
           } on Exception {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.error_api_unreachable),

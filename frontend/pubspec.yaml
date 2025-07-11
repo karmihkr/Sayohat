@@ -41,6 +41,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/map-background.jpeg
     - assets/images/test_ava.JPG
+    - assets/images/loading.gif
   fonts: 
     - family: Roboto
       fonts:
