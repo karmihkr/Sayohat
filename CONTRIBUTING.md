@@ -1,4 +1,4 @@
-# Contributing to **Share Rides**
+# Contributing to **Hamsafar**
 
 > ✨ **Welcome!** This document explains how we develop Hamsafar so you can contribute with confidence.
 
