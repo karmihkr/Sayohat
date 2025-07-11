@@ -1,22 +1,55 @@
-# 🛣️ HamSafar — Ride-Sharing App for Central Asia
-
 [![Pipeline Status](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/badges/main/pipeline.svg)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/pipelines)
 ![Closed Issues](https://img.shields.io/gitlab/issues/closed-raw/d.chegaev/shareyourride?gitlab_url=https%3A%2F%2Fgitlab.pg.innopolis.university&style=flat)
 [![Open Issues](https://img.shields.io/badge/Open%20Issues-Dynamic-orange?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**HamSafar** is a mobile application designed to simplify intercity ride-sharing across Central Asia. Whether you're a driver with empty seats or a passenger looking for a cost-effective and reliable trip — HamSafar connects you.
+# ??? HamSafar � Ride-Sharing App for Central Asia
+
+
+![�������� �����������](frontend/assets/images/splash-logo.png)
+
+
+**HamSafar** is a mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#features">Features</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-run">How to Run</a>
+    </li>
+    <li><a href="#development">Development</a></li>
+    <ul>
+        <li><a href="#kanban-board">Kanban Board</a></li>
+        <li><a href="#git-workflow">Git workflow</a></li>
+        <li><a href="#secrets-management">Secrets management</a></li>
+        <li><a href="#automated-tests">Automated tests</a></li>
+        <li><a href="#continuous-integration">Continuous Integration</a></li>
+   </ul>
+    <li><a href="#quality">Quality</a></li>
+    <li><a href="architecture">Architecture</a></li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
 
 [Features](#features) | [How to Run](#how-to-run) | [Development](#development) | [Quality](#quality) | [Authors](#authors) | [License](#license)
 
 ## Features
 
--  **User-friendly ride matching** — Quickly find available rides or passengers nearby.
--  **Multi-language support** — Available in Tajik and English to serve Central Asian users.
--  **Cost-efficient travel** — Share ride costs to save money.
--  **Real-time notifications** — Receive alerts about trip status and updates.
--  **Cross-platform mobile app** — Built with Flutter for smooth performance on Android and iOS.
--  **Fast and reliable backend** — Powered by FastAPI for quick responses and scalability.
+-  **User-friendly ride matching** � Quickly find available rides or passengers nearby.
+-  **Multi-language support** � Available in Tajik and English to serve Central Asian users.
+-  **Cost-efficient travel** � Share ride costs to save money.
+-  **Real-time notifications** � Receive alerts about trip status and updates.
+-  **Cross-platform mobile app** � Built with Flutter for smooth performance on Android and iOS.
+-  **Fast and reliable backend** � Powered by FastAPI for quick responses and scalability.
 
 ## How to Run
 
@@ -33,16 +66,16 @@
 ### [Kanban board]((https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/boards))
 
 
-- **Backlog** — tasks not yet taken into work.
-- **To Do** — tasks ready to be worked on.
-- **In Progress** — tasks currently being worked on.
-- **Done** — completed and tested tasks.
+- **Backlog** � tasks not yet taken into work.
+- **To Do** � tasks ready to be worked on.
+- **In Progress** � tasks currently being worked on.
+- **Done** � completed and tested tasks.
 
 ### Git workflow
 
-- `main` — production-ready branch, contains stable and reviewed code.
-- `feature/parse-pers-inf` — used for implementing a personal info parser.
-- `destructive_backend_injection` — task-specific branch, e.g., for backend experiments or testing.
+- `main` � production-ready branch, contains stable and reviewed code.
+- `feature/parse-pers-inf` � used for implementing a personal info parser.
+- `destructive_backend_injection` � task-specific branch, e.g., for backend experiments or testing.
 
 
 Rules:
@@ -75,9 +108,9 @@ Rules:
 
 - CI workflow file: [.gitlab-ci.yml](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/.gitlab-ci.yml?ref_type=heads)
 - In CI we use:
-  - `pycodestyle` — for Python static code analysis.
-  - `pytest` — to run backend tests.
-  - `flutter test` — to run frontend tests.
+  - `pycodestyle` � for Python static code analysis.
+  - `pytest` � to run backend tests.
+  - `flutter test` � to run frontend tests.
 - All CI runs can be viewed [here](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/pipelines).
 
 ## Quality
@@ -89,7 +122,7 @@ Rules:
 **Why it matters:**  
 The user interface should only provide relevant, concise, and context-specific features that support users in achieving their goals efficiently. For the Add Ride flow, this means users must be able to input the necessary data easily and without confusion. Including clear field labels and grouping related inputs improves task effectiveness.
 
-**Test Scenario:**  
+**Test Scenario:**
 > **GIVEN** a driver is adding a new ride,  
 > **WHEN** they enter the required data (departure city, arrival city, date, number of passengers),  
 > **THEN** the screen accepts input and is ready for form submission without unnecessary complexity.
@@ -99,21 +132,21 @@ We validate this via a Flutter widget test:
 
 ```dart
 testWidgets('AddRideScreen render and submit form', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(home: Material(child: AddRideScreen())),
-    );
+WidgetTester tester,
+) async {
+await tester.pumpWidget(
+MaterialApp(home: Material(child: AddRideScreen())),
+);
 
-    expect(find.text('General'), findsOneWidget);
-    expect(find.text('Ride details'), findsOneWidget);
-    expect(find.text('Car information'), findsOneWidget);
+expect(find.text('General'), findsOneWidget);
+expect(find.text('Ride details'), findsOneWidget);
+expect(find.text('Car information'), findsOneWidget);
 
-    await tester.enterText(find.byKey(Key('departureCityField')), 'Moscow');
-    await tester.enterText(find.byKey(Key('arrivalCityField')), 'Innopolis');
-    await tester.enterText(find.byKey(Key('dateField')), "28/06/2025");
-    await tester.enterText(find.byKey(Key('passengersField')), "3");
-  });
+await tester.enterText(find.byKey(Key('departureCityField')), 'Moscow');
+await tester.enterText(find.byKey(Key('arrivalCityField')), 'Innopolis');
+await tester.enterText(find.byKey(Key('dateField')), "28/06/2025");
+await tester.enterText(find.byKey(Key('passengersField')), "3");
+});
 ```
 [Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/cb5260928c924e67ca61955eecbfc27f36060316/frontend/test/unit_tests/add_ride_screen_unit_test.dart)
 
@@ -122,7 +155,7 @@ testWidgets('AddRideScreen render and submit form', (
 **Why it matters:**  
 The app must preserve and use the exact input values provided by users to search for rides. If there is a mismatch between what the user enters and what the app stores or processes, the search results will be invalid, causing confusion or even failed bookings.
 
-**Test Scenario:**  
+**Test Scenario:**
 > **GIVEN** a passenger enters origin, destination, date, and passenger count,  
 > **WHEN** a `DataSearch` object is initialized,  
 > **THEN** all parameters must be correctly stored without loss or mutation.
@@ -132,13 +165,13 @@ This behavior is tested using a simple Dart unit test:
 
 ```dart
 test('DataSearch should correctly initialize with parameter', () {
-    final dataSearch = DataSearch('Paris', 'London', '01/01/2023', '2');
+final dataSearch = DataSearch('Paris', 'London', '01/01/2023', '2');
 
-    expect(dataSearch.from, 'Paris');
-    expect(dataSearch.to, 'London');
-    expect(dataSearch.date, '01/01/2023');
-    expect(dataSearch.passengers, '2');
-  });
+expect(dataSearch.from, 'Paris');
+expect(dataSearch.to, 'London');
+expect(dataSearch.date, '01/01/2023');
+expect(dataSearch.passengers, '2');
+});
 ```
 [Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/ed2338a45b1d6f19b987a032ae1a0f0ab7117174/frontend/test/unit_tests/data_search_model_non_empty_unit_test.dart)
 
@@ -149,7 +182,7 @@ test('DataSearch should correctly initialize with parameter', () {
 **Why it matters:**  
 In a multi-environment project, the system must allow configuration changes (like API host) without code duplication or risk of bugs. Centralized and easily testable settings are essential for safe deployments and easier debugging.
 
-**Test Scenario:**  
+**Test Scenario:**
 > **GIVEN** a backend developer starts the app in the local environment,  
 > **WHEN** they access `settings_manager.api.host`,  
 > **THEN** it must return the correct base URL `http://127.0.0.1`, ensuring safe configuration handling.
