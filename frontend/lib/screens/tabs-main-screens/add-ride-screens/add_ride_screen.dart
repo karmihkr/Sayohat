@@ -5,10 +5,8 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/user_data.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 final _dateMaskFormatter = MaskTextInputFormatter(
@@ -157,13 +155,15 @@ class _AddRideScreenState extends State<AddRideScreen> {
                     CityField(
                       key: Key('departureCityField'),
                       label: loc.hint_from,
-                      onSaved: (value) => fromCity = value,
+                      onSaved: (value) => {fromCity = value ?? ''},
+                      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null
                     ),
                     SizedBox(height: 10),
                     CityField(
                       key: Key('arrivalCityField'),
                       label: loc.hint_to,
-                      onSaved: (value) => toCity = value,
+                      onSaved: (value) => {toCity = value ?? ''},
+                      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null
                     ),
                     SizedBox(height: 10),
                     _DateField(
@@ -299,153 +299,116 @@ class _AddRideScreenState extends State<AddRideScreen> {
     };
     apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
     yourRides.add(userRide);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(snackBarFactory.createSnackBar(loc.success_ride_added));
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBarFactory.createSnackBar(loc.success_ride_added),
+    );
   }
 }
 
 class CityField extends StatefulWidget {
   final String label;
-  final void Function(String) onSaved;
-  final String? initialValue;
+  final Function(String?) onSaved;
+  final String? Function(String?)? validator;
 
   const CityField({
     super.key,
     required this.label,
     required this.onSaved,
-    this.initialValue,
+    required this.validator
   });
 
   @override
-  _CityFieldState createState() => _CityFieldState();
+  State<CityField> createState() => _CityFieldState();
 }
 
 class _CityFieldState extends State<CityField> {
-  final TextEditingController _controller = TextEditingController();
-  SuggestSession? _session;
-
-  final _bbox = BoundingBox(
-    northEast: Point(latitude: 56.0, longitude: 38.0),
-    southWest: Point(latitude: 55.5, longitude: 37.0),
-  );
-  final _options = SuggestOptions(
-    suggestType: SuggestType.geo,
-    suggestWords: true,
-    userPosition: Point(latitude: 55.75, longitude: 37.62),
-  );
+  final FocusNode _fieldFocusObserver = FocusNode();
+  late OverlayEntry _searchWindow;
 
   @override
   void initState() {
     super.initState();
-    if (widget.initialValue != null) {
-      _controller.text = widget.initialValue!;
-    }
+    _fieldFocusObserver.addListener(() {
+      if (!_fieldFocusObserver.hasFocus) {
+        _searchWindow.remove();
+      }
+    });
   }
 
-  @override
-  void dispose() {
-    _session?.close();
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<List<SuggestItem>> _fetchSuggestions(String pattern) async {
-    if (pattern.isEmpty) return [];
-    await _session?.reset();
-    final record = await YandexSuggest.getSuggestions(
-      text: pattern,
-      boundingBox: _bbox,
-      suggestOptions: _options,
-    );
-    _session = record.$1;
-    final result = await record.$2;
-    if (result.error != null || result.items == null) {
-      return [];
-    }
-    return result.items!;
+  OverlayEntry _createSearchWindow() {
+    RenderBox renderBox = context.findRenderObject()! as RenderBox;
+    var size = renderBox.size;
+    var offset = renderBox.localToGlobal(Offset.zero);
+    return OverlayEntry(builder: (context) => Positioned(
+      left: offset.dx,
+      top: offset.dy + size.height + 5.0,
+      width: size.width,
+      child: Material(
+        elevation: 4.0,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          children: [
+            for (MapEntry<String, String> entry in {})
+              ListTile(title: Text(entry.value))
+          ],
+        ),
+      )
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
-    return Autocomplete<SuggestItem>(
-      optionsBuilder: (TextEditingValue tv) async {
-        return _fetchSuggestions(tv.text);
-      },
-      displayStringForOption: (SuggestItem item) {
-        final city = item.subtitle ?? '';
-        return city.isNotEmpty ? '${item.title}, $city' : item.title;
-      },
-      fieldViewBuilder:
-          (context, textEditingController, focusNode, onFieldSubmitted) {
-            return TextFormField(
-              controller: textEditingController,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                labelText: widget.label,
-                hintText: loc.hint_start_enter_address,
-                prefixIcon: Icon(
-                  Icons.location_on,
-                  color: AppColors.primaryGreen,
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primaryGreen),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primaryGreen,
-                    width: 2,
-                  ),
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
-                ),
-              ),
-              onFieldSubmitted: (_) => onFieldSubmitted(),
-              validator: (v) =>
-                  (v == null || v.isEmpty) ? loc.error_enter_address : null,
-              onSaved: (v) {
-                if (v != null) widget.onSaved(v);
-              },
-            );
-          },
-      optionsViewBuilder: (context, onSelected, options) => Material(
-        elevation: 4,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 200),
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: options.length,
-            itemBuilder: (context, index) {
-              final item = options.elementAt(index);
-              return ListTile(
-                title: Text(item.title),
-                subtitle: Text(item.subtitle ?? ''),
-                onTap: () => onSelected(item),
-              );
-            },
-          ),
+    return TextFormField(
+      focusNode: _fieldFocusObserver,
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+        ),
+        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
+        hintText: loc.hint_start_enter_address,
+        labelText: widget.label,
+        filled: true,
+        fillColor: Colors.white,
       ),
-      onSelected: (SuggestItem item) {
-        final city = item.subtitle ?? '';
-        final full = city.isNotEmpty ? '$city, ${item.title}' : item.title;
-        widget.onSaved(full);
-      },
+      validator: widget.validator,
+      onSaved: widget.onSaved,
+      onChanged: (value) async {
+        try {
+          _searchWindow.remove();
+        } finally {
+          if (value.isNotEmpty) {
+            _searchWindow = _createSearchWindow();
+            Overlay.of(context).insert(_searchWindow);
+          }
+        }
+      }
     );
   }
 }
 
 class _AddressField extends StatelessWidget {
   final String label;
-  final Key key;
   final Function(String?) onSaved;
 
   const _AddressField({
+    super.key,
     required this.label,
     required this.onSaved,
-    required this.key,
   });
 
   @override
@@ -475,8 +438,7 @@ class _AddressField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_address_short : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_address_short : null,
       onSaved: onSaved,
     );
   }
@@ -484,10 +446,13 @@ class _AddressField extends StatelessWidget {
 
 class _DateField extends StatelessWidget {
   final Function(String?) onSaved;
-  final Key key;
   final String? Function(String?)? validator;
 
-  const _DateField({required this.onSaved, this.validator, required this.key});
+  const _DateField({
+    super.key,
+    required this.onSaved,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -525,13 +490,12 @@ class _DateField extends StatelessWidget {
 
 class _PassengerNumberField extends StatelessWidget {
   final Function(String?) onSaved;
-  final Key key;
   final String? Function(String?)? validator;
 
   const _PassengerNumberField({
+    super.key,
     required this.onSaved,
-    this.validator,
-    required this.key,
+    this.validator
   });
 
   @override
@@ -570,13 +534,12 @@ class _PassengerNumberField extends StatelessWidget {
 
 class _TimeField extends StatelessWidget {
   final Function(String?) onSaved;
-  final Key key;
   final String? Function(String?)? validator;
 
   const _TimeField({
+    super.key,
     required this.onSaved,
-    required this.validator,
-    required this.key,
+    required this.validator
   });
 
   @override
@@ -644,8 +607,7 @@ class _PriceField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_price : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_price : null,
       onSaved: onSaved,
       keyboardType: TextInputType.number,
     );
@@ -654,9 +616,11 @@ class _PriceField extends StatelessWidget {
 
 class _DescriptionField extends StatelessWidget {
   final Function(String?) onSaved;
-  final Key key;
 
-  const _DescriptionField({required this.onSaved, required this.key});
+  const _DescriptionField({
+    super.key,
+    required this.onSaved
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -685,8 +649,7 @@ class _DescriptionField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_description : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_description : null,
       onSaved: onSaved,
     );
   }
@@ -723,8 +686,7 @@ class _CarModelField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_car_model : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_model : null,
       onSaved: onSaved,
     );
   }
@@ -761,8 +723,7 @@ class _CarColorField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_car_color : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_color : null,
       onSaved: onSaved,
     );
   }
@@ -799,8 +760,7 @@ class _CarPlateField extends StatelessWidget {
           borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
         ),
       ),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
+      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
       onSaved: onSaved,
     );
   }
@@ -814,7 +774,7 @@ class HourMinsFormatter extends TextInputFormatter {
 
   String pack(String value) {
     if (value.length != 4) return value;
-    return value.substring(0, 2) + ':' + value.substring(2, 4);
+    return '${value.substring(0, 2)}:${value.substring(2, 4)}';
   }
 
   String unpack(String value) {
@@ -846,10 +806,11 @@ class HourMinsFormatter extends TextInputFormatter {
 
     toRender = '';
     if (newText.length < 5) {
-      if (newText == '00:0')
+      if (newText == '00:0') {
         toRender = '';
-      else
+      } else {
         toRender = pack(complete(unpack(newText)));
+      }
     } else if (newText.length == 6) {
       toRender = pack(limit(unpack(newText)));
     }
