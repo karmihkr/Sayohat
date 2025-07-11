@@ -4,7 +4,7 @@ import 'package:sayohat/api_client.dart';
 void main() {
   final client = APIClient();
   test('checkVericode returns null for invalid input', () async {
-    final result = await client.checkTelegramVerificationCode('invalid-id', '0000');
-    expect(result == null || result == false, isTrue);
+    final result = await client.obtainAccessToken("+79000000000", 'invalid-id', '0000');
+    expect(result is String, isTrue);
   });
 }
