@@ -54,7 +54,7 @@ Fix crash on empty phone number
 ### Issues & Labels
 
 1. Create issues using templates in `.gitlab/issue_templates`.
-2. Add labels for type (`feature`, `bug`, `docs`) and priority (`P1`, `P2`).
+2. Add labels for type (`task`, `bug`, `user story`) and priority (`P0`, `P1`, `P2`).
 3. Assign yourself when you start work.
 4. Close the issue manually after merge.
 
