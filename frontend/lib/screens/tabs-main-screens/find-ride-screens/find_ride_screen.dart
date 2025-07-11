@@ -3,7 +3,7 @@ import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/list_search_screen.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/models/ride_model.dart';
 
 final _dateMaskFormatter = MaskTextInputFormatter(
@@ -29,6 +29,8 @@ class _FindRideScreenState extends State<FindRideScreen> {
 
   void _handleFindRide() async {
     final loc = AppLocalizations.of(context)!;
+    print("Locale name");
+    print(loc.localeName);
     if (!_formKey.currentState!.validate()) return;
 
     final from = _fromController.text;
@@ -36,7 +38,7 @@ class _FindRideScreenState extends State<FindRideScreen> {
     final date = _dateController.text;
     final passengers = int.parse(_passengersController.text);
 
-    final ridesJson = await apiClient.searchRides(
+    final ridesJson = await hamsafarApiClient.searchRides(
       from,
       to,
       date,

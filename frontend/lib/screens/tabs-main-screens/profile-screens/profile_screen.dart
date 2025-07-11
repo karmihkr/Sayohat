@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/edit_info_screen.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _loadProfile() async {
     try {
-      final data = await apiClient.getUserProfile();
+      final data = await hamsafarApiClient.getUserProfile();
       setState(() {
         userData = data;
         isLoading = false;

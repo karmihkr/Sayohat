@@ -94,6 +94,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hint_start_enter_address => 'Начните ввод адреса';
 
   @override
+  String get date_input_label => 'Дата';
+
+  @override
   String get hint_date_ddmmyyyy => 'дд/мм/гггг';
 
   @override
@@ -103,13 +106,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hint_time_hhmm => 'чч:мм';
 
   @override
-  String get hint_price => 'Цена';
+  String get hint_price => 'Доллары';
 
   @override
   String get hint_contact_info_rules => 'Контактная информация, правила и т.д.';
 
   @override
-  String get hint_car_model => 'Модель авто';
+  String get hint_car_model => 'Модель';
 
   @override
   String get hint_car_color => 'Цвет авто';
@@ -396,4 +399,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get error_search_ride => 'Ошибка при загрузке списка поездок';
+
+  @override
+  String get passengers => 'Пассажиры';
+
+  @override
+  String get time_input_label => 'Время';
+
+  @override
+  String get price_label => 'Цена';
+
+  @override
+  String get info => 'Инфо';
+
+  @override
+  String get car => 'Машина';
 }

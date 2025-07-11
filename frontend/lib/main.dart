@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
 import 'package:sayohat/screens/registration-screens/sms_code_screen.dart';
@@ -19,7 +19,7 @@ Future<void> main() async {
   // await persistentStorage.clear();
   // await persistentSecuredStorage.deleteAll();
   initialRoute =
-      await apiClient.checkTokenActuality(
+      await hamsafarApiClient.checkTokenActuality(
         await persistentSecuredStorage.read(key: "token"),
       )
       ? '/WelcomeHub'

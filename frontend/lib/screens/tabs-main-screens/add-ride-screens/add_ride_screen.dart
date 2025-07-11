@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -362,29 +362,7 @@ class _CityFieldState extends State<CityField> {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       focusNode: _fieldFocusObserver,
-      decoration: InputDecoration(
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
-        hintText: loc.hint_start_enter_address,
-        labelText: widget.label,
-        filled: true,
-        fillColor: Colors.white,
-      ),
+      decoration: inputDecorationFactory(Icons.circle_outlined, loc.hint_start_enter_address, widget.label),
       validator: widget.validator,
       onSaved: widget.onSaved,
       onChanged: (value) async {
@@ -416,28 +394,7 @@ class _AddressField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.location_on, color: AppColors.primaryGreen),
-        hintText: label,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.location_on, label, label),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_address_short : null,
       onSaved: onSaved,
     );
@@ -460,33 +417,13 @@ class _DateField extends StatelessWidget {
     return TextFormField(
       key: key,
       inputFormatters: [_dateMaskFormatter],
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.calendar_month, color: AppColors.primaryGreen),
-        hintText: loc.hint_date_ddmmyyyy,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.calendar_month, loc.hint_date_ddmmyyyy, loc.date_input_label),
       validator: validator,
       onSaved: onSaved,
     );
   }
 }
+
 
 class _PassengerNumberField extends StatelessWidget {
   final Function(String?) onSaved;
@@ -503,28 +440,7 @@ class _PassengerNumberField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person_outlined, color: AppColors.primaryGreen),
-        hintText: loc.hint_number_of_passengers,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.person_outlined, loc.hint_number_of_passengers, loc.passengers),
       keyboardType: TextInputType.number,
       validator: validator,
       onSaved: onSaved,
@@ -548,28 +464,7 @@ class _TimeField extends StatelessWidget {
     return TextFormField(
       key: key,
       inputFormatters: <TextInputFormatter>[HourMinsFormatter()],
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.access_time, color: AppColors.primaryGreen),
-        hintText: loc.hint_time_hhmm,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.access_time, loc.hint_time_hhmm, loc.time_input_label),
       validator: validator,
       onSaved: onSaved,
     );
@@ -585,28 +480,7 @@ class _PriceField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.money, color: AppColors.primaryGreen),
-        hintText: loc.hint_price,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.money, loc.hint_price, loc.price_label),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_price : null,
       onSaved: onSaved,
       keyboardType: TextInputType.number,
@@ -627,28 +501,7 @@ class _DescriptionField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.info, color: AppColors.primaryGreen),
-        hintText: loc.hint_contact_info_rules,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.info, loc.hint_contact_info_rules, loc.info),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_description : null,
       onSaved: onSaved,
     );
@@ -664,28 +517,7 @@ class _CarModelField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.directions_car, color: AppColors.primaryGreen),
-        hintText: loc.hint_car_model,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.directions_car, loc.hint_car_model, loc.car),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_model : null,
       onSaved: onSaved,
     );
@@ -701,28 +533,7 @@ class _CarColorField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.color_lens, color: AppColors.primaryGreen),
-        hintText: loc.hint_car_color,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.color_lens, loc.hint_car_color, loc.hint_car_color),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_color : null,
       onSaved: onSaved,
     );
@@ -738,33 +549,40 @@ class _CarPlateField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
-        hintText: loc.hint_car_plate,
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-      ),
+      decoration: inputDecorationFactory(Icons.abc_outlined, loc.hint_car_plate, loc.hint_car_plate),
       validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
       onSaved: onSaved,
     );
   }
 }
+
+
+InputDecoration inputDecorationFactory(IconData iconData, String hintText, String labelText) {
+  return InputDecoration(
+    prefixIcon: Icon(iconData, color: AppColors.primaryGreen),
+    hintText: hintText,
+    labelText: labelText,
+    filled: true,
+    fillColor: Colors.white,
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    ),
+    disabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    ),
+    border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+    errorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    ),
+    focusedErrorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
+    ),
+  );
+}
+
 
 class HourMinsFormatter extends TextInputFormatter {
   late RegExp pattern;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
@@ -145,14 +145,14 @@ class _ConfirmCodeButton extends StatelessWidget {
           return;
         }
         try {
-          String apiAccessToken = await apiClient.obtainAccessToken(
+          String apiAccessToken = await hamsafarApiClient.obtainAccessToken(
             user.phone!,
             user.telegramRequestId!,
             userCode!,
           );
           persistentSecuredStorage.write(key: "token", value: apiAccessToken);
           try {
-            if (await apiClient.userExists(user.phone!)) {
+            if (await hamsafarApiClient.userExists(user.phone!)) {
               Navigator.pushNamed(context, '/WelcomeHub');
               return;
             }

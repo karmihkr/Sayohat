@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
@@ -144,7 +144,7 @@ class _ConfirmBirthButton extends StatelessWidget {
         }
         user.setBirth(userBirth);
         try {
-          await apiClient.registerUser(
+          await hamsafarApiClient.registerUser(
             user.phone!,
             user.name!,
             user.surname!,

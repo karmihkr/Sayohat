@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:string_validator/string_validator.dart';
@@ -92,7 +92,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
 
   Future<void> _loadProfile() async {
     try {
-      final data = await apiClient.getUserProfile();
+      final data = await hamsafarApiClient.getUserProfile();
       setState(() {
         userData = data;
         isLoading = false;
@@ -398,7 +398,7 @@ class _ConfirmChanges extends StatelessWidget {
             return;
           }
           try {
-            await apiClient.updateUserProfile(
+            await hamsafarApiClient.updateUserProfile(
               newPhone.text,
               newName.text,
               newSurname.text,

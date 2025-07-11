@@ -268,10 +268,16 @@ abstract class AppLocalizations {
   /// **'Start enter the address'**
   String get hint_start_enter_address;
 
+  /// Label for the data input field
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date_input_label;
+
   /// Hint text for the date input field in dd/mm/yyyy format
   ///
   /// In en, this message translates to:
-  /// **'Date dd/mm/yyyy'**
+  /// **'dd/mm/yyyy'**
   String get hint_date_ddmmyyyy;
 
   /// Hint text for the passengers input field
@@ -283,25 +289,25 @@ abstract class AppLocalizations {
   /// Hint text for the time input field in hh:mm format
   ///
   /// In en, this message translates to:
-  /// **'Time hh:mm'**
+  /// **'hh:mm'**
   String get hint_time_hhmm;
 
   /// Hint text for the price input field
   ///
   /// In en, this message translates to:
-  /// **'Price'**
+  /// **'dollars'**
   String get hint_price;
 
   /// Hint text for the ride description input field
   ///
   /// In en, this message translates to:
-  /// **'Contact info, rules etc.'**
+  /// **'Contact info, rules, etc.'**
   String get hint_contact_info_rules;
 
   /// Hint text for the car model input field
   ///
   /// In en, this message translates to:
-  /// **'Car Model'**
+  /// **'Model'**
   String get hint_car_model;
 
   /// Hint text for the car color input field
@@ -795,6 +801,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error while searching ride'**
   String get error_search_ride;
+
+  /// Label for the passengers count input field
+  ///
+  /// In en, this message translates to:
+  /// **'Passengers'**
+  String get passengers;
+
+  /// Label for the time input field
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time_input_label;
+
+  /// Label for the price input field
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price_label;
+
+  /// Label for the car input field
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get info;
+
+  /// No description provided for @car.
+  ///
+  /// In en, this message translates to:
+  /// **'Car'**
+  String get car;
 }
 
 class _AppLocalizationsDelegate

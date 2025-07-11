@@ -143,7 +143,12 @@
     "description": "Hint text for the city autocomplete field"
   },
 
-  "hint_date_ddmmyyyy": "Date dd/mm/yyyy",
+  "date_input_label": "Date",
+  "@date_input_label": {
+    "description": "Label for the data input field"
+  },
+
+  "hint_date_ddmmyyyy": "dd/mm/yyyy",
   "@hint_date_ddmmyyyy": {
     "description": "Hint text for the date input field in dd/mm/yyyy format"
   },
@@ -153,22 +158,22 @@
     "description": "Hint text for the passengers input field"
   },
 
-  "hint_time_hhmm": "Time hh:mm",
+  "hint_time_hhmm": "hh:mm",
   "@hint_time_hhmm": {
     "description": "Hint text for the time input field in hh:mm format"
   },
 
-  "hint_price": "Price",
+  "hint_price": "dollars",
   "@hint_price": {
     "description": "Hint text for the price input field"
   },
 
-  "hint_contact_info_rules": "Contact info, rules etc.",
+  "hint_contact_info_rules": "Contact info, rules, etc.",
   "@hint_contact_info_rules": {
     "description": "Hint text for the ride description input field"
   },
 
-  "hint_car_model": "Car Model",
+  "hint_car_model": "Model",
   "@hint_car_model": {
     "description": "Hint text for the car model input field"
   },
@@ -685,5 +690,30 @@
     "description": "Label for the Profile tab in the bottom navigation bar"
   },
 
-  "error_search_ride": "Error while searching ride"
+  "error_search_ride": "Error while searching ride",
+
+  "passengers": "Passengers",
+  "@passengers": {
+    "description": "Label for the passengers count input field"
+  },
+
+  "time_input_label": "Time",
+  "@time_input_label": {
+    "description": "Label for the time input field"
+  },
+
+  "price_label": "Price",
+  "@price_label": {
+    "description": "Label for the price input field"
+  },
+
+  "info": "Info",
+  "@info": {
+    "description": "Label for the info input field"
+  },
+
+  "car": "Car",
+  "@info": {
+    "description": "Label for the car input field"
+  }
 }

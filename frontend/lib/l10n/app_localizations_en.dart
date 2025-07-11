@@ -93,22 +93,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hint_start_enter_address => 'Start enter the address';
 
   @override
-  String get hint_date_ddmmyyyy => 'Date dd/mm/yyyy';
+  String get date_input_label => 'Date';
+
+  @override
+  String get hint_date_ddmmyyyy => 'dd/mm/yyyy';
 
   @override
   String get hint_number_of_passengers => 'Number of passengers';
 
   @override
-  String get hint_time_hhmm => 'Time hh:mm';
+  String get hint_time_hhmm => 'hh:mm';
 
   @override
-  String get hint_price => 'Price';
+  String get hint_price => 'dollars';
 
   @override
-  String get hint_contact_info_rules => 'Contact info, rules etc.';
+  String get hint_contact_info_rules => 'Contact info, rules, etc.';
 
   @override
-  String get hint_car_model => 'Car Model';
+  String get hint_car_model => 'Model';
 
   @override
   String get hint_car_color => 'Car color';
@@ -398,4 +401,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_search_ride => 'Error while searching ride';
+
+  @override
+  String get passengers => 'Passengers';
+
+  @override
+  String get time_input_label => 'Time';
+
+  @override
+  String get price_label => 'Price';
+
+  @override
+  String get info => 'Info';
+
+  @override
+  String get car => 'Car';
 }

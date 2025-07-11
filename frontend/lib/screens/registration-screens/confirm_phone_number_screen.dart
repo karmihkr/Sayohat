@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_client.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
@@ -138,7 +138,7 @@ class _GoNextButton extends StatelessWidget {
         user.setPhone(pn);
         try {
           user.setTelegramRequestId(
-            await apiClient.sendTelegramVerificationCode(pn!),
+            await hamsafarApiClient.sendTelegramVerificationCode(pn!),
           );
         } on Exception {
           ScaffoldMessenger.of(context).showSnackBar(

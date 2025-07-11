@@ -94,6 +94,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get hint_start_enter_address => 'Сурога ворид кунед';
 
   @override
+  String get date_input_label => 'Сана';
+
+  @override
   String get hint_date_ddmmyyyy => 'дд/мм/гггг';
 
   @override
@@ -103,13 +106,13 @@ class AppLocalizationsUk extends AppLocalizations {
   String get hint_time_hhmm => 'чч:мм';
 
   @override
-  String get hint_price => 'Нарх';
+  String get hint_price => 'Доллар';
 
   @override
   String get hint_contact_info_rules => 'Маълумоти тамос, коидахо ва г.';
 
   @override
-  String get hint_car_model => 'Намуди мошин';
+  String get hint_car_model => 'Намуди';
 
   @override
   String get hint_car_color => 'Ранги мошин';
@@ -397,4 +400,19 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get error_search_ride => 'Хатогй хангоми боркунии руйхати каторхо';
+
+  @override
+  String get passengers => 'Мусофирон';
+
+  @override
+  String get time_input_label => 'Вақт';
+
+  @override
+  String get price_label => 'Нарх';
+
+  @override
+  String get info => 'Маълумот';
+
+  @override
+  String get car => 'Мошин';
 }

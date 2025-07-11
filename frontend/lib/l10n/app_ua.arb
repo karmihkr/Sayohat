@@ -85,19 +85,24 @@
   "hint_start_enter_address": "Сурога ворид кунед",
   "@hint_start_enter_address": { "description": "Hint text for the city autocomplete field" },
 
+  "date_input_label": "Сана",
+  "@date_input_label": {
+    "description": "Нишон барои майдони вуруди сана"
+  },
+
   "hint_date_ddmmyyyy": "дд/мм/гггг",
   "@hint_date_ddmmyyyy": { "description": "Hint text for the date input field in dd/mm/yyyy format" },
 
   "hint_time_hhmm": "чч:мм",
   "@hint_time_hhmm": { "description": "Hint text for the time input field in hh:mm format" },
 
-  "hint_price": "Нарх",
+  "hint_price": "Доллар",
   "@hint_price": { "description": "Hint text for the price input field" },
 
   "hint_contact_info_rules": "Маълумоти тамос, коидахо ва г.",
   "@hint_contact_info_rules": { "description": "Hint text for the ride description input field" },
 
-  "hint_car_model": "Намуди мошин",
+  "hint_car_model": "Намуди",
   "@hint_car_model": { "description": "Hint text for the car model input field" },
 
   "hint_car_color": "Ранги мошин",
@@ -414,5 +419,30 @@
     "description": "Validation message when a number must be positive"
   },
 
-  "error_search_ride": "Хатогй хангоми боркунии руйхати каторхо"
+  "error_search_ride": "Хатогй хангоми боркунии руйхати каторхо",
+
+  "passengers": "Мусофирон",
+  "@passengers": {
+    "description": "Label for the passengers count input field"
+  },
+
+  "time_input_label": "Вақт",
+  "@time_input_label": {
+    "description": "Label for the time input field"
+  },
+
+  "price_label": "Нарх",
+  "@price_label": {
+    "description": "Label for the price input field"
+  },
+
+  "info": "Маълумот",
+  "@info": {
+    "description": "Label for the info input field"
+  },
+
+  "car": "Мошин",
+  "@info": {
+    "description": "Label for the car input field"
+  }
 }
