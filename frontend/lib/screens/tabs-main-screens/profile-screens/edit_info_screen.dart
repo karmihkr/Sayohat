@@ -394,7 +394,6 @@ class _ConfirmChanges extends StatelessWidget {
               snackBarFactory.createSnackBar("Something went wrong"),
             );
           }
-          //print("Tap");
         },
         style: ElevatedButton.styleFrom(
           minimumSize: Size(200, 40),

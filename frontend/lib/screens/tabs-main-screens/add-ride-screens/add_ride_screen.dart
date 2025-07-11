@@ -6,10 +6,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:flutter/services.dart';
-import 'package:sayohat/yandexApiClient.dart';
 import 'dart:math' as math;
-
-import 'package:yandex_maps_mapkit/mapkit.dart' as mapkit;
 
 class AddRideScreen extends StatefulWidget {
   const AddRideScreen({super.key});
@@ -326,7 +323,7 @@ class _CityFieldState extends State<CityField> {
     });
   }
 
-  OverlayEntry _createSearchWindow(Map<String, String> map) {
+  OverlayEntry _createSearchWindow() {
     RenderBox renderBox = context.findRenderObject()! as RenderBox;
     var size = renderBox.size;
     var offset = renderBox.localToGlobal(Offset.zero);
@@ -340,7 +337,7 @@ class _CityFieldState extends State<CityField> {
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           children: [
-            for (MapEntry<String, String> entry in map.entries)
+            for (MapEntry<String, String> entry in {})
               ListTile(title: Text(entry.value))
           ],
         ),
@@ -382,28 +379,13 @@ class _CityFieldState extends State<CityField> {
           _searchWindow.remove();
         } finally {
           if (value.isNotEmpty) {
-            print("first");
-            _searchWindow = _createSearchWindow(await yandexSearch(value));
-            print("second");
+            _searchWindow = _createSearchWindow();
             Overlay.of(context).insert(_searchWindow);
           }
         }
       }
     );
   }
-}
-
-Future<Map<String, String>> yandexSearch(String request) async {
-  final response = await yandexApiClient.searchToponyms(
-      request,
-      mapkit.Point(latitude: 55.751762, longitude: 48.747863)
-  );
-  var result = <String, String>{};
-  for (mapkit.GeoObject geoObject in response.collection.children as List<mapkit.GeoObject>) {
-    print(geoObject.name);
-  }
-  result["021554488"] = "Moscow";
-  return result;
 }
 
 class _AddressField extends StatelessWidget {

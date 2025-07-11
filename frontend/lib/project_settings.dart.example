@@ -6,7 +6,6 @@ class ProjectSettings {
   String apiUrl = "API_URL/API_HOST_PORT";
   bool localHosted = true;
   String telegramApiAccessToken = "ACCESS_TOKEN";
-  String yandexApiAccessToken = "ACCESS_TOKEN";
   String telegramApiUrl = "gatewayapi.telegram.org";
   String telegramApiSendEndpoint = "/sendVerificationMessage";
   String telegramApiCheckEndpoint = "/checkVerificationStatus";
