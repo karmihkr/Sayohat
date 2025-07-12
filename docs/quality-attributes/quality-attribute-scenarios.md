@@ -18,7 +18,7 @@ It can also lead to the deletion of the app or bad reviews.
 **Response:** App operates normally without freezing or affecting performance of other apps  
 **Response Measure:** CPU usage < 25%, memory usage < 500 MB; no crashes in 9 out of 10 test runs
 
-## 1.2  
+## 1.2  Interoperability
 ### Meaning
 Interoperability means the ability of our application to interact and exchange data with third-party services, such as Telegram for authentication, Yandex Maps for route visualization, and payment systems.
 
