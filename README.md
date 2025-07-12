@@ -1,10 +1,11 @@
 [![Pipeline Status](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/badges/main/pipeline.svg)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/pipelines)
 ![Closed Issues](https://img.shields.io/gitlab/issues/closed-raw/d.chegaev/shareyourride?gitlab_url=https%3A%2F%2Fgitlab.pg.innopolis.university&style=flat)
-[![Open Issues](https://img.shields.io/badge/Open%20Issues-Dynamic-bl?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
+[![Open Issues](https://img.shields.io/badge/Open%20Issues-Dynamic-orange?style=flat)](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# HamSafar - Ride-Sharing App for Central Asia
+<a id="readme-top"></a>
 
+# HamSafar - Ride-Sharing App for Central Asia
 
 ![logo](frontend/assets/images/splash-logo.png)
 
@@ -31,25 +32,37 @@
         <li><a href="#secrets-management">Secrets management</a></li>
         <li><a href="#automated-tests">Automated tests</a></li>
         <li><a href="#continuous-integration">Continuous Integration</a></li>
-   </ul>
+    </ul>
     <li><a href="#quality">Quality</a></li>
-    <li><a href="architecture">Architecture</a></li>
+    <li><a href="#architecture">Architecture</a>
     <li><a href="#authors">Authors</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#license">License</a>
   </ol>
 </details>
 
+## About The Project
 
-[Features](#features) | [How to Run](#how-to-run) | [Development](#development) | [Quality](#quality) | [Authors](#authors) | [License](#license)
+### Built With
 
-## Features
+* [![Python][Python.org]][Python-url]
+* [![FastAPI][FastAPI.com]][FastAPI-url]
+* [![Flutter][Flutter.dev]][Flutter-url]
+* [![Dart][Dart.dev]][Dart-url]
+* [![MongoDB][MongoDB.com]][MongoDB-url]
+* [![Docker][Docker.com]][Docker-url]
+* [![Ubuntu][Ubuntu.com]][Ubuntu-url]
+* [![Telegram][Telegram.com]][Telegram-url]
+* [![Yandex Maps][Yandex.com]][Yandex-url]
 
--  **User-friendly ride matching** � Quickly find available rides or passengers nearby.
--  **Multi-language support** � Available in Tajik and English to serve Central Asian users.
--  **Cost-efficient travel** � Share ride costs to save money.
--  **Real-time notifications** � Receive alerts about trip status and updates.
--  **Cross-platform mobile app** � Built with Flutter for smooth performance on Android and iOS.
--  **Fast and reliable backend** � Powered by FastAPI for quick responses and scalability.
+### Features
+-  **User-friendly ride matching** - Quickly find available rides or passengers nearby.
+-  **Multi-language support** - Available in Tajik and English to serve Central Asian users.
+-  **Cost-efficient travel** - Share ride costs to save money.
+-  **Real-time notifications** - Receive alerts about trip status and updates.
+-  **Cross-platform mobile app** - Built with Flutter for smooth performance on Android and iOS.
+-  **Fast and reliable backend** - Powered by FastAPI for quick responses and scalability.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## How to Run
 
@@ -61,21 +74,23 @@
 6. Execute `flutter --no-color pub get` from the `/frontend` directory
 7. Run **/lib/main.dart** to start the application
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Development
 
 ### [Kanban board]((https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/boards))
 
 
-- **Backlog** � tasks not yet taken into work.
-- **To Do** � tasks ready to be worked on.
-- **In Progress** � tasks currently being worked on.
-- **Done** � completed and tested tasks.
+- **Backlog** - tasks not yet taken into work.
+- **To Do** - tasks ready to be worked on.
+- **In Progress** - tasks currently being worked on.
+- **Done** - completed and tested tasks.
 
 ### Git workflow
 
-- `main` � production-ready branch, contains stable and reviewed code.
-- `feature/parse-pers-inf` � used for implementing a personal info parser.
-- `destructive_backend_injection` � task-specific branch, e.g., for backend experiments or testing.
+- `main` - production-ready branch, contains stable and reviewed code.
+- `feature/parse-pers-inf` - used for implementing a personal info parser.
+- `destructive_backend_injection` - task-specific branch, e.g., for backend experiments or testing.
 
 
 Rules:
@@ -91,7 +106,8 @@ Rules:
 - **Merging:** done via squash merge after CI passes and review is complete.
 - **Closing Issues:** issues are manually marked as closed by team members in GitLab once the related work is done.
 
-*Git workflow visualization:* [Gitgraph diagram](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/docs/GitGraph.png?ref_type=heads)
+*Git workflow visualization* 
+![GitGraph](docs/GitGraph.png)
 
 ### Secrets management
 
@@ -112,6 +128,8 @@ Rules:
   - `pytest` � to run backend tests.
   - `flutter test` � to run frontend tests.
 - All CI runs can be viewed [here](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/pipelines).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Quality
 
@@ -205,6 +223,8 @@ if __name__ == "__main__":
 ```
 [Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/8375f95509d5cebe48cda369b2f7160c045cd7cd/backend/test/integration_tests/settings_manager_host_integration.py)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Architecture
 
 ### Static view
@@ -245,11 +265,43 @@ Improvement areas:
 - Separate concerns in backend (routes, logic, DB)
 - Automate deployment (CI)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Authors
 [Arsen Latipov](https://gitlab.pg.innopolis.university/a.latipov) | [Danil Chegaev](https://gitlab.pg.innopolis.university/d.chegaev) | [Karina Krotova](https://gitlab.pg.innopolis.university/k.krotova) | [Sofia Seliutina](https://gitlab.pg.innopolis.university/s.seliutina) | [Varvara Gubanova](https://gitlab.pg.innopolis.university/va.gubanova) | [Anna Morozova](https://gitlab.pg.innopolis.university/an.morozova)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/LICENSE?ref_type=heads).
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]: https://www.python.org/
+
+[FastAPI.com]: https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white
+[FastAPI-url]: https://fastapi.tiangolo.com/
+
+[Flutter.dev]: https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white
+[Flutter-url]: https://flutter.dev/
+
+[Dart.dev]: https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white
+[Dart-url]: https://dart.dev/
+
+[MongoDB.com]: https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/
+
+[Docker.com]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+
+[Ubuntu.com]: https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white
+[Ubuntu-url]: https://ubuntu.com/
+
+[Telegram.com]: https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white
+[Telegram-url]: https://core.telegram.org/bots
+
+[Yandex.com]: https://img.shields.io/badge/Yandex.Maps-FF0000?style=for-the-badge&logo=yandex&logoColor=white
+[Yandex-url]: https://yandex.com/dev/maps/
