@@ -18,8 +18,6 @@
   <p align="center">
     A mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="https://drive.google.com/drive/folders/1pj8N1K3-Ya_SItcfxOT9mFsYIVfcbQDr?usp=sharing">View Demo</a>
     &middot;
@@ -140,10 +138,6 @@ The app makes intercity travel in Central Asia easier by connecting drivers with
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Usage
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## How to Run
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install?_gl=1*jjmxmh*_ga*MTYwNjk4MTAxNi4xNzQ5MTM4NTk3*_ga_04YGWK0175*czE3NDk4MDA0NTYkbzYkZzEkdDE3NDk4MDA0ODEkajM1JGwwJGgw) for your development platform
@@ -156,7 +150,9 @@ The app makes intercity travel in Central Asia easier by connecting drivers with
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Development
+## Development 
+
+### [CONTRIBUTING.md](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/CONTRIBUTING.md?ref_type=heads)
 
 ### [Kanban board]((https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/boards))
 
@@ -213,112 +209,31 @@ Rules:
 
 ## Quality
 
-### Functional Suitability
-
-#### Functional Appropriateness
-
-**Why it matters:**  
-The user interface should only provide relevant, concise, and context-specific features that support users in achieving their goals efficiently. For the Add Ride flow, this means users must be able to input the necessary data easily and without confusion. Including clear field labels and grouping related inputs improves task effectiveness.
-
-**Test Scenario:**
-> **GIVEN** a driver is adding a new ride,  
-> **WHEN** they enter the required data (departure city, arrival city, date, number of passengers),  
-> **THEN** the screen accepts input and is ready for form submission without unnecessary complexity.
-
-**Test Implementation:**  
-We validate this via a Flutter widget test:
-
-```dart
-testWidgets('AddRideScreen render and submit form', (
-WidgetTester tester,
-) async {
-await tester.pumpWidget(
-MaterialApp(home: Material(child: AddRideScreen())),
-);
-
-expect(find.text('General'), findsOneWidget);
-expect(find.text('Ride details'), findsOneWidget);
-expect(find.text('Car information'), findsOneWidget);
-
-await tester.enterText(find.byKey(Key('departureCityField')), 'Moscow');
-await tester.enterText(find.byKey(Key('arrivalCityField')), 'Innopolis');
-await tester.enterText(find.byKey(Key('dateField')), "28/06/2025");
-await tester.enterText(find.byKey(Key('passengersField')), "3");
-});
-```
-[Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/cb5260928c924e67ca61955eecbfc27f36060316/frontend/test/unit_tests/add_ride_screen_unit_test.dart)
-
-#### Functional Correctness
-
-**Why it matters:**  
-The app must preserve and use the exact input values provided by users to search for rides. If there is a mismatch between what the user enters and what the app stores or processes, the search results will be invalid, causing confusion or even failed bookings.
-
-**Test Scenario:**
-> **GIVEN** a passenger enters origin, destination, date, and passenger count,  
-> **WHEN** a `DataSearch` object is initialized,  
-> **THEN** all parameters must be correctly stored without loss or mutation.
-
-**Test Implementation:**  
-This behavior is tested using a simple Dart unit test:
-
-```dart
-test('DataSearch should correctly initialize with parameter', () {
-final dataSearch = DataSearch('Paris', 'London', '01/01/2023', '2');
-
-expect(dataSearch.from, 'Paris');
-expect(dataSearch.to, 'London');
-expect(dataSearch.date, '01/01/2023');
-expect(dataSearch.passengers, '2');
-});
-```
-[Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/ed2338a45b1d6f19b987a032ae1a0f0ab7117174/frontend/test/unit_tests/data_search_model_non_empty_unit_test.dart)
-
-### Maintainability
-
-#### Modifiability
-
-**Why it matters:**  
-In a multi-environment project, the system must allow configuration changes (like API host) without code duplication or risk of bugs. Centralized and easily testable settings are essential for safe deployments and easier debugging.
-
-**Test Scenario:**
-> **GIVEN** a backend developer starts the app in the local environment,  
-> **WHEN** they access `settings_manager.api.host`,  
-> **THEN** it must return the correct base URL `http://127.0.0.1`, ensuring safe configuration handling.
-
-**Test Implementation:**  
-We verify this via a Python unit test:
-
-```python
-import unittest
-from settings_manager import settings_manager
-
-
-class TestHostObtaining(unittest.TestCase):
-    def test_obtain(self):
-        self.assertEqual(settings_manager.api.host, "http://127.0.0.1")
-
-
-if __name__ == "__main__":
-    unittest.main()
-```
-[Link to the test](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/8375f95509d5cebe48cda369b2f7160c045cd7cd/backend/test/integration_tests/settings_manager_host_integration.py)
+#### [Quality characteristics and quality attribute scenarios](docs/quality-attributes/quality-attribute-scenarios.md)
+#### Quality assurance
+- [Automated tests](docs/quality-assurance/automated-tests.md)
+- [User acceptance tests](docs/quality-assurance/user-acceptance-tests.md)
+#### Build and deployment automation
+- [Continuous Integration](docs/automation/continuous-integration.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Architecture
 
-### Static view
+### [Tech Stack](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/docs/architecture/architecture.md?ref_type=heads)
+
+### [Static view](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/tree/main/docs/architecture/static-view?ref_type=heads)
 
 Currently, the system has the following modules:
 - **Flutter app** (Dart) running on mobile devices (Android/iOS)
-- **Backend API**, implemented in your chosen server technology
+- **Backend API**, implemented in our chosen server technology
 - **MongoDB** database
 
 [Link to the diagram](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/docs/architecture/static-view/Component%20Diagram.png)
 
 ---
 
-### Dynamic view
+### [Dynamic view](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/tree/main/docs/architecture/dynamic-view?ref_type=heads)
 
 Example flow: **user creates & confirms a ride**
 1. Flutter app sends request to FastAPI backend.
@@ -331,17 +246,15 @@ Example flow: **user creates & confirms a ride**
 
 ---
 
-### Deployment view
+### [Deployment view](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/tree/main/docs/architecture/deployment-view?ref_type=heads)
 
 Current state:
-- Flutter app is distributed via Google Play / App Store.
-- FastAPI backend is deployed manually.
-- MongoDB runs separately.
+- All components are containerized from the beginning.
+- Flutter app is developed locally and has not yet been published to Google Play / App Store.
 
 [Link to the diagram](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/docs/architecture/deployment-view/Deployment%20diagram.png)
 
 Improvement areas:
-- Unify containers with Docker Compose
 - Separate concerns in backend (routes, logic, DB)
 - Automate deployment (CI)
 
