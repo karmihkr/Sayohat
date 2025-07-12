@@ -7,10 +7,25 @@
 
 # HamSafar - Ride-Sharing App for Central Asia
 
-![logo](frontend/assets/images/splash-logo.png)
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="frontend/assets/images/splash-logo.png" alt="Logo" width="350" height="350">
+  </a>
 
+  <h3 align="center">HamSafar</h3>
 
-**HamSafar** is a mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
+  <p align="center">
+    A mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://drive.google.com/drive/folders/1pj8N1K3-Ya_SItcfxOT9mFsYIVfcbQDr?usp=sharing">View Demo</a>
+    &middot;
+    <a href="https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/releases">Up-to-Date Deployed Version </a>
+  </p>
+</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -21,24 +36,30 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#features">Features</a></li>
+        <li><a href="#goals-and-description">Goals and Description</a></li>
+                <li><a href="#context-diagram">Context Diagram</a></li>
       </ul>
     </li>
-    <li><a href="#how-to-run">How to Run</a>
-    </li>
-    <li><a href="#development">Development</a></li>
-    <ul>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#how-to-run">How to Run</a></li>
+    <li>
+      <a href="#development">Development</a>
+      <ul>
         <li><a href="#kanban-board">Kanban Board</a></li>
         <li><a href="#git-workflow">Git workflow</a></li>
         <li><a href="#secrets-management">Secrets management</a></li>
         <li><a href="#automated-tests">Automated tests</a></li>
         <li><a href="#continuous-integration">Continuous Integration</a></li>
-    </ul>
+      </ul>
+    </li>
     <li><a href="#quality">Quality</a></li>
-    <li><a href="#architecture">Architecture</a>
+    <li><a href="#architecture">Architecture</a></li>
     <li><a href="#authors">Authors</a></li>
-    <li><a href="#license">License</a>
+    <li><a href="#license">License</a></li>
   </ol>
 </details>
+
 
 ## About The Project
 
@@ -56,11 +77,70 @@
 
 ### Features
 -  **User-friendly ride matching** - Quickly find available rides or passengers nearby.
--  **Multi-language support** - Available in Tajik and English to serve Central Asian users.
+-  **Multi-language support** - Available in Tajik, English and Russian to serve Central Asian users.
 -  **Cost-efficient travel** - Share ride costs to save money.
 -  **Real-time notifications** - Receive alerts about trip status and updates.
 -  **Cross-platform mobile app** - Built with Flutter for smooth performance on Android and iOS.
 -  **Fast and reliable backend** - Powered by FastAPI for quick responses and scalability.
+
+### Goals and Description
+
+The app makes intercity travel in Central Asia easier by connecting drivers with free seats to passengers looking for affordable and flexible rides. 
+
+*One app — shared trips, lower costs, more freedom.*
+
+
+### Context Diagram
+![diagram](images/ContextDiagram.svg)
+
+**Stakeholders:**
+- Passengers — individuals looking for intercity rides
+- Drivers — individuals offering empty seats
+- Admin — monitors system performance and user reports
+
+**External Systems:**
+- Yandex Maps API — used for geolocation and map display
+- Telegram Gateway — used to send notifications and verification messages
+- MongoDB Atlas — database to store user data and trips
+- Timeweb VM (Ubuntu) — hosts the backend and database
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Roadmap
+
+### ✅ Completed Checkpoints
+
+- Flutter project initialized and environment configured  
+- UI/UX wireframes and mobile app design created  
+- FastAPI backend set up with MongoDB  
+- Core API endpoints implemented (trip creation, search, auth)  
+- Database connected to backend logic  
+- Admin panel features defined and connected  
+- User and trip models implemented  
+- Edit ride and edit profile screens developed  
+- Phone number registration via Telegram implemented  
+- Localization added: Tajik (default), Russian, English  
+- Backend and frontend integrated  
+- Data validation and request structure organized  
+- Initial admin panel usage enabled  
+- Project structure customized  
+- Core debugging and testing completed  
+- Yandex.Maps API integrated  
+
+---
+
+### 🚧 Upcoming Checkpoints
+- Improve phone number registration security  
+- Refactor codebase and improve documentation  
+- Prepare production-ready deployment  
+- Add analytics and basic admin metrics  
+- Expand admin dashboard functionality  
+- Implement push notifications  
+- Add driver identity verification system  
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Usage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -107,7 +187,7 @@ Rules:
 - **Closing Issues:** issues are manually marked as closed by team members in GitLab once the related work is done.
 
 *Git workflow visualization* 
-![GitGraph](docs/GitGraph.png)
+![GitGraph](images/GitGraph.png)
 
 ### Secrets management
 
@@ -124,9 +204,9 @@ Rules:
 
 - CI workflow file: [.gitlab-ci.yml](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/blob/main/.gitlab-ci.yml?ref_type=heads)
 - In CI we use:
-  - `pycodestyle` � for Python static code analysis.
-  - `pytest` � to run backend tests.
-  - `flutter test` � to run frontend tests.
+  - `pycodestyle` - for Python static code analysis.
+  - `pytest` - to run backend tests.
+  - `flutter test` - to run frontend tests.
 - All CI runs can be viewed [here](https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/pipelines).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -278,6 +358,7 @@ This project is licensed under the [MIT License](https://gitlab.pg.innopolis.uni
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
+
 
 [Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
