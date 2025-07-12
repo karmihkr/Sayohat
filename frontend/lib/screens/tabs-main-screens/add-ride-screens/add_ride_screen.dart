@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_clients/hamsafar_api_client.dart';
+import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/screens/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -8,6 +8,26 @@ import 'package:sayohat/user_data.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:sayohat/l10n/app_localizations.dart';
+
+import '../../../models/place_model.dart';
+
+String fromCountry = "";
+String fromUri = "";
+
+String fromCity = '';
+String toCity = '';
+String date = '';
+String passengers = '';
+String fromAddress = '';
+String toAddress = '';
+String time = '';
+String price = '';
+String description = '';
+String carModel = '';
+String carColor = '';
+String carPlate = '';
+
+late final AppLocalizations loc;
 
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
@@ -103,22 +123,9 @@ class _AddRideScreenState extends State<AddRideScreen> {
     return null;
   }
 
-  String fromCity = '';
-  String toCity = '';
-  String date = '';
-  String passengers = '';
-  String addressFrom = '';
-  String addressTo = '';
-  String time = '';
-  String price = '';
-  String description = '';
-  String carModel = '';
-  String carColor = '';
-  String carPlate = '';
-
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
+    loc = AppLocalizations.of(context)!;
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -156,14 +163,16 @@ class _AddRideScreenState extends State<AddRideScreen> {
                       key: Key('departureCityField'),
                       label: loc.hint_from,
                       onSaved: (value) => {fromCity = value ?? ''},
-                      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null
+                      validator: (value) =>
+                          value?.isEmpty ?? true ? 'Enter city' : null,
                     ),
                     SizedBox(height: 10),
                     CityField(
                       key: Key('arrivalCityField'),
                       label: loc.hint_to,
                       onSaved: (value) => {toCity = value ?? ''},
-                      validator: (value) => value?.isEmpty ?? true ? 'Enter city' : null
+                      validator: (value) =>
+                          value?.isEmpty ?? true ? 'Enter city' : null,
                     ),
                     SizedBox(height: 10),
                     _DateField(
@@ -191,13 +200,13 @@ class _AddRideScreenState extends State<AddRideScreen> {
                     _AddressField(
                       key: Key("departureAddressField"),
                       label: loc.hint_departure_address,
-                      onSaved: (value) => addressFrom = value ?? '',
+                      onSaved: (value) => fromAddress = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _AddressField(
                       key: Key("arrivalAddressField"),
                       label: loc.hint_destination_address,
-                      onSaved: (value) => addressTo = value ?? '',
+                      onSaved: (value) => toAddress = value ?? '',
                     ),
                     SizedBox(height: 10),
                     _TimeField(
@@ -280,8 +289,8 @@ class _AddRideScreenState extends State<AddRideScreen> {
       to: toCity,
       date: date,
       seats: passengers,
-      address1: addressFrom,
-      address2: addressTo,
+      address1: fromAddress,
+      address2: toAddress,
       time: time,
       cost: price,
       description: description,
@@ -299,9 +308,9 @@ class _AddRideScreenState extends State<AddRideScreen> {
     };
     // apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
     yourRides.add(userRide);
-    ScaffoldMessenger.of(context).showSnackBar(
-      snackBarFactory.createSnackBar(loc.success_ride_added),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(snackBarFactory.createSnackBar(loc.success_ride_added));
   }
 }
 
@@ -314,7 +323,7 @@ class CityField extends StatefulWidget {
     super.key,
     required this.label,
     required this.onSaved,
-    required this.validator
+    required this.validator,
   });
 
   @override
@@ -330,16 +339,69 @@ class _CityFieldState extends State<CityField> {
     super.initState();
     _fieldFocusObserver.addListener(() {
       if (!_fieldFocusObserver.hasFocus) {
+        if (fromCountry.isEmpty) fromCity = "";
         _searchWindow.remove();
       }
     });
   }
 
-  OverlayEntry _createSearchWindow() {
-    RenderBox renderBox = context.findRenderObject()! as RenderBox;
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-    return OverlayEntry(builder: (context) => Positioned(
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+    return TextFormField(
+      focusNode: _fieldFocusObserver,
+      decoration: inputDecorationFactory(
+        Icons.circle_outlined,
+        loc.hint_start_enter_address,
+        widget.label,
+      ),
+      validator: widget.validator,
+      onSaved: widget.onSaved,
+      onChanged: (value) async {
+        try {
+          _searchWindow.remove();
+        } finally {
+          if (value.isNotEmpty && !yandexApiClient.suggesting) {
+            //try {
+              print("banana");
+              yandexApiClient.suggestsCities(value);
+              await yandexApiClient.nonblockingWaitingOperationsCompletion();
+              print("banana finished");
+            /*} on Exception {
+              print("strawberry exception");
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(loc.error_api_unreachable),
+              );
+              return;
+            }*/
+            print("strawberry");
+            fromCountry = "";
+            _searchWindow = createSearchWindow(
+              context,
+              yandexApiClient.suggested,
+              (String title, String subtitle, String? uri) {
+                fromCountry = subtitle;
+                fromCity = title;
+              },
+            );
+            Overlay.of(context).insert(_searchWindow);
+          }
+        }
+      },
+    );
+  }
+}
+
+OverlayEntry createSearchWindow(
+  BuildContext context,
+  List<Place> places,
+  void Function(String title, String subtitle, String? uri) onTap,
+) {
+  RenderBox renderBox = context.findRenderObject()! as RenderBox;
+  var size = renderBox.size;
+  var offset = renderBox.localToGlobal(Offset.zero);
+  return OverlayEntry(
+    builder: (context) => Positioned(
       left: offset.dx,
       top: offset.dy + size.height + 5.0,
       width: size.width,
@@ -349,45 +411,26 @@ class _CityFieldState extends State<CityField> {
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           children: [
-            for (MapEntry<String, String> entry in {})
-              ListTile(title: Text(entry.value))
+            for (Place place in places)
+              ListTile(
+                title: Text(place.title),
+                subtitle: Text(place.subtitle),
+                onTap: () {
+                  onTap(place.title, place.subtitle, place.uri);
+                },
+              ),
           ],
         ),
-      )
-    ));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    return TextFormField(
-      focusNode: _fieldFocusObserver,
-      decoration: inputDecorationFactory(Icons.circle_outlined, loc.hint_start_enter_address, widget.label),
-      validator: widget.validator,
-      onSaved: widget.onSaved,
-      onChanged: (value) async {
-        try {
-          _searchWindow.remove();
-        } finally {
-          if (value.isNotEmpty) {
-            _searchWindow = _createSearchWindow();
-            Overlay.of(context).insert(_searchWindow);
-          }
-        }
-      }
-    );
-  }
+      ),
+    ),
+  );
 }
 
 class _AddressField extends StatelessWidget {
   final String label;
   final Function(String?) onSaved;
 
-  const _AddressField({
-    super.key,
-    required this.label,
-    required this.onSaved,
-  });
+  const _AddressField({super.key, required this.label, required this.onSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -395,7 +438,8 @@ class _AddressField extends StatelessWidget {
     return TextFormField(
       key: key,
       decoration: inputDecorationFactory(Icons.location_on, label, label),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_address_short : null,
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_address_short : null,
       onSaved: onSaved,
     );
   }
@@ -405,7 +449,30 @@ class _DateField extends StatelessWidget {
   final Function(String?) onSaved;
   final String? Function(String?)? validator;
 
-  const _DateField({
+  const _DateField({super.key, required this.onSaved, this.validator});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+    return TextFormField(
+      key: key,
+      inputFormatters: [_dateMaskFormatter],
+      decoration: inputDecorationFactory(
+        Icons.calendar_month,
+        loc.hint_date_ddmmyyyy,
+        loc.date_input_label,
+      ),
+      validator: validator,
+      onSaved: onSaved,
+    );
+  }
+}
+
+class _PassengerNumberField extends StatelessWidget {
+  final Function(String?) onSaved;
+  final String? Function(String?)? validator;
+
+  const _PassengerNumberField({
     super.key,
     required this.onSaved,
     this.validator,
@@ -416,31 +483,11 @@ class _DateField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      inputFormatters: [_dateMaskFormatter],
-      decoration: inputDecorationFactory(Icons.calendar_month, loc.hint_date_ddmmyyyy, loc.date_input_label),
-      validator: validator,
-      onSaved: onSaved,
-    );
-  }
-}
-
-
-class _PassengerNumberField extends StatelessWidget {
-  final Function(String?) onSaved;
-  final String? Function(String?)? validator;
-
-  const _PassengerNumberField({
-    super.key,
-    required this.onSaved,
-    this.validator
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    return TextFormField(
-      key: key,
-      decoration: inputDecorationFactory(Icons.person_outlined, loc.hint_number_of_passengers, loc.passengers),
+      decoration: inputDecorationFactory(
+        Icons.person_outlined,
+        loc.hint_number_of_passengers,
+        loc.passengers,
+      ),
       keyboardType: TextInputType.number,
       validator: validator,
       onSaved: onSaved,
@@ -452,11 +499,7 @@ class _TimeField extends StatelessWidget {
   final Function(String?) onSaved;
   final String? Function(String?)? validator;
 
-  const _TimeField({
-    super.key,
-    required this.onSaved,
-    required this.validator
-  });
+  const _TimeField({super.key, required this.onSaved, required this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -464,7 +507,11 @@ class _TimeField extends StatelessWidget {
     return TextFormField(
       key: key,
       inputFormatters: <TextInputFormatter>[HourMinsFormatter()],
-      decoration: inputDecorationFactory(Icons.access_time, loc.hint_time_hhmm, loc.time_input_label),
+      decoration: inputDecorationFactory(
+        Icons.access_time,
+        loc.hint_time_hhmm,
+        loc.time_input_label,
+      ),
       validator: validator,
       onSaved: onSaved,
     );
@@ -480,8 +527,13 @@ class _PriceField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: inputDecorationFactory(Icons.money, loc.hint_price, loc.price_label),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_price : null,
+      decoration: inputDecorationFactory(
+        Icons.money,
+        loc.hint_price,
+        loc.price_label,
+      ),
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_price : null,
       onSaved: onSaved,
       keyboardType: TextInputType.number,
     );
@@ -491,18 +543,20 @@ class _PriceField extends StatelessWidget {
 class _DescriptionField extends StatelessWidget {
   final Function(String?) onSaved;
 
-  const _DescriptionField({
-    super.key,
-    required this.onSaved
-  });
+  const _DescriptionField({super.key, required this.onSaved});
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      decoration: inputDecorationFactory(Icons.info, loc.hint_contact_info_rules, loc.info),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_description : null,
+      decoration: inputDecorationFactory(
+        Icons.info,
+        loc.hint_contact_info_rules,
+        loc.info,
+      ),
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_description : null,
       onSaved: onSaved,
     );
   }
@@ -517,8 +571,13 @@ class _CarModelField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: inputDecorationFactory(Icons.directions_car, loc.hint_car_model, loc.car),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_model : null,
+      decoration: inputDecorationFactory(
+        Icons.directions_car,
+        loc.hint_car_model,
+        loc.car,
+      ),
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_model : null,
       onSaved: onSaved,
     );
   }
@@ -533,8 +592,13 @@ class _CarColorField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: inputDecorationFactory(Icons.color_lens, loc.hint_car_color, loc.hint_car_color),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_color : null,
+      decoration: inputDecorationFactory(
+        Icons.color_lens,
+        loc.hint_car_color,
+        loc.hint_car_color,
+      ),
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_color : null,
       onSaved: onSaved,
     );
   }
@@ -549,15 +613,23 @@ class _CarPlateField extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
-      decoration: inputDecorationFactory(Icons.abc_outlined, loc.hint_car_plate, loc.hint_car_plate),
-      validator: (value) => value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
+      decoration: inputDecorationFactory(
+        Icons.abc_outlined,
+        loc.hint_car_plate,
+        loc.hint_car_plate,
+      ),
+      validator: (value) =>
+          value?.isEmpty ?? true ? loc.error_enter_car_plate : null,
       onSaved: onSaved,
     );
   }
 }
 
-
-InputDecoration inputDecorationFactory(IconData iconData, String hintText, String labelText) {
+InputDecoration inputDecorationFactory(
+  IconData iconData,
+  String hintText,
+  String labelText,
+) {
   return InputDecoration(
     prefixIcon: Icon(iconData, color: AppColors.primaryGreen),
     hintText: hintText,
@@ -583,9 +655,9 @@ InputDecoration inputDecorationFactory(IconData iconData, String hintText, Strin
   );
 }
 
-
 class HourMinsFormatter extends TextInputFormatter {
   late RegExp pattern;
+
   HourMinsFormatter() {
     pattern = RegExp(r'^[0-9:]+$');
   }

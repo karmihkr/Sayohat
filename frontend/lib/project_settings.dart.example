@@ -8,6 +8,12 @@ class ProjectSettings {
   String telegramApiUrl = "gatewayapi.telegram.org";
   String telegramApiSendEndpoint = "/sendVerificationMessage";
   String telegramApiCheckEndpoint = "/checkVerificationStatus";
+  String yandexSuggestApiAccessToken = "ACCESS_TOKEN";
+  String yandexSuggestApiUrl = "suggest-maps.yandex.ru";
+  String yandexSuggestApiSuggestEndpoint = "/v1/suggest";
+  String yandexGeocoderApiAccessToken = "ACCESS_TOKEN";
+  String yandexGeocoderApiUrl = "geocode-maps.yandex.ru";
+  String yandexGeocoderApiGeocoderEndpoint = "/v1/";
 }
 
 

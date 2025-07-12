@@ -5,7 +5,7 @@ import 'package:sayohat/api_clients/request_types.dart';
 import 'package:sayohat/project_settings.dart';
 
 class HamsafarApiClient {
-  var client = http.Client();
+  final client = http.Client();
 
   Future<http.Response> request(
     RequestType type,
