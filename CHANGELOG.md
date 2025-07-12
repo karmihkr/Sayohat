@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delete src .DS_Store
 - Delete api .DS_Store
 
-## [MVP2] - 2025-07-06
+## [2.0.0] - 2025-07-06
 
 ### 🚀 Features
 
@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delete endpoint function from app security, unify token checking, optimize python imports
 - Resolve issues highlighted by linter
 
-## [MVP1] - 2025-06-21
+## [1.0.0] - 2025-06-21
 
 ### 🚀 Features
 
@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backend example fix
 - Delete auto generating file, minor clean up in api and AndroidManifest
 
-## [MVP0] - 2025-06-13
+## [0.1.0] - 2025-06-13
 
 ### 🚀 Features
 
