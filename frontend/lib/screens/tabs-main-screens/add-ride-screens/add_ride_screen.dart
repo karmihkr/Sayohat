@@ -14,13 +14,14 @@ import '../../../models/place_model.dart';
 String fromCountry = "";
 String toCountry = "";
 String fromUri = "";
+String toUri = "";
 
 String fromCity = '';
 String toCity = '';
-String date = '';
-String passengers = '';
 String fromAddress = '';
 String toAddress = '';
+String date = '';
+String passengers = '';
 String time = '';
 String price = '';
 String description = '';
@@ -158,14 +159,16 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 key: _stepFormKeys[0],
                 child: Column(
                   children: [
-                    if (yandexApiClient.suggesting) Image.asset(
-                      "assets/images/loading.gif",
-                      height: 50,
-                      width: 50,
-                    ),
+                    if (yandexApiClient.suggesting)
+                      Image.asset(
+                        "assets/images/loading.gif",
+                        height: 50,
+                        width: 50,
+                      ),
                     CityField(
                       key: Key('departureCityField'),
                       label: loc.hint_from,
+                      hint: loc.hint_city,
                       onSaved: (value) => {fromCity = value ?? ''},
                       validator: (value) =>
                           value?.isEmpty ?? true ? 'Enter city' : null,
@@ -176,6 +179,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
                     CityField(
                       key: Key('arrivalCityField'),
                       label: loc.hint_to,
+                      hint: loc.hint_city,
                       onSaved: (value) => {toCity = value ?? ''},
                       validator: (value) =>
                           value?.isEmpty ?? true ? 'Enter city' : null,
@@ -205,16 +209,33 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 key: _stepFormKeys[1],
                 child: Column(
                   children: [
-                    _AddressField(
-                      key: Key("departureAddressField"),
+                    if (yandexApiClient.suggesting)
+                      Image.asset(
+                        "assets/images/loading.gif",
+                        height: 50,
+                        width: 50,
+                      ),
+                    CityField(
+                      key: Key('departureAddressField'),
                       label: loc.hint_departure_address,
+                      hint: loc.street,
                       onSaved: (value) => fromAddress = value ?? '',
+                      validator: (value) => value?.isEmpty ?? true
+                          ? loc.error_enter_address_short
+                          : null,
+                      loc: loc,
+                      mainContext: context,
                     ),
-                    SizedBox(height: 10),
-                    _AddressField(
-                      key: Key("arrivalAddressField"),
+                    CityField(
+                      key: Key('arrivalAddressField'),
                       label: loc.hint_destination_address,
+                      hint: loc.street,
                       onSaved: (value) => toAddress = value ?? '',
+                      validator: (value) => value?.isEmpty ?? true
+                          ? loc.error_enter_address_short
+                          : null,
+                      loc: loc,
+                      mainContext: context,
                     ),
                     SizedBox(height: 10),
                     _TimeField(
@@ -324,6 +345,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
 
 class CityField extends StatefulWidget {
   final String label;
+  final String hint;
   final Function(String?) onSaved;
   final String? Function(String?)? validator;
   final AppLocalizations loc;
@@ -331,11 +353,12 @@ class CityField extends StatefulWidget {
 
   const CityField({
     super.key,
+    required this.hint,
     required this.label,
     required this.onSaved,
     required this.validator,
     required this.loc,
-    required this.mainContext
+    required this.mainContext,
   });
 
   @override
@@ -353,7 +376,11 @@ class _CityFieldState extends State<CityField> {
     _fieldFocusObserver.addListener(() {
       if (!_fieldFocusObserver.hasFocus) {
         if (widget.label == widget.loc.hint_from && fromCountry.isEmpty ||
-            widget.label == widget.loc.hint_to && toCountry.isEmpty) {
+            widget.label == widget.loc.hint_to && toCountry.isEmpty ||
+            widget.label == widget.loc.hint_departure_address &&
+                fromUri.isEmpty ||
+            widget.label == widget.loc.hint_destination_address &&
+                toUri.isEmpty) {
           controller.text = "";
         }
         searchWindowSafeRemove(_searchWindow);
@@ -369,22 +396,49 @@ class _CityFieldState extends State<CityField> {
       focusNode: _fieldFocusObserver,
       decoration: inputDecorationFactory(
         Icons.circle_outlined,
-        loc.hint_city,
+        widget.hint,
         widget.label,
       ),
       validator: widget.validator,
       onSaved: widget.onSaved,
       onChanged: (value) async {
+        if (widget.label == loc.hint_from) {
+          fromCountry = "";
+          fromCity = "";
+        } else if (widget.label == loc.hint_to) {
+          toCountry = "";
+          toCity = "";
+        } else if (widget.label == loc.hint_departure_address) {
+          fromUri = "";
+        } else if (widget.label == loc.hint_destination_address) {
+          toUri = "";
+        }
         if (value.isEmpty) {
           searchWindowSafeRemove(_searchWindow);
           return;
         }
         if (yandexApiClient.suggesting) {
-          yandexApiClient.delayedRequest = value;
+          if (widget.label == widget.loc.hint_from ||
+              widget.label == widget.loc.hint_to) {
+            yandexApiClient.delayedRequest = value;
+          } else if (widget.label == widget.loc.hint_departure_address) {
+            yandexApiClient.delayedRequest = "$fromCountry, $fromCity, $value";
+          } else if (widget.label == widget.loc.hint_destination_address) {
+            yandexApiClient.delayedRequest = "$toCountry, $toCity, $value";
+          }
           return;
         }
         (widget.mainContext as Element).markNeedsBuild();
-        await yandexApiClient.suggestCities(value);
+        if (widget.label == widget.loc.hint_from ||
+            widget.label == widget.loc.hint_to) {
+          await yandexApiClient.suggestCities(value);
+        } else if (widget.label == widget.loc.hint_departure_address) {
+          await yandexApiClient.suggestStreets(
+            "$fromCountry, $fromCity, $value",
+          );
+        } else if (widget.label == widget.loc.hint_destination_address) {
+          await yandexApiClient.suggestStreets("$toCountry, $toCity, $value");
+        }
         (widget.mainContext as Element).markNeedsBuild();
         if (controller.text.isEmpty) return;
         searchWindowSafeRemove(_searchWindow);
@@ -396,9 +450,13 @@ class _CityFieldState extends State<CityField> {
           if (widget.label == loc.hint_from) {
             fromCountry = subtitle;
             fromCity = title;
-          } else {
+          } else if (widget.label == loc.hint_to) {
             toCountry = subtitle;
             toCity = title;
+          } else if (widget.label == loc.hint_departure_address) {
+            fromUri = uri!;
+          } else if (widget.label == loc.hint_destination_address) {
+            toUri = uri!;
           }
           controller.text = title;
           searchWindowSafeRemove(_searchWindow);
@@ -447,25 +505,6 @@ void searchWindowSafeRemove(OverlayEntry? searchWindow) {
   try {
     searchWindow!.remove();
   } catch (_) {}
-}
-
-class _AddressField extends StatelessWidget {
-  final String label;
-  final Function(String?) onSaved;
-
-  const _AddressField({super.key, required this.label, required this.onSaved});
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    return TextFormField(
-      key: key,
-      decoration: inputDecorationFactory(Icons.location_on, loc.street, label),
-      validator: (value) =>
-          value?.isEmpty ?? true ? loc.error_enter_address_short : null,
-      onSaved: onSaved,
-    );
-  }
 }
 
 class _DateField extends StatelessWidget {

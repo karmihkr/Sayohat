@@ -75,6 +75,7 @@ class YandexApiClient {
       if (response.statusCode != 200) throw http.ClientException("");
       if (jsonDecode(response.body)["results"] == null) {
         suggested.add(Place(title: "No such localities", subtitle: "Country"));
+        suggesting = false;
         return;
       }
       for (final result in jsonDecode(response.body)["results"]) {
@@ -89,10 +90,50 @@ class YandexApiClient {
       suggested.add(
         Place(title: "Error occurred", subtitle: "Check internet connection"),
       );
+      suggesting = false;
       return;
     }
     if (delayedRequest.isNotEmpty) {
       await suggestCities(delayedRequest);
+    } else {
+      suggesting = false;
+    }
+  }
+
+  Future<void> suggestStreets(String incompleteStreet) async {
+    suggesting = true;
+    delayedRequest = "";
+    suggested = [];
+    try {
+      http.Response response = await suggestRequest({
+        "text": incompleteStreet,
+        "types": "street,house,entrance",
+        "attrs": "uri",
+      });
+      if (response.statusCode != 200) throw http.ClientException("");
+      if (jsonDecode(response.body)["results"] == null) {
+        suggested.add(Place(title: "No such streets", subtitle: "City"));
+        suggesting = false;
+        return;
+      }
+      for (final result in jsonDecode(response.body)["results"]) {
+        suggested.add(
+          Place(
+            title: result["title"]["text"],
+            subtitle: incompleteStreet.split(',')[1],
+            uri: result["uri"]
+          ),
+        );
+      }
+    } catch (error) {
+      suggested.add(
+        Place(title: "Error occurred", subtitle: "Check internet connection"),
+      );
+      suggesting = false;
+      return;
+    }
+    if (delayedRequest.isNotEmpty) {
+      await suggestStreets(delayedRequest);
     } else {
       suggesting = false;
     }
