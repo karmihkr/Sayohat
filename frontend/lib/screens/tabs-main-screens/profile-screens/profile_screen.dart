@@ -30,11 +30,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         userData = data;
         isLoading = false;
       });
-    } on Exception {
-      setState(() {
-        userData = null;
-        isLoading = false;
-      });
+    } on Exception catch (error) {
+      if (error.toString().contains("expired")) {
+        Navigator.pushNamed(context, '/PhoneScreen');
+      } else {
+        setState(() {
+          userData = null;
+          isLoading = false;
+        });
+      }
     }
   }
 

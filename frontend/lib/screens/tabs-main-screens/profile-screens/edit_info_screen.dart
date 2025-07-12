@@ -97,11 +97,15 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
         userData = data;
         isLoading = false;
       });
-    } on Exception {
-      setState(() {
-        userData = null;
-        isLoading = false;
-      });
+    } on Exception catch (error) {
+      if (error.toString().contains("expired")) {
+        Navigator.pushNamed(context, '/PhoneScreen');
+      } else {
+        setState(() {
+          userData = null;
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -407,10 +411,14 @@ class _ConfirmChanges extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.snackbar_info_updated),
             );
-          } on Exception {
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackBarFactory.createSnackBar(loc.error_api_unreachable),
-            );
+          } on Exception catch (error) {
+            if (error.toString().contains("expired")) {
+              Navigator.pushNamed(context, '/PhoneScreen');
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(loc.error_api_unreachable),
+              );
+            }
           }
         },
         style: ElevatedButton.styleFrom(

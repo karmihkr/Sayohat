@@ -14,6 +14,7 @@ class ProjectSettings {
   String yandexGeocoderApiAccessToken = "ACCESS_TOKEN";
   String yandexGeocoderApiUrl = "geocode-maps.yandex.ru";
   String yandexGeocoderApiGeocoderEndpoint = "/v1/";
+  String expiredTokenExample = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZXhwIjowfQ.oktOPhSpxjD7OcOdFOb5Qzh73IGYv712ommmGcoQutk";
 }
 
 

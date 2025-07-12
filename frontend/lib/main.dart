@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/api_clients/hamsafar_api_client.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
@@ -20,11 +20,12 @@ Future<void> main() async {
   // await persistentStorage.clear();
   // await persistentSecuredStorage.deleteAll();
   initialRoute =
-      await hamsafarApiClient.checkTokenActuality(
-        await persistentSecuredStorage.read(key: "token"),
+      Jwt.isExpired(
+        await persistentSecuredStorage.read(key: "token") ??
+            projectSettings.expiredTokenExample,
       )
-      ? '/WelcomeHub'
-      : '/PhoneScreen';
+      ? '/PhoneScreen'
+      : '/WelcomeHub';
   runApp(const MyApp());
 }
 

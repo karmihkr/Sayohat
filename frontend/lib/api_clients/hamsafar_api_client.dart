@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sayohat/api_clients/request_types.dart';
 import 'package:sayohat/project_settings.dart';
 
@@ -14,6 +15,9 @@ class HamsafarApiClient {
     Map<String, String> headers,
     Map<String, String> body,
   ) {
+    if (headers.containsKey("Authorization") && Jwt.isExpired(headers["Authorization"]!.substring(7))) {
+      throw http.ClientException("expired");
+    }
     if (type == RequestType.get) {
       return client.get(
         Uri.http(projectSettings.apiUrl, endpoint, params),
@@ -29,42 +33,6 @@ class HamsafarApiClient {
       headers: headers,
       body: body,
     );
-  }
-
-  Future<http.Response> sideRequest(
-    RequestType type,
-    String url,
-    String endpoint,
-    Map<String, dynamic> params,
-    Map<String, String> headers,
-    Map<String, String> body,
-  ) {
-    if (type == RequestType.get) {
-      return client.get(Uri.https(url, endpoint, params), headers: headers);
-    }
-    return (type == RequestType.post
-        ? client.post
-        : type == RequestType.delete
-        ? client.delete
-        : client.put)(
-      Uri.https(url, endpoint, params),
-      headers: headers,
-      body: body,
-    );
-  }
-
-  Future<bool> checkTokenActuality(String? token) async {
-    if (token == null) {
-      return false;
-    }
-    http.Response response = await request(
-      RequestType.post,
-      "/hello",
-      <String, dynamic>{},
-      {"Authorization": "Bearer $token"},
-      {},
-    );
-    return response.statusCode == 200;
   }
 
   Future<String> sendTelegramVerificationCode(String number) async {
