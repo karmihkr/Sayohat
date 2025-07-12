@@ -142,6 +142,8 @@ class _ConfirmCodeButton extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(snackBarFactory.createSnackBar(loc.error_enter_code));
+          loading = false;
+          (mainContext as Element).markNeedsBuild();
           return;
         }
         try {
@@ -161,16 +163,22 @@ class _ConfirmCodeButton extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.error_api_unreachable),
             );
+            loading = false;
+            (mainContext as Element).markNeedsBuild();
           }
         } on Exception catch (error) {
           if (error.toString().contains("incorrect")) {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.error_incorrect_or_expired),
             );
+            loading = false;
+            (mainContext as Element).markNeedsBuild();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.error_api_unreachable),
             );
+            loading = false;
+            (mainContext as Element).markNeedsBuild();
           }
           return;
         }

@@ -144,6 +144,8 @@ class _GoNextButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),
           );
+          loading = false;
+          (mainContext as Element).markNeedsBuild();
           return;
         }
         Navigator.pushNamed(context, '/VerificationScreen');
