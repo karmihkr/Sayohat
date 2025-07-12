@@ -12,8 +12,9 @@ class YandexApiClient {
   String highlightingMatches = '0';
   String resultsCount = '4';
 
-  bool suggesting = false;
   late List<Place> suggested;
+  String delayedRequest = "";
+  bool suggesting = false;
 
   Future<http.Response> suggestRequest(Map<String, dynamic> params) {
     return client.get(
@@ -60,30 +61,40 @@ class YandexApiClient {
     return country;
   }
 
-  Future<void> suggestsCities(String incompleteCity) async {
+  Future<void> suggestCities(String incompleteCity) async {
     suggesting = true;
+    delayedRequest = "";
     suggested = [];
-    print("suggesting starts");
-    http.Response response = await suggestRequest({
-      "text": incompleteCity,
-      "types": "locality",
-      "attrs": "uri",
-    });
-    print("first response");
-    if (response.statusCode != 200) throw http.ClientException("");
-    for (final result in jsonDecode(response.body)["results"]) {
-      print(result);
-      suggested.add(Place(
-        title: result["title"]["text"],
-        subtitle: await countryNameByUri(result["uri"])
-      ));
+    try {
+      http.Response response = await suggestRequest({
+        "text": incompleteCity,
+        "types": "locality",
+        "attrs": "uri",
+      });
+      if (response.statusCode != 200) throw http.ClientException("");
+      if (jsonDecode(response.body)["results"] == null) {
+        suggested.add(Place(title: "No such localities", subtitle: "Country"));
+        return;
+      }
+      for (final result in jsonDecode(response.body)["results"]) {
+        suggested.add(
+          Place(
+            title: result["title"]["text"],
+            subtitle: await countryNameByUri(result["uri"]),
+          ),
+        );
+      }
+    } catch (_) {
+      suggested.add(
+        Place(title: "Error occurred", subtitle: "Check internet connection"),
+      );
+      return;
     }
-    print("suggesting false");
-    suggesting = false;
-  }
-
-  Future<void> nonblockingWaitingOperationsCompletion() async {
-    while (suggesting) {await Future.delayed(Duration(seconds: 0));}
+    if (delayedRequest.isNotEmpty) {
+      await suggestCities(delayedRequest);
+    } else {
+      suggesting = false;
+    }
   }
 }
 

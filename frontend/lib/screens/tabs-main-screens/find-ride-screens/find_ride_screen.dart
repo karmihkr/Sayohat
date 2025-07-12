@@ -29,8 +29,6 @@ class _FindRideScreenState extends State<FindRideScreen> {
 
   void _handleFindRide() async {
     final loc = AppLocalizations.of(context)!;
-    print("Locale name");
-    print(loc.localeName);
     if (!_formKey.currentState!.validate()) return;
 
     final from = _fromController.text;

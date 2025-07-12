@@ -333,6 +333,7 @@ class CityField extends StatefulWidget {
 class _CityFieldState extends State<CityField> {
   final FocusNode _fieldFocusObserver = FocusNode();
   late OverlayEntry _searchWindow;
+  late String actualValue;
 
   @override
   void initState() {
@@ -340,7 +341,9 @@ class _CityFieldState extends State<CityField> {
     _fieldFocusObserver.addListener(() {
       if (!_fieldFocusObserver.hasFocus) {
         if (fromCountry.isEmpty) fromCity = "";
-        _searchWindow.remove();
+        try {
+          _searchWindow.remove();
+        } catch (_) {}
       }
     });
   }
@@ -358,35 +361,39 @@ class _CityFieldState extends State<CityField> {
       validator: widget.validator,
       onSaved: widget.onSaved,
       onChanged: (value) async {
+        actualValue = value;
+        if (value.isEmpty) {
+          try {
+            _searchWindow.remove();
+          } catch (_) {}
+          return;
+        }
+        if (yandexApiClient.suggesting) {
+          yandexApiClient.delayedRequest = value;
+          return;
+        }
+        await yandexApiClient.suggestCities(value);
+        if (actualValue.isEmpty) return;
+        fromCountry = "";
         try {
           _searchWindow.remove();
-        } finally {
-          if (value.isNotEmpty && !yandexApiClient.suggesting) {
-            //try {
-              print("banana");
-              yandexApiClient.suggestsCities(value);
-              await yandexApiClient.nonblockingWaitingOperationsCompletion();
-              print("banana finished");
-            /*} on Exception {
+        } catch (_) {}
+        _searchWindow = createSearchWindow(context, yandexApiClient.suggested, (
+          String title,
+          String subtitle,
+          String? uri,
+        ) {
+          fromCountry = subtitle;
+          fromCity = title;
+        });
+        Overlay.of(context).insert(_searchWindow);
+        /*} on Exception {
               print("strawberry exception");
               ScaffoldMessenger.of(context).showSnackBar(
                 snackBarFactory.createSnackBar(loc.error_api_unreachable),
               );
               return;
             }*/
-            print("strawberry");
-            fromCountry = "";
-            _searchWindow = createSearchWindow(
-              context,
-              yandexApiClient.suggested,
-              (String title, String subtitle, String? uri) {
-                fromCountry = subtitle;
-                fromCity = title;
-              },
-            );
-            Overlay.of(context).insert(_searchWindow);
-          }
-        }
       },
     );
   }
