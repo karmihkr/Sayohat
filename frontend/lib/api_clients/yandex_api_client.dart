@@ -1,13 +1,14 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:http/http.dart' as http;
 import 'package:sayohat/project_settings.dart';
-import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/add_ride_screen.dart';
 
 import '../models/place_model.dart';
 
 class YandexApiClient {
   final client = http.Client();
+  Locale? currentLocale;
 
   String highlightingMatches = '0';
   String resultsCount = '4';
@@ -24,7 +25,7 @@ class YandexApiClient {
         {
           ...params,
           "apikey": projectSettings.yandexSuggestApiAccessToken,
-          "lang": loc.localeName == "uk" ? "tg" : loc.localeName,
+          "lang": currentLocale!.languageCode == "uk" ? "tg" : currentLocale!.languageCode,
           "results": resultsCount,
           "highlight": highlightingMatches,
         },
@@ -40,7 +41,7 @@ class YandexApiClient {
         {
           ...params,
           "apikey": projectSettings.yandexGeocoderApiAccessToken,
-          "lang": loc.localeName == "uk" ? "tg" : loc.localeName,
+          "lang": currentLocale!.languageCode == "uk" ? "tg" : currentLocale!.languageCode,
           "results": '1',
           "format": "json",
         },

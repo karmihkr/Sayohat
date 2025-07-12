@@ -36,10 +36,11 @@ class _WelcomeScreenState extends State<WelcomeHub> {
     final loc = AppLocalizations.of(context)!;
 
     final widgetOptions = <Widget>[
+      AddRideScreen(),
       FindRideScreen(
         onShowSearchList: (show) => setState(() => _showSearchList = show),
       ),
-      AddRideScreen(),
+
       ListRideScreen(),
       ProfileScreen(onLocaleChanged: widget.onLocaleChanged),
     ];

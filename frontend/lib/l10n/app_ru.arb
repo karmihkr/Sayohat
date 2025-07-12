@@ -570,11 +570,6 @@
     "description": "Header for registration screens"
   },
 
-  "hint_start_enter_address": "Начните ввод адреса",
-  "@hint_start_enter_address": {
-    "description": "Hint text for the city autocomplete field"
-  },
-
   "hint_date_ddmmyyyy": "дд/мм/гггг",
   "@hint_date_ddmmyyyy": {
     "description": "Hint text for date input in dd/mm/yyyy format"
@@ -758,7 +753,17 @@
   },
 
   "car": "Машина",
-  "@info": {
+  "@car": {
     "description": "Label for the car input field"
+  },
+
+  "hint_city": "Город",
+  "@hint_city": {
+    "description": "Hint for the city input field"
+  },
+
+  "street": "Улица",
+  "@street": {
+    "description": "Hint for the address input field"
   }
 }

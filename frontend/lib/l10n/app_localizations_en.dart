@@ -90,9 +90,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get car_information => 'Car information';
 
   @override
-  String get hint_start_enter_address => 'Start enter the address';
-
-  @override
   String get date_input_label => 'Date';
 
   @override
@@ -416,4 +413,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get car => 'Car';
+
+  @override
+  String get hint_city => 'City';
+
+  @override
+  String get street => 'Street';
 }

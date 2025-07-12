@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
+import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
 import 'package:sayohat/screens/registration-screens/sms_code_screen.dart';
@@ -56,8 +57,10 @@ class _MyAppState extends State<MyApp> {
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (supportedLocales.contains(locale)) {
+          yandexApiClient.currentLocale = locale;
           return locale;
         }
+        yandexApiClient.currentLocale = Locale("en");
         return const Locale('en');
       },
       theme: ThemeData(

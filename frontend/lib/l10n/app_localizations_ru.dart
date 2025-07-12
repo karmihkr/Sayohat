@@ -91,9 +91,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get car_information => 'Информация об авто';
 
   @override
-  String get hint_start_enter_address => 'Начните ввод адреса';
-
-  @override
   String get date_input_label => 'Дата';
 
   @override
@@ -414,4 +411,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get car => 'Машина';
+
+  @override
+  String get hint_city => 'Город';
+
+  @override
+  String get street => 'Улица';
 }

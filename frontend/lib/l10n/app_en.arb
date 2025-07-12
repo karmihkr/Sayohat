@@ -138,11 +138,6 @@
     "description": "Title of the third step in the Add Ride stepper"
   },
 
-  "hint_start_enter_address": "Start enter the address",
-  "@hint_start_enter_address": {
-    "description": "Hint text for the city autocomplete field"
-  },
-
   "date_input_label": "Date",
   "@date_input_label": {
     "description": "Label for the data input field"
@@ -713,7 +708,17 @@
   },
 
   "car": "Car",
-  "@info": {
+  "@car": {
     "description": "Label for the car input field"
+  },
+
+  "hint_city": "City",
+  "@hint_city": {
+    "description": "Hint for the city input field"
+  },
+
+  "street": "Street",
+  "@street": {
+    "description": "Hint for the address input field"
   }
 }

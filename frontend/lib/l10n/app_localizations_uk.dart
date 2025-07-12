@@ -91,9 +91,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get car_information => 'Маълумоти мошин';
 
   @override
-  String get hint_start_enter_address => 'Сурога ворид кунед';
-
-  @override
   String get date_input_label => 'Сана';
 
   @override
@@ -415,4 +412,10 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get car => 'Мошин';
+
+  @override
+  String get hint_city => 'Шахр';
+
+  @override
+  String get street => 'Кӯча';
 }

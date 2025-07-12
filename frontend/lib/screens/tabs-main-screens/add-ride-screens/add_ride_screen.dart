@@ -12,6 +12,7 @@ import 'package:sayohat/l10n/app_localizations.dart';
 import '../../../models/place_model.dart';
 
 String fromCountry = "";
+String toCountry = "";
 String fromUri = "";
 
 String fromCity = '';
@@ -26,8 +27,6 @@ String description = '';
 String carModel = '';
 String carColor = '';
 String carPlate = '';
-
-late final AppLocalizations loc;
 
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
@@ -125,7 +124,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
 
   @override
   Widget build(BuildContext context) {
-    loc = AppLocalizations.of(context)!;
+    final loc = AppLocalizations.of(context)!;
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -159,12 +158,19 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 key: _stepFormKeys[0],
                 child: Column(
                   children: [
+                    if (yandexApiClient.suggesting) Image.asset(
+                      "assets/images/loading.gif",
+                      height: 50,
+                      width: 50,
+                    ),
                     CityField(
                       key: Key('departureCityField'),
                       label: loc.hint_from,
                       onSaved: (value) => {fromCity = value ?? ''},
                       validator: (value) =>
                           value?.isEmpty ?? true ? 'Enter city' : null,
+                      loc: loc,
+                      mainContext: context,
                     ),
                     SizedBox(height: 10),
                     CityField(
@@ -173,6 +179,8 @@ class _AddRideScreenState extends State<AddRideScreen> {
                       onSaved: (value) => {toCity = value ?? ''},
                       validator: (value) =>
                           value?.isEmpty ?? true ? 'Enter city' : null,
+                      loc: loc,
+                      mainContext: context,
                     ),
                     SizedBox(height: 10),
                     _DateField(
@@ -318,12 +326,16 @@ class CityField extends StatefulWidget {
   final String label;
   final Function(String?) onSaved;
   final String? Function(String?)? validator;
+  final AppLocalizations loc;
+  final BuildContext mainContext;
 
   const CityField({
     super.key,
     required this.label,
     required this.onSaved,
     required this.validator,
+    required this.loc,
+    required this.mainContext
   });
 
   @override
@@ -332,18 +344,19 @@ class CityField extends StatefulWidget {
 
 class _CityFieldState extends State<CityField> {
   final FocusNode _fieldFocusObserver = FocusNode();
-  late OverlayEntry _searchWindow;
-  late String actualValue;
+  OverlayEntry? _searchWindow;
+  var controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _fieldFocusObserver.addListener(() {
       if (!_fieldFocusObserver.hasFocus) {
-        if (fromCountry.isEmpty) fromCity = "";
-        try {
-          _searchWindow.remove();
-        } catch (_) {}
+        if (widget.label == widget.loc.hint_from && fromCountry.isEmpty ||
+            widget.label == widget.loc.hint_to && toCountry.isEmpty) {
+          controller.text = "";
+        }
+        searchWindowSafeRemove(_searchWindow);
       }
     });
   }
@@ -352,48 +365,45 @@ class _CityFieldState extends State<CityField> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
+      controller: controller,
       focusNode: _fieldFocusObserver,
       decoration: inputDecorationFactory(
         Icons.circle_outlined,
-        loc.hint_start_enter_address,
+        loc.hint_city,
         widget.label,
       ),
       validator: widget.validator,
       onSaved: widget.onSaved,
       onChanged: (value) async {
-        actualValue = value;
         if (value.isEmpty) {
-          try {
-            _searchWindow.remove();
-          } catch (_) {}
+          searchWindowSafeRemove(_searchWindow);
           return;
         }
         if (yandexApiClient.suggesting) {
           yandexApiClient.delayedRequest = value;
           return;
         }
+        (widget.mainContext as Element).markNeedsBuild();
         await yandexApiClient.suggestCities(value);
-        if (actualValue.isEmpty) return;
-        fromCountry = "";
-        try {
-          _searchWindow.remove();
-        } catch (_) {}
+        (widget.mainContext as Element).markNeedsBuild();
+        if (controller.text.isEmpty) return;
+        searchWindowSafeRemove(_searchWindow);
         _searchWindow = createSearchWindow(context, yandexApiClient.suggested, (
           String title,
           String subtitle,
           String? uri,
         ) {
-          fromCountry = subtitle;
-          fromCity = title;
+          if (widget.label == loc.hint_from) {
+            fromCountry = subtitle;
+            fromCity = title;
+          } else {
+            toCountry = subtitle;
+            toCity = title;
+          }
+          controller.text = title;
+          searchWindowSafeRemove(_searchWindow);
         });
-        Overlay.of(context).insert(_searchWindow);
-        /*} on Exception {
-              print("strawberry exception");
-              ScaffoldMessenger.of(context).showSnackBar(
-                snackBarFactory.createSnackBar(loc.error_api_unreachable),
-              );
-              return;
-            }*/
+        Overlay.of(context).insert(_searchWindow!);
       },
     );
   }
@@ -433,6 +443,12 @@ OverlayEntry createSearchWindow(
   );
 }
 
+void searchWindowSafeRemove(OverlayEntry? searchWindow) {
+  try {
+    searchWindow!.remove();
+  } catch (_) {}
+}
+
 class _AddressField extends StatelessWidget {
   final String label;
   final Function(String?) onSaved;
@@ -444,7 +460,7 @@ class _AddressField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       key: key,
-      decoration: inputDecorationFactory(Icons.location_on, label, label),
+      decoration: inputDecorationFactory(Icons.location_on, loc.street, label),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_address_short : null,
       onSaved: onSaved,

@@ -262,12 +262,6 @@ abstract class AppLocalizations {
   /// **'Car information'**
   String get car_information;
 
-  /// Hint text for the city autocomplete field
-  ///
-  /// In en, this message translates to:
-  /// **'Start enter the address'**
-  String get hint_start_enter_address;
-
   /// Label for the data input field
   ///
   /// In en, this message translates to:
@@ -820,17 +814,29 @@ abstract class AppLocalizations {
   /// **'Price'**
   String get price_label;
 
-  /// Label for the car input field
+  /// Label for the info input field
   ///
   /// In en, this message translates to:
   /// **'Info'**
   String get info;
 
-  /// No description provided for @car.
+  /// Label for the car input field
   ///
   /// In en, this message translates to:
   /// **'Car'**
   String get car;
+
+  /// Hint for the city input field
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get hint_city;
+
+  /// Hint for the address input field
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get street;
 }
 
 class _AppLocalizationsDelegate

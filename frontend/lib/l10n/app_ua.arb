@@ -82,9 +82,6 @@
   "car_information": "Маълумоти мошин",
   "@car_information": { "description": "Title of the third step in the Add Ride stepper" },
 
-  "hint_start_enter_address": "Сурога ворид кунед",
-  "@hint_start_enter_address": { "description": "Hint text for the city autocomplete field" },
-
   "date_input_label": "Сана",
   "@date_input_label": {
     "description": "Нишон барои майдони вуруди сана"
@@ -442,7 +439,17 @@
   },
 
   "car": "Мошин",
-  "@info": {
+  "@car": {
     "description": "Label for the car input field"
+  },
+
+  "hint_city": "Шахр",
+  "@hint_city": {
+    "description": "Hint for the city input field"
+  },
+
+  "street": "Кӯча",
+  "@street": {
+    "description": "Hint for the address input field"
   }
 }
