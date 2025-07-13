@@ -17,6 +17,7 @@ It can also lead to the deletion of the app or bad reviews.
 **Environment:** Android 12 device or Windows 11 laptop  
 **Response:** App operates normally without freezing or affecting performance of other apps  
 **Response Measure:** CPU usage < 25%, memory usage < 500 MB; no crashes in 9 out of 10 test runs
+**Testing:** Performance tests using Flutter driver, memory profiling tools
 
 ## 1.2  Interoperability
 ### Meaning
@@ -34,6 +35,7 @@ Without smooth integration, key features like login or route planning won’t wo
 **Environment:** Stable internet connection during user registration and ride creation  
 **Response:** System successfully communicates with Telegram and Yandex.Maps to authenticate and display routes  
 **Response Measure:** 95% success rate for API responses < 2 seconds; fallback displayed on failure
+**Testing:** Integration tests using mocks for Telegram API and Yandex.Maps SDK
 
 ---
 
@@ -54,7 +56,9 @@ fake accounts and ensure proper user identity, we verify users with secure confi
 **Artifact:** Backend API (Python), Telegram API 
 **Environment:** Production  
 **Response:** User identity is verified via Telegram confirmation code
-**Response Measure:** Token issued within 60 seconds, 100% of valid requests receive code 200  
+**Response Measure:** Token issued within 60 seconds, 100% of valid requests receive code 200
+**Testing:** Automated tests with mocked Telegram responses, unit tests for auth logic using `unittest`, and manual login flow validation in staging.
+
 
 ---
 
@@ -75,6 +79,7 @@ bookings, and messages. Every action should be auditable.
 **Environment:** Normal operation  
 **Response:** Each user action is logged with user ID, timestamp, and action type  
 **Response Measure:** 100% of critical actions are logged and can be retrieved in <2 seconds  
+**Testing:** Integration tests verifying log creation after key actions (booking, canceling), MongoDB log checks, and log-retrieval latency testing with Python scripts.
 
 ---
 
@@ -94,15 +99,14 @@ encrypted and securely transmitted.
 **Environment:** Production  
 **Response:** Sensitive data remains encrypted in storage and during transit  
 **Response Measure:** 100% of data encrypted; no unauthorized access in >99.9% of penetration test scenarios  
+**Testing:** Manual and automated security tests
 
 ---
 
 # 3. Reliability
 ## 3.1 Faultlessness
 ### Meaning
-Faultlessness - the system's ability to operate without failures when processing valid input data. 
-In our project, this means that functions wrapped in try-catch blocks shouldn't generate unhandled 
-exceptions under normal operating conditions.
+Faultlessness is the system's ability to process valid input without failures.  
 
 ### Why it is important for our project
 * Ensures stable application performance for users
@@ -110,13 +114,13 @@ exceptions under normal operating conditions.
 * Reduces the number of critical system errors
 
 ### Quality Scenario
-**Source:** User submits valid data through form  
-**Stimulus:** Valid input from user  
-**Artifact:** Python backend API and frontend  
-**Environment:** Production at peak hours  
-**Response:** Request is processed without exceptions  
-**Response Measure:** 100% of requests processed successfully, response time < 1 sec  
-**Testing:** Unit tests, load tests (Locust), error monitoring (Sentry)  
+**Source:** User performs a ride search or registration  
+**Stimulus:** Enters valid input data  
+**Artifact:** Python backend API and Flutter frontend  
+**Environment:** Normal production environment  
+**Response:** The request is processed successfully with no exceptions  
+**Response Measure:** 100% of valid requests are completed successfully; response time < 1 second  
+**Testing:** Unit and integration tests covering all main use cases    
 
 ## 3.2 Availability
 ### Meaning
@@ -129,13 +133,13 @@ Exception handling through try-catch prevents complete system failure.
 * Allows the system to operate in degraded mode during partial failures
 
 ### Quality Scenario
-**Source:** User requests data during server issue  
-**Stimulus:** Partial backend failure  
-**Artifact:** REST API (Spring Boot), Redis cache  
-**Environment:** Backend instability  
-**Response:** API returns cached data or default error response  
-**Response Measure:** 99.9% uptime, critical functions accessible  
-**Testing:** Chaos engineering (Simian Army), fallback A/B tests, Grafana monitoring  
+**Source:** User opens the app  
+**Stimulus:** One of the services (e.g., database) is temporarily unavailable  
+**Artifact:** Backend API, Redis cache, Flutter frontend  
+**Environment:** Partial system outage (e.g., DB failure)  
+**Response:** The app still functions, either using cached data or displaying an understandable error  
+**Response Measure:** Uptime ≥ 99.9%; critical features remain accessible  
+**Testing:** Failure simulation tests   
 
 ## 3.3 Fault Tolerance
 ### Meaning
@@ -148,12 +152,12 @@ during abnormal situations (invalid data, network failures).
 * Improves resilience of critical functions
 
 ### Quality Scenario
-**Source:** Sensor sends corrupted data  
-**Stimulus:** Faulty input  
-**Artifact:** Gateway API and middleware  
-**Environment:** Unstable network  
-**Response:** System discards bad packets, remains stable  
-**Response Measure:** 100% of corrupted data handled, <50ms delay  
-**Testing:** Fuzz testing, network failure simulations  
+**Source:** User submits a form with invalid input or during poor network conditions  
+**Stimulus:** The system receives incorrect or incomplete data  
+**Artifact:** Backend and frontend  
+**Environment:** Unstable internet connection  
+**Response:** The system responds with a clear error message and does not crash  
+**Response Measure:** 100% of invalid inputs are handled gracefully with user-friendly errors  
+**Testing:** Tests using invalid data, network disconnection scenarios, and mocked APIs  
 
 ---
