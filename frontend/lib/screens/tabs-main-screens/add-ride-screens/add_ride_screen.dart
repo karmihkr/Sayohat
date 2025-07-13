@@ -1,17 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
+import 'package:sayohat/models/ride_model.dart';
+import 'package:sayohat/objects/current_rides.dart';
+import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:sayohat/l10n/app_localizations.dart';
 
 import '../../../factories/input_decoration_factory.dart';
 import '../../../factories/search_window_factory.dart';
+import '../../../objects/current_user.dart';
 
 String fromCountry = "";
 String toCountry = "";
@@ -148,22 +152,6 @@ class _AddRideScreenState extends State<AddRideScreen> {
             }
             try {
               if (hamsafarApiClient.registering) return;
-              Ride userRide = Ride(
-                fullName: '${user.name} ${user.surname}',
-                age: 5,
-                from: fromCity,
-                to: toCity,
-                date: date,
-                seats: passengers,
-                address1: fromAddress,
-                address2: toAddress,
-                time: time,
-                cost: price,
-                description: description,
-                carModel: carModel,
-                carColor: carColor,
-                carPlate: carPlate,
-              );
               (context as Element).markNeedsBuild();
               await hamsafarApiClient.registerRide(
                 fromUri,
@@ -175,16 +163,43 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 description,
                 carModel,
                 carColor,
-                carPlate
+                carPlate,
               );
               (context as Element).markNeedsBuild();
+              currentRides.add(
+                Ride(
+                  id: currentUser.id,
+                  driverName: currentUser.name,
+                  driverSurname: currentUser.surname,
+                  driverPhone: currentUser.phone,
+                  fromCountry: fromCountry,
+                  fromCity: fromCity,
+                  fromStreet: fromAddress,
+                  toCountry: toCountry,
+                  toCity: toCity,
+                  toStreet: toAddress,
+                  year: int.parse(date.split('/')[2]),
+                  month: int.parse(date.split('/')[1]),
+                  day: int.parse(date.split('/')[0]),
+                  hours: int.parse(time.split(':')[0]),
+                  minutes: int.parse(time.split(':')[1]),
+                  passengers: int.parse(passengers),
+                  price: double.parse(price),
+                  description: description,
+                  carModel: carModel,
+                  carColor: carColor,
+                  carPlate: carPlate,
+                ),
+              );
+              await persistentStorage.setStringList("currentRides", [
+                ...?(await persistentStorage.getStringList("currentRides")),
+                jsonEncode(currentRides.last.toJson()),
+              ]);
               setState(() => _currentStep = 0);
-              yourRides.add(userRide);
               ScaffoldMessenger.of(context).showSnackBar(
                 snackBarFactory.createSnackBar(loc.success_ride_added),
               );
             } catch (error) {
-              print(error.toString());
               hamsafarApiClient.registering = false;
               (context as Element).markNeedsBuild();
               if (error.toString().contains("expired")) {
@@ -464,25 +479,25 @@ class _CityFieldState extends State<CityField> {
         (widget.mainContext as Element).markNeedsBuild();
         if (controller.text.isEmpty) return;
         searchWindowSafeRemove(_searchWindow);
-        _searchWindow = searchWindowFactory(context, yandexApiClient.suggested, (
-          String title,
-          String subtitle,
-          String? uri,
-        ) {
-          if (widget.label == loc.hint_from) {
-            fromCountry = subtitle;
-            fromCity = title;
-          } else if (widget.label == loc.hint_to) {
-            toCountry = subtitle;
-            toCity = title;
-          } else if (widget.label == loc.hint_departure_address) {
-            fromUri = uri!;
-          } else if (widget.label == loc.hint_destination_address) {
-            toUri = uri!;
-          }
-          controller.text = title;
-          searchWindowSafeRemove(_searchWindow);
-        });
+        _searchWindow = searchWindowFactory(
+          context,
+          yandexApiClient.suggested,
+          (String title, String subtitle, String? uri) {
+            if (widget.label == loc.hint_from) {
+              fromCountry = subtitle;
+              fromCity = title;
+            } else if (widget.label == loc.hint_to) {
+              toCountry = subtitle;
+              toCity = title;
+            } else if (widget.label == loc.hint_departure_address) {
+              fromUri = uri!;
+            } else if (widget.label == loc.hint_destination_address) {
+              toUri = uri!;
+            }
+            controller.text = title;
+            searchWindowSafeRemove(_searchWindow);
+          },
+        );
         Overlay.of(context).insert(_searchWindow!);
       },
     );

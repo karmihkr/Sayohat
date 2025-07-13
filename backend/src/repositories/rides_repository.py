@@ -14,5 +14,8 @@ class RidesRepository:
     def get_matching_ride(self, **filters):
         return self.database.ride.find_one(filter=filters)
 
+    def get_matching_rides(self, **filters):
+        return self.database.ride.find(filter=filters)
+
 
 rides_repository = RidesRepository(settings_manager.database.host, settings_manager.database.port)

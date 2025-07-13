@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/project_settings.dart';
+import 'package:sayohat/pull_data.dart';
 import 'package:sayohat/screens/registration-screens/phone_number_screen.dart';
 import 'package:sayohat/screens/registration-screens/sms_code_screen.dart';
 import 'package:sayohat/screens/registration-screens/name_surname_screen.dart';
@@ -26,6 +27,8 @@ Future<void> main() async {
       )
       ? '/PhoneScreen'
       : '/WelcomeHub';
+  // add separate loading screen for that
+  if (initialRoute == "/WelcomeHub") await pullData();
   runApp(const MyApp());
 }
 

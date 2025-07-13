@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
+
+import '../../../models/ride_model.dart';
+import '../../../objects/current_user.dart';
 
 class YourRideDetailsScreen extends StatelessWidget {
   final Ride ride;
@@ -62,7 +64,7 @@ class _FullName extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.driver_label(ride.fullName),
+      loc.driver_label(ride.driverName! + ride.driverSurname!),
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -82,7 +84,7 @@ class _Age extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return Text(
-      loc.age_label("${ride.age}"),
+      loc.age_label("${-currentUser.year! + (DateTime.now()).year}"),
       style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
     );
   }
@@ -115,7 +117,7 @@ class _FromAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.from_address_label(ride.address1),
+        loc.from_address_label(ride.fromStreet!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -133,7 +135,7 @@ class _ToAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.to_address_label(ride.address2),
+        loc.to_address_label(ride.toStreet!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -151,7 +153,7 @@ class _DateStart extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
       title: Text(
-        loc.date_label(ride.date),
+        loc.date_label("${ride.day}.${ride.month}.${ride.year}"),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -169,7 +171,7 @@ class _StartTime extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
       title: Text(
-        loc.time_label(ride.time),
+        loc.time_label("${ride.hours}:${ride.minutes}"),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -204,7 +206,7 @@ class _CarModel extends StatelessWidget {
       //
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
-        loc.model_label(ride.carModel),
+        loc.model_label(ride.carModel!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -222,7 +224,7 @@ class _CarColor extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
       title: Text(
-        loc.color_label(ride.carColor),
+        loc.color_label(ride.carColor!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -240,7 +242,7 @@ class _CarPlate extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
       title: Text(
-        loc.car_plate_label(ride.carPlate),
+        loc.car_plate_label(ride.carPlate!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -273,7 +275,7 @@ class _DescriptionContent extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
       title: Text(
-        ride.description,
+        ride.description!,
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );

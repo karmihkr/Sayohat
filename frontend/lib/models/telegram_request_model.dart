@@ -1,0 +1,3 @@
+class TelegramRequest {
+  String? requestId;
+}

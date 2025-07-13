@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/screens/tabs-main-screens/profile-screens/edit_info_screen.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
@@ -14,43 +15,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Map<String, dynamic>? userData;
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    _loadProfile();
-  }
-
-  Future<void> _loadProfile() async {
-    try {
-      final data = await hamsafarApiClient.getUserProfile();
-      setState(() {
-        userData = data;
-        isLoading = false;
-      });
-    } on Exception catch (error) {
-      if (error.toString().contains("expired")) {
-        Navigator.pushNamed(context, '/PhoneScreen');
-      } else {
-        setState(() {
-          userData = null;
-          isLoading = false;
-        });
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (userData == null) {
-      return Center(child: Text(loc.error_data_unresolved));
-    }
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: EdgeInsets.only(top: 40),
@@ -63,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           _Avatar(),
           SizedBox(height: 20),
-          _NameSurname(name: userData!['name'], surname: userData!['surname']),
+          _NameSurname(name: currentUser.name!, surname: currentUser.surname!),
           SizedBox(height: 20),
           Expanded(
             child: Container(
@@ -75,10 +47,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _PhoneNumber(phone: userData!['phone']),
+                  _PhoneNumber(phone: currentUser.phone!),
                   Divider(height: 5, color: AppColors.primaryGreen),
                   SizedBox(height: 10),
-                  _DateOfBirth(userDateOfBirth: userData!['birth']),
+                  _DateOfBirth(
+                    userDateOfBirth:
+                        "${currentUser.day}.${currentUser.month}.${currentUser.year}",
+                  ),
                   Divider(height: 5, color: AppColors.primaryGreen),
                   SizedBox(height: 20),
                   _StatisticsText(),
@@ -115,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Spacer(),
-                  _EditProfileButton(),
+                  _EditProfileButton(mainContext: context),
                 ],
               ),
             ),
@@ -236,7 +211,7 @@ class _StatisticsText extends StatelessWidget {
     return Center(
       child: Text(
         //
-        'N rides were done',
+        '${currentUser.asDriver! + currentUser.asPassenger!} rides were done',
         style: const TextStyle(
           color: AppColors.primaryGreen,
           fontSize: 24,
@@ -266,7 +241,7 @@ class _StatisticsBlocks extends StatelessWidget {
             children: [
               Icon(Icons.people, color: AppColors.primaryGreen, size: 30),
               Text(
-                'N',
+                currentUser.asPassenger.toString(),
                 style: const TextStyle(
                   color: AppColors.primaryGreen,
                   fontSize: 24,
@@ -298,7 +273,7 @@ class _StatisticsBlocks extends StatelessWidget {
             children: [
               Icon(Icons.car_rental, color: AppColors.primaryGreen, size: 30),
               Text(
-                'N',
+                currentUser.asDriver.toString(),
                 style: const TextStyle(
                   color: AppColors.primaryGreen,
                   fontSize: 24,
@@ -323,6 +298,10 @@ class _StatisticsBlocks extends StatelessWidget {
 }
 
 class _EditProfileButton extends StatelessWidget {
+  BuildContext mainContext;
+
+  _EditProfileButton({required this.mainContext});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -331,7 +310,7 @@ class _EditProfileButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EditInfoScreen()),
+            MaterialPageRoute(builder: (context) => EditInfoScreen(mainContext: mainContext)),
           );
         },
         style: ElevatedButton.styleFrom(

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/find_data.dart';
+import 'package:sayohat/runtime_data/find_data.dart';
 
 void main() {
   test('DataSearch should correctly initialize with parameter', () {

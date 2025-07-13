@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
 final _nameTextController = TextEditingController();
@@ -174,8 +174,8 @@ class _ConfirmNameSurnameButton extends StatelessWidget {
             snackBarFactory.createSnackBar(loc.error_enter_name_surname),
           );
         } else {
-          user.setName(userName);
-          user.setSurname(userSurname);
+          currentUser.name = userName;
+          currentUser.surname = userSurname;
           Navigator.pushNamed(context, '/BirthScreen');
         }
       },

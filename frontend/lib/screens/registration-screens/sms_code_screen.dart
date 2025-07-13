@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
+import 'package:sayohat/objects/current_telegram_request.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/project_settings.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
-import '../../user_data.dart';
-
 import 'package:sayohat/l10n/app_localizations.dart';
+
+import '../../models/user_model.dart';
 
 final _codeTextController = TextEditingController();
 String? userCode;
@@ -148,13 +152,19 @@ class _ConfirmCodeButton extends StatelessWidget {
         }
         try {
           String apiAccessToken = await hamsafarApiClient.obtainAccessToken(
-            user.phone!,
-            user.telegramRequestId!,
+            currentUser.phone!,
+            currentTelegramRequest.requestId!,
             userCode!,
           );
           persistentSecuredStorage.write(key: "token", value: apiAccessToken);
           try {
-            if (await hamsafarApiClient.userExists(user.phone!)) {
+            if (await hamsafarApiClient.userExists(currentUser.phone!)) {
+              await persistentStorage.setString(
+                "currentUser",
+                await hamsafarApiClient.getUserProfile(),
+              );
+              print(await persistentStorage.getString("currentUser"));
+              currentUser = User.fromJsonString(await persistentStorage.getString("currentUser"));
               Navigator.pushNamed(context, '/WelcomeHub');
               return;
             }

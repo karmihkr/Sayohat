@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:sayohat/screens/tabs-main-screens/find-ride-screens/list_search_screen.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
-import 'package:sayohat/models/ride_model.dart';
 
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
@@ -50,12 +48,12 @@ class _FindRideScreenState extends State<FindRideScreen> {
       return;
     }
 
-    final rides = ridesJson.map((m) => Ride.fromJson(m)).toList();
+    /*final rides = ridesJson.map((m) => Ride.fromJson(m)).toList();
 
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => ListSearchRideScreen(rides: rides)),
-    );
+    );*/
   }
 
   String? _validateDate(String? value) {

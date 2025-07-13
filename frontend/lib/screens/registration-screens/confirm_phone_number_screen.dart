@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
+import 'package:sayohat/objects/current_telegram_request.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
-late String? pn;
+late String? phone;
 bool loading = false;
 
 class ConfirmPhoneNumberScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ConfirmPhoneNumberScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    pn = phoneNumber;
+    phone = phoneNumber;
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -76,7 +77,7 @@ class _PhoneNumberForm extends StatelessWidget {
         child: Container(
           color: AppColors.backgroundGreen,
           child: Text(
-            pn ?? "",
+            phone ?? "",
             style: TextStyle(
               fontSize: 26.0,
               fontFamily: 'Roboto',
@@ -135,11 +136,10 @@ class _GoNextButton extends StatelessWidget {
       onPressed: () async {
         loading = true;
         (mainContext as Element).markNeedsBuild();
-        user.setPhone(pn);
+        currentUser.phone = phone;
         try {
-          user.setTelegramRequestId(
-            await hamsafarApiClient.sendTelegramVerificationCode(pn!),
-          );
+          currentTelegramRequest.requestId = await hamsafarApiClient
+              .sendTelegramVerificationCode(phone!);
         } on Exception {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),

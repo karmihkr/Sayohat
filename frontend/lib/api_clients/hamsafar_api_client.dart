@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sayohat/api_clients/request_types.dart';
 import 'package:sayohat/api_clients/yandex_api_client.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/project_settings.dart';
 
 class HamsafarApiClient {
@@ -90,25 +91,24 @@ class HamsafarApiClient {
     return jsonDecode(response.body)["result"];
   }
 
-  Future<void> registerUser(
-    String phone,
-    String name,
-    String surname,
-    String birth,
-  ) async {
+  Future<void> registerUser() async {
+    registering = true;
     http.Response response = await request(
       RequestType.post,
       "/user",
-      <String, dynamic>{
-        "phone": phone,
-        "name": name,
-        "surname": surname,
-        "birth": birth,
+      {
+        "phone": currentUser.phone,
+        "name": currentUser.name,
+        "surname": currentUser.surname,
+        "year": currentUser.year.toString(),
+        "month": currentUser.month.toString(),
+        "day": currentUser.day.toString()
       },
       {},
       {},
     );
     if (response.statusCode != 200) throw http.ClientException("");
+    registering = false;
   }
 
   Future<void> registerPlace(String uri) async {
@@ -169,13 +169,13 @@ class HamsafarApiClient {
     registering = false;
   }
 
-  Future<Map<String, dynamic>> getUserProfile() async {
+  Future<String> getUserProfile() async {
     final token = await persistentSecuredStorage.read(key: 'token');
     http.Response response = await request(RequestType.get, '/user/me', {}, {
       'Authorization': 'Bearer $token',
     }, {});
     if (response.statusCode != 200) throw http.ClientException("");
-    return jsonDecode(response.body);
+    return response.body;
   }
 
   Future<void> updateUserProfile(
@@ -184,16 +184,17 @@ class HamsafarApiClient {
     String surname,
     String birth,
   ) async {
-    Map<String, dynamic> userData = await hamsafarApiClient.getUserProfile();
     final token = await persistentSecuredStorage.read(key: 'token');
     http.Response response = await request(
       RequestType.put,
       "/user",
       {
-        "phone": phone.isEmpty ? userData['phone'] : phone,
-        "name": name.isEmpty ? userData['name'] : name,
-        "surname": surname.isEmpty ? userData['surname'] : surname,
-        "birth": birth.isEmpty ? userData['birth'] : birth,
+        "phone": phone.isEmpty ? currentUser.phone : phone,
+        "name": name.isEmpty ? currentUser.name : name,
+        "surname": surname.isEmpty ? currentUser.surname : surname,
+        "year": birth.isEmpty ? currentUser.year.toString() : birth.split('/')[2],
+        "month": birth.isEmpty ? currentUser.month.toString() : birth.split('/')[1],
+        "day": birth.isEmpty ? currentUser.day.toString() : birth.split('/')[0],
       },
       {'Authorization': 'Bearer $token'},
       {},
@@ -201,6 +202,7 @@ class HamsafarApiClient {
     if (response.statusCode != 200) throw http.ClientException("");
   }
 
+  // should be refined
   Future<List<Map<String, dynamic>>?> searchRides(
     String from,
     String to,
@@ -226,6 +228,23 @@ class HamsafarApiClient {
     } else {
       return null;
     }
+  }
+
+  Future<List<String>> getUserRides() async {
+    final token = await persistentSecuredStorage.read(key: 'token');
+    http.Response response = await request(
+      RequestType.get,
+      "/rides/${currentUser.id}",
+      {},
+      {'Authorization': 'Bearer $token'},
+      {},
+    );
+    if (response.statusCode != 200) throw http.ClientException("");
+    List<String> rides = [];
+    for (final ride in jsonDecode(response.body)["rides"]) {
+      rides.add(jsonEncode(ride));
+    }
+    return rides;
   }
 }
 

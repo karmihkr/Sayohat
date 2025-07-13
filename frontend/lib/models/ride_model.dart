@@ -1,69 +1,102 @@
+import 'dart:convert';
+
 class Ride {
-  final String id;
-  final String driverId;
-  final String fromCity;
-  final String toCity;
-  final String date;
-  final String time;
-  final int seats;
-  final String cost;
-  final String addressFrom;
-  final String addressTo;
-  final String description;
-  final String carModel;
-  final String carColor;
-  final String carPlate;
+  String? id;
+  String? driverName;
+  String? driverSurname;
+  String? driverPhone;
+  String? fromCountry;
+  String? fromCity;
+  String? fromStreet;
+  String? toCountry;
+  String? toCity;
+  String? toStreet;
+  int? year;
+  int? month;
+  int? day;
+  int? hours;
+  int? minutes;
+  int? passengers;
+  double? price;
+  String? description;
+  String? carModel;
+  String? carColor;
+  String? carPlate;
 
   Ride({
-    required this.id,
-    required this.driverId,
-    required this.fromCity,
-    required this.toCity,
-    required this.date,
-    required this.time,
-    required this.seats,
-    required this.cost,
-    required this.addressFrom,
-    required this.addressTo,
-    required this.description,
-    required this.carModel,
-    required this.carColor,
-    required this.carPlate,
+    this.id,
+    this.driverName,
+    this.driverSurname,
+    this.driverPhone,
+    this.fromCountry,
+    this.fromCity,
+    this.fromStreet,
+    this.toCountry,
+    this.toCity,
+    this.toStreet,
+    this.year,
+    this.month,
+    this.day,
+    this.hours,
+    this.minutes,
+    this.passengers,
+    this.price,
+    this.description,
+    this.carModel,
+    this.carColor,
+    this.carPlate,
   });
-  factory Ride.fromJson(Map<String, dynamic> json) {
+
+  factory Ride.fromJsonString(String? jsonString) {
+    final json = jsonDecode(jsonString!);
     return Ride(
-      id: json['id'].toString(),
-      driverId: json['driver_id'].toString(),
-      fromCity: json['from'] as String,
-      toCity: json['to'] as String,
-      date: json['date'] as String,
-      time: json['time'] as String,
-      seats: int.parse(json['available_places'].toString()),
-      cost: json['price'].toString(),
-      addressFrom: json['address1'] as String,
-      addressTo: json['address2'] as String,
-      description: json['description'] as String,
-      carModel: json['car_model'] as String,
-      carColor: json['car_color'] as String,
-      carPlate: json['car_plate'] as String,
+      id: json["_id"],
+      driverName: json["driver_name"],
+      driverSurname: json["driver_surname"],
+      driverPhone: json["driver_phone"],
+      fromCountry: json["from_country"],
+      fromCity: json["from_city"],
+      fromStreet: json["from_street"],
+      toCountry: json["to_country"],
+      toCity: json["to_city"],
+      toStreet: json["to_street"],
+      year: json["year"],
+      month: json["month"],
+      day: json["day"],
+      hours: json["hours"],
+      minutes: json["minutes"],
+      passengers: json["passengers"],
+      price: json["price"],
+      description: json["description"],
+      carModel: json["car_model"],
+      carColor: json["car_color"],
+      carPlate: json["car_plate"],
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'driver_id': driverId,
-      'from': fromCity,
-      'to': toCity,
-      'date': date,
-      'time': time,
-      'available_places': seats,
-      'price': cost,
-      'address1': addressFrom,
-      'address2': addressTo,
-      'description': description,
-      'car_model': carModel,
-      'car_color': carColor,
-      'car_plate': carPlate,
+      "_id": id,
+      "driver_name": driverName,
+      "driver_surname": driverSurname,
+      "driver_phone": driverPhone,
+      "from_country": fromCountry,
+      "from_city": fromCity,
+      "from_street": fromStreet,
+      "to_country": toCountry,
+      "to_city": toCity,
+      "to_street": toStreet,
+      "year": year,
+      "month": month,
+      "day": day,
+      "hours": hours,
+      "minutes": minutes,
+      "passengers": passengers,
+      "price": price,
+      "description": description,
+      "car_model": carModel,
+      "car_color": carColor,
+      "car_plate": carPlate,
     };
   }
 }

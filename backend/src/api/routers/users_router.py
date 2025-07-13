@@ -34,8 +34,8 @@ def read_own_profile(token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)
 
 
 @users_router.post("/user")
-def post_user(phone, name, surname, birth):
-    users_repository.insert(phone=phone, name=name, surname=surname, birth=birth)
+def post_user(phone: str, name: str, surname: str, day: int, month: int, year: int):
+    users_repository.insert(phone=phone, name=name, surname=surname, day=day, month=month, year=year, as_driver=int(), as_passenger=int())
 
 
 @users_router.get("/user_exists")
@@ -46,12 +46,15 @@ def check_user(phone):
 
 
 @users_router.put("/user")
-def put_user(phone, name, surname, birth, token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
+def put_user(phone: str, name: str, surname: str, year: int, month: int, day: int,
+             token: typing.Annotated[str, fastapi.Depends(oauth2_scheme)]):
     user = check_token(token)
     data = {
         "name": name,
         "surname": surname,
         "phone": phone,
-        "birth": birth
+        "year": year,
+        "month": month,
+        "day": day
     }
     users_repository.update(user, data)

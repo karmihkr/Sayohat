@@ -6,6 +6,9 @@ import 'package:string_validator/string_validator.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
+import '../../../objects/current_user.dart';
+import '../../../project_settings.dart';
+
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
   filter: {"#": RegExp(r'\d')},
@@ -60,64 +63,29 @@ bool isValidPhone(String input) {
   return true;
 }
 
-String? userName;
-String? userSurname;
-String? userPhone;
-String? userBirth;
-
 class EditInfoScreen extends StatefulWidget {
-  const EditInfoScreen({super.key});
+  BuildContext mainContext;
+
+  EditInfoScreen({super.key, required this.mainContext});
 
   @override
   State<EditInfoScreen> createState() => _EditInfoScreenState();
 }
 
 class _EditInfoScreenState extends State<EditInfoScreen> {
-  Map<String, dynamic>? userData;
-  bool isLoading = true;
-
   final nameTextController = TextEditingController();
-
   final surnameTextController = TextEditingController();
-
   final birthTextController = TextEditingController();
-
   final phoneTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _loadProfile();
-  }
-
-  Future<void> _loadProfile() async {
-    try {
-      final data = await hamsafarApiClient.getUserProfile();
-      setState(() {
-        userData = data;
-        isLoading = false;
-      });
-    } on Exception catch (error) {
-      if (error.toString().contains("expired")) {
-        Navigator.pushNamed(context, '/PhoneScreen');
-      } else {
-        setState(() {
-          userData = null;
-          isLoading = false;
-        });
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (userData == null) {
-      return Center(child: Text(loc.error_data_unresolved));
-    }
     return Scaffold(
       backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
@@ -138,28 +106,30 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              loc.label_your_name(userData!['name']),
+              loc.label_your_name(currentUser.name!),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _NameForm(nameTextController: nameTextController),
             Divider(),
             Text(
-              loc.label_your_surname(userData!['surname']),
+              loc.label_your_surname(currentUser.surname!),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _SurnameForm(surnameTextController: surnameTextController),
             Divider(),
             Text(
-              loc.label_your_phone_number(userData!['phone']),
+              loc.label_your_phone_number(currentUser.phone!),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
             _PhoneNumberForm(phoneTextController: phoneTextController),
             Divider(),
             Text(
-              loc.label_your_date_of_birth(userData!['birth']),
+              loc.label_your_date_of_birth(
+                "${currentUser.day}/${currentUser.month}/${currentUser.year}",
+              ),
               style: TextStyle(fontFamily: 'Roboto', fontSize: 18),
             ),
             SizedBox(height: 10),
@@ -170,6 +140,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
               newSurname: surnameTextController,
               newPhone: phoneTextController,
               newBirth: birthTextController,
+              mainContext: widget.mainContext,
             ),
           ],
         ),
@@ -378,12 +349,14 @@ class _ConfirmChanges extends StatelessWidget {
   TextEditingController newSurname;
   TextEditingController newPhone;
   TextEditingController newBirth;
+  BuildContext mainContext;
 
   _ConfirmChanges({
     required this.newName,
     required this.newSurname,
     required this.newPhone,
     required this.newBirth,
+    required this.mainContext,
   });
 
   @override
@@ -408,6 +381,21 @@ class _ConfirmChanges extends StatelessWidget {
               newSurname.text,
               newBirth.text,
             );
+            if (newPhone.text.isNotEmpty) currentUser.phone = newPhone.text;
+            if (newName.text.isNotEmpty) currentUser.name = newName.text;
+            if (newSurname.text.isNotEmpty) {
+              currentUser.surname = newSurname.text;
+            }
+            if (newBirth.text.isNotEmpty) {
+              currentUser.year = int.parse(newBirth.text.split('/')[2]);
+              currentUser.month = int.parse(newBirth.text.split('/')[1]);
+              currentUser.day = int.parse(newBirth.text.split('/')[0]);
+            }
+            await persistentStorage.setString(
+              "currentUser",
+              currentUser.toJsonString(),
+            );
+            (mainContext as Element).markNeedsBuild();
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.snackbar_info_updated),
             );

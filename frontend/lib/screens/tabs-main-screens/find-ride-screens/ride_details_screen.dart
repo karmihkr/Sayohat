@@ -118,7 +118,7 @@ class _FromAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.from_address_label(ride.addressFrom),
+        loc.from_address_label(ride.fromStreet!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -136,7 +136,7 @@ class _ToAddress extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.location_on, color: AppColors.primaryGreen),
       title: Text(
-        loc.to_address_label(ride.addressTo),
+        loc.to_address_label(ride.toStreet!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -153,7 +153,7 @@ class _DateStart extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.calendar_today, color: AppColors.primaryGreen),
       title: Text(
-        ride.date,
+        "${ride.day}.${ride.month}.${ride.year}",
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -170,7 +170,7 @@ class _StartTime extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.access_time, color: AppColors.primaryGreen),
       title: Text(
-        ride.time,
+        "${ride.hours}:${ride.minutes}",
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -205,7 +205,7 @@ class _CarModel extends StatelessWidget {
       //
       leading: Icon(Icons.directions_car, color: AppColors.primaryGreen),
       title: Text(
-        loc.model_label(ride.carModel),
+        loc.model_label(ride.carModel!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -223,7 +223,7 @@ class _CarColor extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.color_lens, color: AppColors.primaryGreen),
       title: Text(
-        loc.color_label(ride.carColor),
+        loc.color_label(ride.carColor!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -241,7 +241,7 @@ class _CarPlate extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.abc_outlined, color: AppColors.primaryGreen),
       title: Text(
-        loc.car_plate_label(ride.carPlate),
+        loc.car_plate_label(ride.carPlate!),
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );
@@ -274,7 +274,7 @@ class _DescriptionContent extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.text_fields, color: AppColors.primaryGreen),
       title: Text(
-        ride.description,
+        ride.description!,
         style: TextStyle(fontFamily: 'Roboto', color: AppColors.primaryGreen),
       ),
     );

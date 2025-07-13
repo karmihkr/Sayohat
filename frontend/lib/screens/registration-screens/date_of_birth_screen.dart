@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
+import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/theme/app_colors.dart';
-import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
+
+import '../../project_settings.dart';
 
 bool isValidDate(String input) {
   try {
@@ -50,12 +52,18 @@ class DateOfBirthScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                if (hamsafarApiClient.registering)
+                  Image.asset(
+                    "assets/images/loading.gif",
+                    height: 50,
+                    width: 50,
+                  ),
                 const SizedBox(height: 80),
                 _BirthText(),
                 const SizedBox(height: 15),
                 _BirthForm(),
                 const SizedBox(height: 15),
-                _ConfirmBirthButton(),
+                _ConfirmBirthButton(mainContext: context),
               ],
             ),
           ),
@@ -123,6 +131,10 @@ class _BirthForm extends StatelessWidget {
 }
 
 class _ConfirmBirthButton extends StatelessWidget {
+  BuildContext mainContext;
+
+  _ConfirmBirthButton({required this.mainContext});
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -141,16 +153,23 @@ class _ConfirmBirthButton extends StatelessWidget {
           );
           return;
         }
-        user.setBirth(userBirth);
+        currentUser.year = int.parse(userBirth!.split('/')[2]);
+        currentUser.month = int.parse(userBirth!.split('/')[1]);
+        currentUser.day = int.parse(userBirth!.split('/')[0]);
+        currentUser.asPassenger = 0;
+        currentUser.asDriver = 0;
         try {
-          await hamsafarApiClient.registerUser(
-            user.phone!,
-            user.name!,
-            user.surname!,
-            user.birth!,
-          );
+          (mainContext as Element).markNeedsBuild();
+          await hamsafarApiClient.registerUser();
+          (mainContext as Element).markNeedsBuild();
           Navigator.pushNamed(context, '/WelcomeHub');
+          await persistentStorage.setString(
+            "currentUser",
+            await hamsafarApiClient.getUserProfile(),
+          );
         } on Exception {
+          hamsafarApiClient.registering = false;
+          (mainContext as Element).markNeedsBuild();
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarFactory.createSnackBar(loc.error_api_unreachable),
           );

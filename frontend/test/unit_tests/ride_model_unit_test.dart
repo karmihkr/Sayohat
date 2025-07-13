@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
+import 'package:sayohat/runtime_data/your_ride_data.dart';
 
 void main() {
   group('Ride Model Tests', () {
