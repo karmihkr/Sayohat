@@ -17,7 +17,7 @@
     A mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
     <br />
     <br />
-    <a href="https://drive.google.com/drive/folders/1pj8N1K3-Ya_SItcfxOT9mFsYIVfcbQDr?usp=sharing">View Demo</a>
+    <a href="https://drive.google.com/file/d/1F0RedI2lEKeFnFQ7JonVp2s2sypOkin1/view?usp=sharing">View Demo</a>
     &middot;
     <a href="https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/releases/blueberry">Up-to-Date Deployed Version </a>
   </p>
