@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('en');
 
   void _setLocale(Locale newLocale) {
+    yandexApiClient.currentLocale = newLocale;
     setState(() {
       _locale = newLocale;
     });
