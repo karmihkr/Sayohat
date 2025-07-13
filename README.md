@@ -12,16 +12,14 @@
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="frontend/assets/images/splash-logo.png" alt="Logo" width="350" height="350">
   </a>
-
   <h3 align="center">HamSafar</h3>
-
   <p align="center">
     A mobile app that enables convenient and reliable intercity ride-sharing across Central Asia.
     <br />
     <br />
     <a href="https://drive.google.com/drive/folders/1pj8N1K3-Ya_SItcfxOT9mFsYIVfcbQDr?usp=sharing">View Demo</a>
     &middot;
-    <a href="https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/releases">Up-to-Date Deployed Version </a>
+    <a href="https://gitlab.pg.innopolis.university/d.chegaev/shareyourride/-/releases/blueberry">Up-to-Date Deployed Version </a>
   </p>
 </div>
 
