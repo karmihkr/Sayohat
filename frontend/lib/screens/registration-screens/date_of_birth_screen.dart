@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
-import 'package:sayohat/project_settings.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';

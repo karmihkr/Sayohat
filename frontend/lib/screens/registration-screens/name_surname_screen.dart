@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:sayohat/user_data.dart';
 import 'package:sayohat/l10n/app_localizations.dart';

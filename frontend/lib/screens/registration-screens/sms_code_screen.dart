@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/project_settings.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 import '../../user_data.dart';

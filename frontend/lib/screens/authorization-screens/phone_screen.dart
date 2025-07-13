@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 import '../registration-screens/confirm_phone_number_screen.dart';

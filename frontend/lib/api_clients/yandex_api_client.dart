@@ -25,7 +25,9 @@ class YandexApiClient {
         {
           ...params,
           "apikey": projectSettings.yandexSuggestApiAccessToken,
-          "lang": currentLocale!.languageCode == "uk" ? "tg" : currentLocale!.languageCode,
+          "lang": currentLocale!.languageCode == "uk"
+              ? "tg"
+              : currentLocale!.languageCode,
           "results": resultsCount,
           "highlight": highlightingMatches,
         },
@@ -33,7 +35,7 @@ class YandexApiClient {
     );
   }
 
-  Future<http.Response> geocodeRequest(Map<String, dynamic> params) {
+  Future<http.Response> geocodeRequest(Map<String, dynamic> params, {useLocale = true}) {
     return client.get(
       Uri.https(
         projectSettings.yandexGeocoderApiUrl,
@@ -41,7 +43,9 @@ class YandexApiClient {
         {
           ...params,
           "apikey": projectSettings.yandexGeocoderApiAccessToken,
-          "lang": currentLocale!.languageCode == "uk" ? "tg" : currentLocale!.languageCode,
+          "lang": useLocale ? (currentLocale!.languageCode == "uk"
+              ? "tg"
+              : currentLocale!.languageCode) : "en",
           "results": '1',
           "format": "json",
         },
@@ -53,10 +57,13 @@ class YandexApiClient {
     http.Response response = await geocodeRequest({"uri": uri});
     if (response.statusCode != 200) throw http.ClientException("");
     String? country;
-    for (final component in jsonDecode(
-      response.body,
-    )["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["Address"]["Components"]) {
-      if (component["kind"] == "country") country = component["name"];
+    for (final component in firstGeoObject(
+      response,
+    )["metaDataProperty"]["GeocoderMetaData"]["Address"]["Components"]) {
+      if (component["kind"] == "country") {
+        country = component["name"];
+        break;
+      }
     }
     if (country == null) throw http.ClientException("");
     return country;
@@ -121,7 +128,7 @@ class YandexApiClient {
           Place(
             title: result["title"]["text"],
             subtitle: incompleteStreet.split(',')[1],
-            uri: result["uri"]
+            uri: result["uri"],
           ),
         );
       }
@@ -137,6 +144,47 @@ class YandexApiClient {
     } else {
       suggesting = false;
     }
+  }
+
+  dynamic firstGeoObject(http.Response response) {
+    return jsonDecode(
+      response.body,
+    )["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"];
+  }
+
+  Future<Map<String, dynamic>> geoInformationByUri(String uri) async {
+    http.Response response = await geocodeRequest({"uri": uri}, useLocale: false);
+    if (response.statusCode != 200) throw http.ClientException("");
+    List<String> latitudeLongitude = firstGeoObject(
+      response,
+    )["Point"]["pos"].split(' ');
+    String? country;
+    String? locality;
+    String? street;
+    String? house;
+    String? entrance;
+    for (final component in firstGeoObject(
+      response,
+    )["metaDataProperty"]["GeocoderMetaData"]["Address"]["Components"]) {
+      if (component["kind"] == "country") {
+        country = component["name"];
+      } else if (component["kind"] == "locality") {
+        locality = component["name"];
+      } else if (component["kind"] == "street") {
+        street = component["name"];
+      } else if (component["kind"] == "house") {
+        house = component["name"];
+      } else if (component["kind"] == "entrance") {
+        entrance = component["name"];
+      }
+    }
+    return {
+      "longitude": latitudeLongitude[0],
+      "latitude": latitudeLongitude[1],
+      "country": country,
+      "city": locality,
+      "street": street ?? house ?? entrance
+    };
   }
 }
 

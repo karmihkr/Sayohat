@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayohat/screens/registration-screens/confirm_phone_number_screen.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
 String? userPhoneNumber;

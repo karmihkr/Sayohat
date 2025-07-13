@@ -39,7 +39,7 @@ def post_user(phone, name, surname, birth):
 
 
 @users_router.get("/user_exists")
-def post_user(phone):
+def check_user(phone):
     return {
         "result": bool(users_repository.get_matching_user(phone=phone))
     }

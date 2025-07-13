@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/api_clients/yandex_api_client.dart';
-import 'package:sayohat/screens/snack_bar_factory.dart';
+import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/screens/tabs-main-screens/add-ride-screens/your_ride_data.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:sayohat/l10n/app_localizations.dart';
 
-import '../../../models/place_model.dart';
+import '../../../factories/input_decoration_factory.dart';
+import '../../../factories/search_window_factory.dart';
 
 String fromCountry = "";
 String toCountry = "";
@@ -137,13 +139,60 @@ class _AddRideScreenState extends State<AddRideScreen> {
         child: Stepper(
           connectorColor: WidgetStatePropertyAll(AppColors.primaryGreen),
           currentStep: _currentStep,
-          onStepContinue: () {
-            if (_stepFormKeys[_currentStep].currentState!.validate()) {
-              _stepFormKeys[_currentStep].currentState!.save();
-              if (_currentStep < 2) {
-                setState(() => _currentStep += 1);
+          onStepContinue: () async {
+            if (!(_stepFormKeys[_currentStep].currentState!.validate())) return;
+            _stepFormKeys[_currentStep].currentState!.save();
+            if (_currentStep < 2) {
+              setState(() => _currentStep += 1);
+              return;
+            }
+            try {
+              if (hamsafarApiClient.registering) return;
+              Ride userRide = Ride(
+                fullName: '${user.name} ${user.surname}',
+                age: 5,
+                from: fromCity,
+                to: toCity,
+                date: date,
+                seats: passengers,
+                address1: fromAddress,
+                address2: toAddress,
+                time: time,
+                cost: price,
+                description: description,
+                carModel: carModel,
+                carColor: carColor,
+                carPlate: carPlate,
+              );
+              (context as Element).markNeedsBuild();
+              await hamsafarApiClient.registerRide(
+                fromUri,
+                toUri,
+                date,
+                passengers,
+                time,
+                price,
+                description,
+                carModel,
+                carColor,
+                carPlate
+              );
+              (context as Element).markNeedsBuild();
+              setState(() => _currentStep = 0);
+              yourRides.add(userRide);
+              ScaffoldMessenger.of(context).showSnackBar(
+                snackBarFactory.createSnackBar(loc.success_ride_added),
+              );
+            } catch (error) {
+              print(error.toString());
+              hamsafarApiClient.registering = false;
+              (context as Element).markNeedsBuild();
+              if (error.toString().contains("expired")) {
+                Navigator.pushNamed(context, '/PhoneScreen');
               } else {
-                _saveRide();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  snackBarFactory.createSnackBar(loc.error_api_unreachable),
+                );
               }
             }
           },
@@ -261,6 +310,12 @@ class _AddRideScreenState extends State<AddRideScreen> {
                 key: _stepFormKeys[2],
                 child: Column(
                   children: [
+                    if (hamsafarApiClient.registering)
+                      Image.asset(
+                        "assets/images/loading.gif",
+                        height: 50,
+                        width: 50,
+                      ),
                     _CarModelField(onSaved: (value) => carModel = value ?? ''),
                     SizedBox(height: 10),
                     _CarColorField(onSaved: (value) => carColor = value ?? ''),
@@ -307,39 +362,6 @@ class _AddRideScreenState extends State<AddRideScreen> {
         ),
       ),
     );
-  }
-
-  void _saveRide() async {
-    final loc = AppLocalizations.of(context)!;
-    Ride userRide = Ride(
-      fullName: '${user.name} ${user.surname}',
-      age: 5,
-      from: fromCity,
-      to: toCity,
-      date: date,
-      seats: passengers,
-      address1: fromAddress,
-      address2: toAddress,
-      time: time,
-      cost: price,
-      description: description,
-      carModel: carModel,
-      carColor: carColor,
-      carPlate: carPlate,
-    );
-    var params = {
-      "driver_id": "1",
-      "begin_id": "1",
-      "end_id": "1",
-      "price": price,
-      "available_places": passengers,
-      "vehicle_number": carPlate,
-    };
-    // apiClient.request(apiClient.post, "/new/ride", params, <String, String>{});
-    yourRides.add(userRide);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(snackBarFactory.createSnackBar(loc.success_ride_added));
   }
 }
 
@@ -442,7 +464,7 @@ class _CityFieldState extends State<CityField> {
         (widget.mainContext as Element).markNeedsBuild();
         if (controller.text.isEmpty) return;
         searchWindowSafeRemove(_searchWindow);
-        _searchWindow = createSearchWindow(context, yandexApiClient.suggested, (
+        _searchWindow = searchWindowFactory(context, yandexApiClient.suggested, (
           String title,
           String subtitle,
           String? uri,
@@ -465,46 +487,6 @@ class _CityFieldState extends State<CityField> {
       },
     );
   }
-}
-
-OverlayEntry createSearchWindow(
-  BuildContext context,
-  List<Place> places,
-  void Function(String title, String subtitle, String? uri) onTap,
-) {
-  RenderBox renderBox = context.findRenderObject()! as RenderBox;
-  var size = renderBox.size;
-  var offset = renderBox.localToGlobal(Offset.zero);
-  return OverlayEntry(
-    builder: (context) => Positioned(
-      left: offset.dx,
-      top: offset.dy + size.height + 5.0,
-      width: size.width,
-      child: Material(
-        elevation: 4.0,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          children: [
-            for (Place place in places)
-              ListTile(
-                title: Text(place.title),
-                subtitle: Text(place.subtitle),
-                onTap: () {
-                  onTap(place.title, place.subtitle, place.uri);
-                },
-              ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-void searchWindowSafeRemove(OverlayEntry? searchWindow) {
-  try {
-    searchWindow!.remove();
-  } catch (_) {}
 }
 
 class _DateField extends StatelessWidget {
@@ -685,36 +667,6 @@ class _CarPlateField extends StatelessWidget {
       onSaved: onSaved,
     );
   }
-}
-
-InputDecoration inputDecorationFactory(
-  IconData iconData,
-  String hintText,
-  String labelText,
-) {
-  return InputDecoration(
-    prefixIcon: Icon(iconData, color: AppColors.primaryGreen),
-    hintText: hintText,
-    labelText: labelText,
-    filled: true,
-    fillColor: Colors.white,
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-    ),
-    disabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-    ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-    ),
-    border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-    errorBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-    ),
-    focusedErrorBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-    ),
-  );
 }
 
 class HourMinsFormatter extends TextInputFormatter {

@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sayohat/api_clients/request_types.dart';
+import 'package:sayohat/api_clients/yandex_api_client.dart';
 import 'package:sayohat/project_settings.dart';
 
 class HamsafarApiClient {
   final client = http.Client();
+
+  bool registering = false;
 
   Future<http.Response> request(
     RequestType type,
@@ -15,7 +18,8 @@ class HamsafarApiClient {
     Map<String, String> headers,
     Map<String, String> body,
   ) {
-    if (headers.containsKey("Authorization") && Jwt.isExpired(headers["Authorization"]!.substring(7))) {
+    if (headers.containsKey("Authorization") &&
+        Jwt.isExpired(headers["Authorization"]!.substring(7))) {
       throw http.ClientException("expired");
     }
     if (type == RequestType.get) {
@@ -105,6 +109,64 @@ class HamsafarApiClient {
       {},
     );
     if (response.statusCode != 200) throw http.ClientException("");
+  }
+
+  Future<void> registerPlace(String uri) async {
+    final token = await persistentSecuredStorage.read(key: 'token');
+    final geoInformation = await yandexApiClient.geoInformationByUri(uri);
+    http.Response response = await request(
+      RequestType.post,
+      "/place",
+      {...geoInformation, "_id": uri},
+      {
+        'Authorization': 'Bearer $token'
+      },
+      {},
+    );
+    if (response.statusCode != 200) throw http.ClientException("");
+  }
+
+  Future<void> registerRide(
+    String fromUri,
+    String toUri,
+    String date,
+    String passengers,
+    String time,
+    String price,
+    String description,
+    String carModel,
+    String carColor,
+    String carPlate,
+  ) async {
+    registering = true;
+    await registerPlace(fromUri);
+    await registerPlace(toUri);
+    final token = await persistentSecuredStorage.read(key: 'token');
+    http.Response response = await request(
+      RequestType.post,
+      "/ride",
+      <String, dynamic>{
+        "from_place_id": fromUri,
+        "to_place_id": toUri,
+        "year": date.split('/')[2],
+        "month": date.split('/')[1],
+        "day": date.split('/')[0],
+        "passengers" : passengers,
+        "hours" : time.split(':')[0],
+        "minutes": time.split(':')[1],
+        "price" : price,
+        "description": description,
+        "car_model" : carModel,
+        "car_color" : carColor,
+        "car_plate" : carPlate
+      },
+      {
+        'Authorization': 'Bearer $token'
+      },
+      {},
+    );
+    if (response.statusCode != 200) throw http.ClientException("");
+    registering = false;
   }
 
   Future<Map<String, dynamic>> getUserProfile() async {
