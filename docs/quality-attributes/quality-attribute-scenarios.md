@@ -20,14 +20,16 @@ It can also lead to the deletion of the app or bad reviews.
 
 ## 1.2  Interoperability
 ### Meaning
-Interoperability means the ability of our application to interact and exchange data with third-party services, such as Telegram for authentication, Yandex Maps for route visualization, and payment systems.
+Interoperability means the ability of our application to interact and exchange data with third-party services,
+such as Telegram for authentication, Yandex Maps for route visualization, and payment systems.
 
 ### Why it is important for our project  
-Our ride-sharing app depends on external APIs: for location search, user verification, and secure transactions. Without smooth integration, key features like login or route planning won’t work, which would make the app unusable.
+Our ride-sharing app depends on external APIs: for location search, user verification, and secure transactions. 
+Without smooth integration, key features like login or route planning won’t work, which would make the app unusable.
 
 ### Quality Scenario  
 **Source:** Ride-sharing mobile app integrating third-party APIs  
-**Stimulus:** A user registers using a phone number and location services  
+**Stimulus:** A user registers using a phone number 
 **Artifact:** Flutter frontend, Telegram API, Yandex.Maps SDK, backend APIs  
 **Environment:** Stable internet connection during user registration and ride creation  
 **Response:** System successfully communicates with Telegram and Yandex.Maps to authenticate and display routes  
@@ -39,17 +41,19 @@ Our ride-sharing app depends on external APIs: for location search, user verific
 
 ## 2.1 Authenticity
 ### Meaning  
-Authenticity ensures that each user interacting with the system is who they claim to be. It prevents spoofing or impersonation using secure methods like phone verification or JWT tokens.
+Authenticity ensures that each user interacting with the system is who they claim to be. 
+It prevents spoofing or impersonation using secure methods like phone verification.
 
 ### Why it is important for our project  
-Our app uses authentication via Telegram and relies on unique phone numbers. To prevent fake accounts and ensure proper user identity, we verify users with secure confirmation codes.
+Our app uses authentication via Telegram and relies on unique phone numbers. To prevent 
+fake accounts and ensure proper user identity, we verify users with secure confirmation codes.
 
 ### Quality Scenario  
 **Source:** Ride-sharing app  
 **Stimulus:** User attempts to log in  
-**Artifact:** Backend API (Python), Telegram API, JWT tokens  
+**Artifact:** Backend API (Python), Telegram API 
 **Environment:** Production  
-**Response:** User identity is verified via Telegram confirmation code, JWT issued  
+**Response:** User identity is verified via Telegram confirmation code
 **Response Measure:** Token issued within 60 seconds, 100% of valid requests receive code 200  
 
 ---
@@ -57,10 +61,12 @@ Our app uses authentication via Telegram and relies on unique phone numbers. To 
 ## 2.2 Accountability
 
 ### Meaning  
-Accountability ensures all user actions are logged and traceable to specific accounts. This helps in tracking misuse, disputes, and fraudulent activities.
+Accountability - degree to which the actions of an entity can be traced uniquely to the entity. 
+Ensures all user actions are logged and traceable to specific accounts. 
 
 ### Why it is important for our project  
-To resolve conflicts (e.g., no-shows, cancellations), we must store and track ride requests, bookings, and messages. Every action should be auditable.
+To resolve conflicts (e.g., no-shows, cancellations), we must store and track ride requests, 
+bookings, and messages. Every action should be auditable.
 
 ### Quality Scenario  
 **Source:** Application server logs  
@@ -75,10 +81,11 @@ To resolve conflicts (e.g., no-shows, cancellations), we must store and track ri
 ## 2.3 Confidentiality
 
 ### Meaning  
-Confidentiality ensures that sensitive user data (phone number, messages, ride history) is protected from unauthorized access.
+Confidentiality ensures that sensitive user data is protected from unauthorized access.
 
 ### Why it is important for our project  
-Our app stores personal information, so any data leak would result in serious consequences for users. We must ensure data is encrypted and securely transmitted.
+Our app stores personal information, so any data leak would result in serious consequences for users. We must ensure data is 
+encrypted and securely transmitted.
 
 ### Quality Scenario  
 **Source:** Backend system storing user info  
