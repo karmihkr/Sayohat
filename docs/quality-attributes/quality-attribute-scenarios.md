@@ -53,10 +53,10 @@ fake accounts and ensure proper user identity, we verify users with secure confi
 ### Quality Scenario  
 **Source:** Ride-sharing app  
 **Stimulus:** User attempts to log in  
-**Artifact:** Backend API (Python), Telegram API 
-**Environment:** Production  
-**Response:** User identity is verified via Telegram confirmation code
-**Response Measure:** Token issued within 60 seconds, 100% of valid requests receive code 200
+**Artifact:** Backend API (Python), Telegram API  
+**Environment:** Production   
+**Response:** User identity is verified via Telegram confirmation code  
+**Response Measure:** Token issued within 60 seconds, 100% of valid requests receive code 200  
 **Testing:** Automated tests with mocked Telegram responses, unit tests for auth logic using `unittest`, and manual login flow validation in staging.
 
 
