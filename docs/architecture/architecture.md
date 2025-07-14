@@ -36,7 +36,7 @@ The platform includes:
 Files structure is divided by domain and responsibility. Each domain (e.g., users, trips) contains its own endpoints, schemas, and logic.
 
 ---
-![staticview](/docs/architecture/ComponentDiagram.png)
+![staticview](\shareyourride\docs\architecture\static-view\ComponentDiagram.png)
 
 ## 4. Dynamic View
 
