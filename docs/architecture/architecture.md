@@ -36,7 +36,7 @@ The platform includes:
 Files structure is divided by domain and responsibility. Each domain (e.g., users, trips) contains its own endpoints, schemas, and logic.
 
 ---
-![staticview](static-view\ComponentDiagram.png)
+![staticview](./static-view/ComponentDiagram.png)
 
 ## 4. Dynamic View
 
@@ -48,7 +48,7 @@ Files structure is divided by domain and responsibility. Each domain (e.g., user
 4. Token is stored locally and used in future requests.
 ---
 
-![dynamic](dynamic-view\SequenceDiagram.png)
+![dynamic](./dynamic-view/SequenceDiagram.png)
 
 ## Deployment View
 
@@ -64,4 +64,4 @@ The system follows a **containerized microservice-like architecture**, where eac
 
 All services are containerized and orchestrated using `docker-compose`.
 
-![deployment](deployment-view\Deploymentdiagram.png)
+![deployment](./deployment-view/Deploymentdiagram.png)
