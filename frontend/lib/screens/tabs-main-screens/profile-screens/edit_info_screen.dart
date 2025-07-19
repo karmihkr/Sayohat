@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 import 'package:sayohat/theme/app_colors.dart';
@@ -6,6 +8,8 @@ import 'package:string_validator/string_validator.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
+import '../../../factories/input_decoration_factory.dart';
+import '../../../models/ride_model.dart';
 import '../../../objects/current_user.dart';
 import '../../../project_settings.dart';
 
@@ -162,34 +166,10 @@ class _NameForm extends StatelessWidget {
       height: 40,
       child: TextField(
         controller: nameTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
           hintText: loc.hint_new_name,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
+          outline: true,
         ),
       ),
     );
@@ -209,34 +189,10 @@ class _SurnameForm extends StatelessWidget {
       height: 40,
       child: TextField(
         controller: surnameTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
           hintText: loc.hint_new_surname,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
+          outline: true,
         ),
       ),
     );
@@ -257,34 +213,10 @@ class _PhoneNumberForm extends StatelessWidget {
       child: TextField(
         keyboardType: TextInputType.number,
         controller: phoneTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
           hintText: loc.hint_new_phone_number,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
+          outline: true,
         ),
       ),
     );
@@ -306,34 +238,10 @@ class _BirthForm extends StatelessWidget {
         inputFormatters: [_dateMaskFormatter],
         controller: birthTextController,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
           hintText: loc.hint_new_date_of_birth,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
+          outline: true,
         ),
       ),
     );
@@ -395,6 +303,16 @@ class _ConfirmChanges extends StatelessWidget {
               "currentUser",
               currentUser.toJsonString(),
             );
+            List<String> updatedRides = [];
+            for (dynamic ride
+                in (await persistentStorage.getStringList("currentRides")) ??
+                    {}) {
+              var gotRide = Ride.fromJsonString(ride);
+              gotRide.driverName = newName.text;
+              gotRide.driverSurname = newSurname.text;
+              updatedRides.add(gotRide.toJsonString());
+            }
+            await persistentStorage.setStringList("currentRides", updatedRides);
             (mainContext as Element).markNeedsBuild();
             ScaffoldMessenger.of(context).showSnackBar(
               snackBarFactory.createSnackBar(loc.snackbar_info_updated),

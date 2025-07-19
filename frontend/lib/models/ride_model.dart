@@ -74,8 +74,8 @@ class Ride {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
+  String toJsonString() {
+    return jsonEncode({
       "_id": id,
       "driver_name": driverName,
       "driver_surname": driverSurname,
@@ -97,6 +97,6 @@ class Ride {
       "car_model": carModel,
       "car_color": carColor,
       "car_plate": carPlate,
-    };
+    });
   }
 }

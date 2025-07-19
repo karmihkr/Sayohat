@@ -10,6 +10,7 @@ import 'package:sayohat/theme/app_colors.dart';
 
 import 'package:sayohat/l10n/app_localizations.dart';
 
+import '../../factories/input_decoration_factory.dart';
 import '../../models/user_model.dart';
 
 final _codeTextController = TextEditingController();
@@ -95,33 +96,9 @@ class _CodeForm extends StatelessWidget {
       child: TextField(
         controller: _codeTextController,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
+          outline: true,
           hintText: loc.hint_code,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
         ),
       ),
@@ -164,7 +141,9 @@ class _ConfirmCodeButton extends StatelessWidget {
                 await hamsafarApiClient.getUserProfile(),
               );
               print(await persistentStorage.getString("currentUser"));
-              currentUser = User.fromJsonString(await persistentStorage.getString("currentUser"));
+              currentUser = User.fromJsonString(
+                await persistentStorage.getString("currentUser"),
+              );
               Navigator.pushNamed(context, '/WelcomeHub');
               return;
             }

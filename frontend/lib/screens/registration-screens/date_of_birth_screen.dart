@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
+import 'package:sayohat/factories/input_decoration_factory.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/objects/current_user.dart';
 import 'package:sayohat/theme/app_colors.dart';
@@ -101,29 +102,10 @@ class _BirthForm extends StatelessWidget {
         controller: _birthController,
         keyboardType: TextInputType.number,
         inputFormatters: [_dateMaskFormatter],
-        decoration: InputDecoration(
+        decoration: inputDecorationFactory(
+          outline: true,
           hintText: loc.hint_date_of_birth,
-          filled: true,
           fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
         ),
       ),
     );

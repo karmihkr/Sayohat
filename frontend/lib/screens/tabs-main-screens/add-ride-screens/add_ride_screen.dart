@@ -193,7 +193,7 @@ class _AddRideScreenState extends State<AddRideScreen> {
               );
               await persistentStorage.setStringList("currentRides", [
                 ...?(await persistentStorage.getStringList("currentRides")),
-                jsonEncode(currentRides.last.toJson()),
+                jsonEncode(currentRides.last.toJsonString()),
               ]);
               setState(() => _currentStep = 0);
               ScaffoldMessenger.of(context).showSnackBar(
@@ -432,9 +432,10 @@ class _CityFieldState extends State<CityField> {
       controller: controller,
       focusNode: _fieldFocusObserver,
       decoration: inputDecorationFactory(
-        Icons.circle_outlined,
-        widget.hint,
-        widget.label,
+        prefixIcon: Icons.circle_outlined,
+        hintText: widget.hint,
+        labelText: widget.label,
+        outline: false,
       ),
       validator: widget.validator,
       onSaved: widget.onSaved,
@@ -517,9 +518,10 @@ class _DateField extends StatelessWidget {
       key: key,
       inputFormatters: [_dateMaskFormatter],
       decoration: inputDecorationFactory(
-        Icons.calendar_month,
-        loc.hint_date_ddmmyyyy,
-        loc.date_input_label,
+        prefixIcon: Icons.calendar_month,
+        hintText: loc.hint_date_ddmmyyyy,
+        labelText: loc.date_input_label,
+        outline: false
       ),
       validator: validator,
       onSaved: onSaved,
@@ -543,9 +545,10 @@ class _PassengerNumberField extends StatelessWidget {
     return TextFormField(
       key: key,
       decoration: inputDecorationFactory(
-        Icons.person_outlined,
-        loc.hint_number_of_passengers,
-        loc.passengers,
+        prefixIcon: Icons.person_outlined,
+        hintText: loc.hint_number_of_passengers,
+        labelText: loc.passengers,
+        outline: false
       ),
       keyboardType: TextInputType.number,
       validator: validator,
@@ -567,9 +570,10 @@ class _TimeField extends StatelessWidget {
       key: key,
       inputFormatters: <TextInputFormatter>[HourMinsFormatter()],
       decoration: inputDecorationFactory(
-        Icons.access_time,
-        loc.hint_time_hhmm,
-        loc.time_input_label,
+        prefixIcon: Icons.access_time,
+        hintText: loc.hint_time_hhmm,
+        labelText: loc.time_input_label,
+        outline: false
       ),
       validator: validator,
       onSaved: onSaved,
@@ -587,9 +591,10 @@ class _PriceField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: inputDecorationFactory(
-        Icons.money,
-        loc.hint_price,
-        loc.price_label,
+        prefixIcon: Icons.money,
+        hintText: loc.hint_price,
+        labelText: loc.price_label,
+        outline: false
       ),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_price : null,
@@ -610,9 +615,10 @@ class _DescriptionField extends StatelessWidget {
     return TextFormField(
       key: key,
       decoration: inputDecorationFactory(
-        Icons.info,
-        loc.hint_contact_info_rules,
-        loc.info,
+        prefixIcon: Icons.info,
+        hintText: loc.hint_contact_info_rules,
+        labelText: loc.info,
+        outline: false
       ),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_description : null,
@@ -631,9 +637,10 @@ class _CarModelField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: inputDecorationFactory(
-        Icons.directions_car,
-        loc.hint_car_model,
-        loc.car,
+        prefixIcon: Icons.directions_car,
+        hintText: loc.hint_car_model,
+        labelText: loc.car,
+        outline: false
       ),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_car_model : null,
@@ -652,9 +659,10 @@ class _CarColorField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: inputDecorationFactory(
-        Icons.color_lens,
-        loc.hint_car_color,
-        loc.hint_car_color,
+        prefixIcon: Icons.color_lens,
+        hintText: loc.hint_car_color,
+        labelText: loc.hint_car_color,
+        outline: false
       ),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_car_color : null,
@@ -673,9 +681,10 @@ class _CarPlateField extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return TextFormField(
       decoration: inputDecorationFactory(
-        Icons.abc_outlined,
-        loc.hint_car_plate,
-        loc.hint_car_plate,
+        prefixIcon: Icons.abc_outlined,
+        hintText: loc.hint_car_plate,
+        labelText: loc.hint_car_plate,
+        outline: false
       ),
       validator: (value) =>
           value?.isEmpty ?? true ? loc.error_enter_car_plate : null,

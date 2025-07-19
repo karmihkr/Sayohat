@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sayohat/factories/snack_bar_factory.dart';
 import 'package:sayohat/theme/app_colors.dart';
 
+import '../../factories/input_decoration_factory.dart';
 import '../registration-screens/confirm_phone_number_screen.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 
@@ -80,34 +81,10 @@ class _NameForm extends StatelessWidget {
       height: 46,
       child: TextField(
         controller: _phoneTextController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-          ),
+        decoration: inputDecorationFactory(
           hintText: loc.phone_number,
-          filled: true,
           fillColor: Color.fromRGBO(255, 255, 255, 1),
+          outline: true
         ),
       ),
     );

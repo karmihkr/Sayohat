@@ -4,6 +4,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sayohat/l10n/app_localizations.dart';
 import 'package:sayohat/api_clients/hamsafar_api_client.dart';
 
+import '../../../factories/input_decoration_factory.dart';
+
 final _dateMaskFormatter = MaskTextInputFormatter(
   mask: '##/##/####',
   filter: {"#": RegExp(r'\d')},
@@ -38,7 +40,7 @@ class _FindRideScreenState extends State<FindRideScreen> {
       from,
       to,
       date,
-      passengers
+      passengers,
     );
 
     if (ridesJson == null) {
@@ -171,26 +173,10 @@ class _FromField extends StatelessWidget {
         }
         return null;
       },
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
+      decoration: inputDecorationFactory(
+        prefixIcon: Icons.circle_outlined,
+        outline: false,
         hintText: loc.hint_from,
-        filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
     );
@@ -214,26 +200,10 @@ class _ToField extends StatelessWidget {
         }
         return null;
       },
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.circle_outlined, color: AppColors.primaryGreen),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.primaryGreen),
-        ),
+      decoration: inputDecorationFactory(
+        prefixIcon: Icons.circle_outlined,
+        outline: false,
         hintText: loc.hint_to,
-        filled: true,
         fillColor: Color.fromRGBO(255, 255, 255, 1),
       ),
     );
